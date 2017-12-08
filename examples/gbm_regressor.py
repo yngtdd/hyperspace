@@ -3,7 +3,7 @@ Gradient Boosting Regressor
 A hyperspace distributed version of Scikit-Optimize's hyperparameter optimization example
 
 To Run:
-mpirun -n 32 python gbm_regressor.py
+mpirun -n 32 python gbm_regressor.py --results_dir <full_path_to.../gbm_results>
 
 Note: we use 32 processes in this example (hence -n 32 above) since we have 2**5
 combinations of hyperparameter subspaces.
