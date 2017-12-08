@@ -1,7 +1,7 @@
 """
 """
-from . import hyperdrive
-from . import space
+from .hyperdrive import hyperdrive
+from .space import space
 
 from .hyperdrive import hyperdrive
 from .space.mapping_space import check_dimension

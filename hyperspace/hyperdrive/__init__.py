@@ -1,6 +1,6 @@
 """
 """
-from .hyperdrive import hyperdrive
+from . import hyperdrive
 
 
 __all__ = (

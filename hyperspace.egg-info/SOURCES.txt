@@ -1,3 +1,4 @@
+README.md
 hyperspace/__init__.py
 hyperspace.egg-info/PKG-INFO
 hyperspace.egg-info/SOURCES.txt

@@ -1,4 +1,4 @@
-from ..space import create_hyperspace
+from hyperspace.space import create_hyperspace
 
 from skopt import gp_minimize
 from skopt import gbrt_minimize
