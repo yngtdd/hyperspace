@@ -19,7 +19,7 @@ pip install .
 
 ### Modules
 
-A Hubble height view of the library. For details, see our [wiki](https://code-int.ornl.gov/ygx/hyperspace/wikis/home).
+A Hubble height view of the library. For details, check out the [wiki](https://github.com/yngtodd/hyperspace/wiki).
 
 ### Space
 
