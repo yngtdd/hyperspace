@@ -3,7 +3,7 @@
 from .hyperdrive import hyperdrive
 from .space import space
 
-from .hyperdrive import hyperdrive
+from .hyperdrive.hyperdrive import hyperdrive
 from .space.mapping_space import check_dimension
 from .space.mapping_space import create_hyperspace
 from .space import HyperInteger

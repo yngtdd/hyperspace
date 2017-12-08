@@ -11,8 +11,17 @@ combinations of hyperparameter subspaces.
 from sklearn.datasets import load_boston
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.model_selection import cross_val_score
+import numpy as np
+import argparse
 
 from hyperspace import hyperdrive
+
+
+boston = load_boston()
+X, y = boston.data, boston.target
+n_features = X.shape[1]
+
+reg = GradientBoostingRegressor(n_estimators=50, random_state=0)
 
 
 def objective(params):
@@ -39,23 +48,22 @@ def objective(params):
 
 
 def main():
-    boston = load_boston()
-    X, y = boston.data, boston.target
-    n_features = X.shape[1]
+    parser = argparse.ArgumentParser(description='Setup experiment.')
+    parser.add_argument('-rd', '--results_dir', default='~/hyperspace/examples/gbm_results/',
+                        type=str, help='Path to results directory.')
+    args = parser.parse_args()
 
-    reg = GradientBoostingRegressor(n_estimators=50, random_state=0)
-
-    hparams = [(2, 10),            # max_depth
-               (10.0**-5,10.0**0), # learning_rate
-               (1, 10),            # max_features
-               (2, 100),           # min_samples_split
-               (1, 100)]           # min_samples_leaf
+    hparams = [(2, 10),             # max_depth
+               (10.0**-2, 10.0**0), # learning_rate
+               (1, 10),             # max_features
+               (2, 100),            # min_samples_split
+               (1, 100)]            # min_samples_leaf
 
     hyperdrive(objective=objective,
                hyperparameters=hparams,
-               results_path='~/hyperspace/examples/gbm_results/',
+               results_path=args.results_dir,
                model="GP",
-               n_iterations=50,
+               n_iterations=11,
                verbose=True,
                random_state=0)
 
