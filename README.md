@@ -10,7 +10,7 @@ A combinatorial explosion, in fact. Here is a *Hitchhiker's Guide*:
 You can't just waltz out into space without the proper preparations.
 
 ```
-git clone https://code-int.ornl.gov/ygx/hyperspace/
+git clone https://github.com/yngtodd/hyperspace.git
 cd hyperspace
 
 # Get you gear!
