@@ -49,8 +49,7 @@ def objective(params):
 
 def main():
     parser = argparse.ArgumentParser(description='Setup experiment.')
-    parser.add_argument('-rd', '--results_dir', default='~/hyperspace/examples/gbm_results/',
-                        type=str, help='Path to results directory.')
+    parser.add_argument('--results_dir', type=str, help='Path to results directory.')
     args = parser.parse_args()
 
     hparams = [(2, 10),             # max_depth
