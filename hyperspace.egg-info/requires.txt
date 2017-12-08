@@ -1,0 +1,3 @@
+numpy
+scikit-optimize
+scikit-learn

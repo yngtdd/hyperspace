@@ -1,0 +1,23 @@
+"""
+"""
+from . import hyperdrive
+from . import space
+
+from .hyperdrive import hyperdrive
+from .space.mapping_space import check_dimension
+from .space.mapping_space import create_hyperspace
+from .space import HyperInteger
+from .space import HyperReal
+from .space import HyperCategorical
+
+
+__version__ = "0.2"
+
+__all__ = (
+    "check_dimension",
+    "create_hyperspace",
+    "HyperCategorical"
+    "hyperdrive",
+    "HyperInteger",
+    "HyperReal"
+)
