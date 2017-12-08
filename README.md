@@ -27,17 +27,17 @@ A Hubble height view of the library. For details, see our [wiki](https://code-in
 mindbogglingly big it is. I mean, you may think it's a long way down the road to the
 chemist's, but that's just peanuts to space." - The Hitchhiker's Guide to the Galaxy_
 
-In [space](https://code-int.ornl.gov/ygx/hyperspace/tree/ygx_hyperV2/hyperspace/space/space.py)
+In [space](https://github.com/yngtodd/hyperspace/blob/master/hyperspace/space/space.py)
 you will find the various classes that define hyperparameter search spaces.
 
 ### Mapping Space
 
-In [mapping_space](https://code-int.ornl.gov/ygx/hyperspace/blob/ygx_hyperV2/hyperspace/space/mapping_space.py)
+In [mapping_space](https://github.com/yngtodd/hyperspace/blob/master/hyperspace/space/mapping_space.py)
 we have functions that define hyperspaces, the many subregions
 of our hyperparameter search space to be distributed across cluster resources.
 
 
 ### Hyperdrive
 
-In [hyperdrive](https://code-int.ornl.gov/ygx/hyperspace/tree/ygx_hyperV2/hyperspace/hyperdrive/hyperdrive.py)
+In [hyperdrive](https://github.com/yngtodd/hyperspace/tree/master/hyperspace/hyperdrive)
 we have various methods for distributing our optimization procedure.
