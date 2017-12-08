@@ -1,6 +1,6 @@
 # HyperSpace
 
-### Welcome to Hyperspace!
+### Welcome to HyperSpace!
 
 If you have a complicated model with many hyperparameters, there is a lot to explore here.
 A combinatorial explosion, in fact. Here is a *Hitchhiker's Guide*:
