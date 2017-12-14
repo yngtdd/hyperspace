@@ -85,4 +85,4 @@ def hyperdrive(objective, hyperparameters, results_path, model="GP", n_iteration
                          "supported models.".format(model))
 
     # Each worker will independently write their results to disk
-    dump(result, results_path + 'hyperspace' + str(rank))
+    dump(result, results_path + '/hyperspace' + str(rank))
