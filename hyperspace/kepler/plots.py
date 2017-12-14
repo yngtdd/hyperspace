@@ -5,11 +5,10 @@ For more plotting functions, see Scikit-Optimize:
 https://scikit-optimize.github.io/plots.m.html1
 """
 import numpy as np
+from scipy.optimize import OptimizeResult
 
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import cm
-
-from scipy.optimize import OptimizeResult
 
 
 def plot_convergence(*args, **kwargs):
@@ -66,7 +65,7 @@ def plot_convergence(*args, **kwargs):
     if yscale is not None:
         ax.set_yscale(yscale)
 
-    colors = cm.color_map(np.linspace(0.25, 1.0, len(args)))
+    colors = cm.plasma(np.linspace(0.25, 1.0, len(args)))
 
     for results, color in zip(args, colors):
         if isinstance(results, tuple):
