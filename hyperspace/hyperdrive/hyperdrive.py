@@ -40,6 +40,9 @@ def hyperdrive(objective, hyperparameters, results_path, model="GP", n_iteration
     * `verbose` [bool, default=False]
         Verbosity of optimization.
 
+    * `deadline` [int, optional]
+        Deadline (seconds) for the optimization to finish within.
+
     * `random_state` [int, default=0]
         Random state for reproducibility.
     """
