@@ -4,13 +4,14 @@ from skopt import gp_minimize
 from skopt import gbrt_minimize
 from skopt import forest_minimize
 from skopt import dummy_minimize
+from skopt.callbacks import DeadlineStopper
 from skopt import dump
 
 from mpi4py import MPI
 
 
 def hyperdrive(objective, hyperparameters, results_path, model="GP", n_iterations=50,
-               verbose=False, random_state=0):
+               verbose=False, deadline=None, random_state=0):
     """
     Distributed optimization - one optimization per node.
 
@@ -54,32 +55,35 @@ def hyperdrive(objective, hyperparameters, results_path, model="GP", n_iteration
 
     space = comm.scatter(hyperspace, root=0)
 
+    if deadline:
+        deadline = DeadlineStopper(deadline)
+
     # Thanks Guido for refusing to believe in switch statements.
     # Case 0
     if model == "GP":
         # Verbose mode should only run on node 0.
         if verbose and rank == 0:
             result = gp_minimize(objective, space, n_calls=n_iterations, verbose=verbose,
-                                 random_state=random_state)
-        result = gp_minimize(objective, space, n_calls=n_iterations, random_state=random_state)
+                                 callback=deadline, random_state=random_state)
+        result = gp_minimize(objective, space, n_calls=n_iterations, callback=deadline, random_state=random_state)
     # Case 1
     elif model == "RF":
         if verbose and rank == 0:
             result = forest_minimize(objective, space, n_calls=n_iterations, verbose=verbose,
-                                     random_state=random_state)
-        result = forest_minimize(objective, space, n_calls=n_iterations, random_state=random_state)
+                                     callback=deadline, random_state=random_state)
+        result = forest_minimize(objective, space, n_calls=n_iterations, callback=deadline, random_state=random_state)
     # Case 2
     elif model == "GRBRT":
         if verbose and rank == 0:
             result = gbrt_minimize(objective, space, n_calls=n_iterations, verbose=verbose,
-                                   random_state=random_state)
-        result = gbrt_minimize(objective, space, n_calls=n_iterations, random_state=random_state)
+                                   callback=deadline, random_state=random_state)
+        result = gbrt_minimize(objective, space, n_calls=n_iterations, callback=deadline, random_state=random_state)
     # Case 3
     elif model == "RAND":
         if verbose and rank == 0:
             result = dummy_minimize(objective, space, n_calls=n_iterations, verbose=verbose,
-                                    random_state=random_state)
-        result = dummy_minimize(objective, space, n_calls=n_iterations, random_state=random_state)
+                                    callback=deadline, random_state=random_state)
+        result = dummy_minimize(objective, space, n_calls=n_iterations, callback=deadline, random_state=random_state)
     else:
         raise ValueError("Invalid model {}. Read the documentation for "
                          "supported models.".format(model))

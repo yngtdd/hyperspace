@@ -65,7 +65,8 @@ def main():
                model="GP",
                n_iterations=100,
                verbose=True,
-               random_state=0)
+               random_state=0,
+               deadline=120)
 
 
 if __name__ == '__main__':
