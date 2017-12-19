@@ -35,8 +35,8 @@ def objective(params):
         - Controlled by hyperspaces's hyperdrive function.
         - Order preserved from list passed to hyperdrive's hyperparameters argument.
     """
-    #max_depth, learning_rate, max_features, min_samples_split, min_samples_leaf = params
-    max_depth, max_features, min_samples_split, min_samples_leaf = params
+    max_depth, learning_rate, max_features, min_samples_split, min_samples_leaf = params
+    #max_depth, max_features, min_samples_split, min_samples_leaf = params
 
     reg.set_params(max_depth=max_depth,
                    #learning_rate=learning_rate,
@@ -54,7 +54,7 @@ def main():
     args = parser.parse_args()
 
     hparams = [(2, 10),             # max_depth
-               #(10.0**-2, 10.0**0), # learning_rate
+               (10.0**-2, 10.0**0), # learning_rate
                (1, 10),             # max_features
                (2, 100),            # min_samples_split
                (1, 100)]            # min_samples_leaf
