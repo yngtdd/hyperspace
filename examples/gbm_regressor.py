@@ -39,7 +39,7 @@ def objective(params):
     #max_depth, max_features, min_samples_split, min_samples_leaf = params
 
     reg.set_params(max_depth=max_depth,
-                   #learning_rate=learning_rate,
+                   learning_rate=learning_rate,
                    max_features=max_features,
                    min_samples_split=min_samples_split,
                    min_samples_leaf=min_samples_leaf)
