@@ -173,8 +173,8 @@ class HyperReal(HyperSpace, Real):
             warnings.warn("Each hyperspace contains a single value.")
 
         self.space0_low = self.low
-        self.space0_high = round(self.space0_low + subinterval_length + overlap_length)
-        self.space1_low = round(self.high - (subinterval_length + overlap_length))
+        self.space0_high = self.space0_low + subinterval_length + overlap_length
+        self.space1_low = self.high - (subinterval_length + overlap_length)
         self.space1_high = self.high
 
     def get_hyperspace(self):
