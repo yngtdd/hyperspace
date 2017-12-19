@@ -1,7 +1,0 @@
-README.md
-hyperspace/__init__.py
-hyperspace.egg-info/PKG-INFO
-hyperspace.egg-info/SOURCES.txt
-hyperspace.egg-info/dependency_links.txt
-hyperspace.egg-info/requires.txt
-hyperspace.egg-info/top_level.txt
