@@ -68,25 +68,33 @@ def hyperdrive(objective, hyperparameters, results_path, model="GP", n_iteration
         if verbose and rank == 0:
             result = gp_minimize(objective, space, n_calls=n_iterations, verbose=verbose,
                                  callback=deadline, random_state=random_state)
-        result = gp_minimize(objective, space, n_calls=n_iterations, callback=deadline, random_state=random_state)
+        else:
+            result = gp_minimize(objective, space, n_calls=n_iterations,
+                                 callback=deadline, random_state=random_state)
     # Case 1
     elif model == "RF":
         if verbose and rank == 0:
             result = forest_minimize(objective, space, n_calls=n_iterations, verbose=verbose,
                                      callback=deadline, random_state=random_state)
-        result = forest_minimize(objective, space, n_calls=n_iterations, callback=deadline, random_state=random_state)
+        else:
+            result = forest_minimize(objective, space, n_calls=n_iterations,
+                                     callback=deadline, random_state=random_state)
     # Case 2
     elif model == "GRBRT":
         if verbose and rank == 0:
             result = gbrt_minimize(objective, space, n_calls=n_iterations, verbose=verbose,
                                    callback=deadline, random_state=random_state)
-        result = gbrt_minimize(objective, space, n_calls=n_iterations, callback=deadline, random_state=random_state)
+        else:
+            result = gbrt_minimize(objective, space, n_calls=n_iterations,
+                                   callback=deadline, random_state=random_state)
     # Case 3
     elif model == "RAND":
         if verbose and rank == 0:
             result = dummy_minimize(objective, space, n_calls=n_iterations, verbose=verbose,
                                     callback=deadline, random_state=random_state)
-        result = dummy_minimize(objective, space, n_calls=n_iterations, callback=deadline, random_state=random_state)
+        else:
+            result = dummy_minimize(objective, space, n_calls=n_iterations,
+                                    callback=deadline, random_state=random_state)
     else:
         raise ValueError("Invalid model {}. Read the documentation for "
                          "supported models.".format(model))
