@@ -7,7 +7,7 @@ A combinatorial explosion, in fact. Here is a *Hitchhiker's Guide*:
 
 ### Preparations
 
-You can't just waltz out into space without the proper preparations.
+You can't just waltz out into space without the proper preparations!
 
 ```
 git clone https://github.com/yngtodd/hyperspace.git
