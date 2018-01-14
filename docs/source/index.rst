@@ -3,8 +3,12 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+:github_url: https://github.com/yngtodd/hyperspace
+
 HyperSpace Documentation
 ========================
+
+HyperSpace is a library for distributed Bayesian hyperparameter optimization.
 
 .. toctree::
    :maxdepth: 2
