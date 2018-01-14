@@ -113,7 +113,7 @@ nav .hidden-section {
     display: inherit;
 }
 
-.wy-side-nav-search>div.version {
-    color: #000;
-}
+#.wy-side-nav-search>div.version {
+#    color: #000;
+#}
 
