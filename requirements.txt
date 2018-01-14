@@ -1,4 +1,0 @@
-numpy
-scikit-optimize
-mpi4py
-sphinx_rtd_theme
