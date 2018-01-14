@@ -1,4 +1,6 @@
-# HyperSpace
+<p align="center">
+    <img width="200" src="https://github.com/yngtodd/tanuki/blob/master/img/tanuki1.png">
+</p>
 
 ### Welcome to HyperSpace!
 
