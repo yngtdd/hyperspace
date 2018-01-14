@@ -168,5 +168,5 @@ texinfo_documents = [
      'Miscellaneous'),
 ]
 
-
+html_theme = "sphinx_rtd_theme"
 
