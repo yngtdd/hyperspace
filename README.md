@@ -2,6 +2,8 @@
     <img width="300" src="https://github.com/yngtodd/hyperspace/blob/master/img/hyperspace_logo.png">
 </p>
 
+--------------------------
+
 ### Welcome to HyperSpace!
 
 If you have a complicated model with many hyperparameters, there is a lot to explore here.
@@ -21,7 +23,8 @@ pip install .
 
 ### Modules
 
-A Hubble height view of the library. For details, check out the [wiki](https://github.com/yngtodd/hyperspace/wiki).
+A Hubble height view of the library. For details, check out the [documentation](http://hyperspace.readthedocs.io/en/latest/).
+You can also find some information on the [wiki](https://github.com/yngtodd/hyperspace/wiki).
 
 ### Space
 
