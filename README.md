@@ -1,5 +1,5 @@
 <p align="center">
-    <img width="200" src="https://github.com/yngtodd/tanuki/blob/master/img/tanuki1.png">
+    <img width="200" src="https://github.com/yngtodd/hyperspace/blob/master/img/hyperspace_logo.png">
 </p>
 
 ### Welcome to HyperSpace!
