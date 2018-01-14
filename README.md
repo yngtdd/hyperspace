@@ -11,7 +11,9 @@ A combinatorial explosion, in fact. Here is a *Hitchhiker's Guide*:
 
 ### Preparations
 
-You can't just waltz out into space without the proper preparations! HyperSpace makes use of MPI through `mpi4py`. Make sure to have either [MPICH](http://www.mpich.org/) or [Open MPI](https://www.open-mpi.org/).
+You can't just waltz out into space without the proper preparations! 
+
+HyperSpace makes use of MPI through `mpi4py`. Make sure to have either [MPICH](http://www.mpich.org/) or [Open MPI](https://www.open-mpi.org/).
 
 ```
 git clone https://github.com/yngtodd/hyperspace.git
