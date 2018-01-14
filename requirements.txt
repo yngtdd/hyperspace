@@ -1,3 +1,0 @@
-numpy>=1.12.1
-scikit-optimize>=0.4
-scikit-learn>=0.18.1
