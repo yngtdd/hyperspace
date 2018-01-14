@@ -9,7 +9,7 @@ h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend, p.capti
 
 /* Use white for docs background */
 .wy-side-nav-search {
-    background-color: #546072;
+    background-color: #fff;
 }
 
 .wy-nav-content-wrap, .wy-menu li.current > a  {
