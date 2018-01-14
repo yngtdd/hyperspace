@@ -23,7 +23,7 @@ pip install .
 
 ### Modules
 
-A Hubble height view of the library. For details, check out the [documentation](http://hyperspace.readthedocs.io/en/latest/).
+Here is a Hubble height view of the library. For details, check out the [documentation](http://hyperspace.readthedocs.io/en/latest/).
 You can also find some information on the [wiki](https://github.com/yngtodd/hyperspace/wiki).
 
 ### Space
