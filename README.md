@@ -7,7 +7,11 @@
 ### Welcome to HyperSpace!
 
 If you have a complicated model with many hyperparameters, there is a lot to explore here.
-A combinatorial explosion, in fact. Here is a *Hitchhiker's Guide*:
+A combinatorial explosion, in fact. 
+
+For details, check out the [documentation](http://hyperspace.readthedocs.io/en/latest/).
+
+Here is a *Hitchhiker's Guide*:
 
 ### Preparations
 
@@ -25,8 +29,7 @@ pip install .
 
 ### Modules
 
-Here is a Hubble height view of the library. For details, check out the [documentation](http://hyperspace.readthedocs.io/en/latest/).
-You can also find some information on the [wiki](https://github.com/yngtodd/hyperspace/wiki).
+Here is a Hubble height view of the library: 
 
 ### Space
 
