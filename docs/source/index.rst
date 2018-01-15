@@ -20,7 +20,7 @@ HyperSpace is a library for distributed Bayesian hyperparameter optimization.
   :maxdepth: 1
   :caption: Library Reference
 
-  hyperspace.space
+  space
 
 
 Indices and tables
