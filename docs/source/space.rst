@@ -1,7 +1,7 @@
 .. role:: hidden
     :class: hidden-section
 
-space
+Space
 =====
 .. automodule:: hyperspace.space
 .. currentmodule:: hyperspace.space
