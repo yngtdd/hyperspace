@@ -7,9 +7,7 @@
 ### Welcome to HyperSpace!
 
 If you have a complicated model with many hyperparameters, there is a lot to explore here.
-A combinatorial explosion, in fact. 
-
-For details, check out the [documentation](http://hyperspace.readthedocs.io/en/latest/).
+A combinatorial explosion, in fact. Details can be found in the [documentation](http://hyperspace.readthedocs.io/en/latest/).
 
 Here is a *Hitchhiker's Guide*:
 
