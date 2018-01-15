@@ -8,7 +8,6 @@ space
 
 :hidden:`HyperInteger`
 ~~~~~~~~~~~~~~~~~~~~~~
+
 .. autoclass:: HyperInteger
      :members:
-
-
