@@ -1,5 +1,4 @@
 import numbers
-from enum import Enum
 import numpy as np
 
 from skopt.space import Dimension
@@ -8,41 +7,6 @@ from skopt.space import Space
 from .space import HyperInteger
 from .space import HyperReal
 from .space import HyperCategorical
-
-
-class SpaceType(Enum):
-    INTEGER = 0
-    REAL = 1
-    CATEGORICAL = 2
-
-
-class Factory:
-    """
-    Factory for building hyperspaces.
-
-    Parameters
-    ----------
-    * `space_type` [`INTEGER`, `REAL`, or `CATEGORICAL`, SpaceType object]:
-
-    * `**kwargs`
-        keyword arguments to be passed to each of the HyperClasses.
-
-    Returns
-    -------
-    * hyperspace_low, hyperspace_high [`Integer`, `Real`, or `Categorical` Scikit-Optimize object]:
-    """
-    def get_space(self, space_type, **kwargs):
-        if space_type == SpaceType.INTEGER:
-            hyper_int = HyperInteger(**kwargs)
-            return hyper_int.get_hyperspace()
-        elif space_type == SpaceType.REAL:
-            hyper_real = HyperReal(**kwargs)
-            return hyper_real.get_hyperspace()
-        elif space_type == SpaceType.CATEGORICAL:
-            hyper_cat = HyperCategorical(**kwargs)
-            return hyper_cat.get_hyperspace()
-        else:
-            raise NotImplementedError("Unknown space type.")
 
 
 def check_dimension(dimension, transform=None):
