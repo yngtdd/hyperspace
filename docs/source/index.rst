@@ -21,6 +21,8 @@ HyperSpace is a library for distributed Bayesian hyperparameter optimization.
   :caption: Library Reference
 
   space
+  hyperspace.hyperdrive
+  hyperspace.kepler
 
 
 Indices and tables
