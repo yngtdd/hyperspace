@@ -2,7 +2,7 @@
     <img width="300" src="https://github.com/yngtodd/hyperspace/blob/master/img/hyperspace_logo.png">
 </p>
 
---------------------------
+---------------------------
 
 ### Welcome to HyperSpace!
 
