@@ -103,7 +103,7 @@ def dualdrive(objective, hyperparameters, results_path, model="GP", n_iterations
                          "supported models.".format(model))
 
     # Each worker will independently write their results to disk
-    dump(result0, results_path + '/hyperspace0' + str(rank))
-    dump(result1, results_path + '/hyperspace1' + str(rank))
+    dump(result0, results_path + '/hyperspace0' + '_rank' + str(rank))
+    dump(result1, results_path + '/hyperspace1' + '_rank' + str(rank))
 
 
