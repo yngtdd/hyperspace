@@ -3,7 +3,7 @@ import numbers
 import numpy as np
 
 
-def sample_latin_hypercube(low, high, n_samples, rng=None):
+def sample_latin_hypercube(low, high, n_samples, n_dims=None, rng=None):
     """
     Creates initial design of n_samples drawn from a latin hypercube.
 
@@ -25,7 +25,8 @@ def sample_latin_hypercube(low, high, n_samples, rng=None):
     """
     if rng is None:
         rng = np.random.RandomState(np.random.randint(0, 10000))
-    n_dims = low.shape[0]
+    if n_dims is None:
+        n_dims = low.shape[0]
 
     samples = []
     for i in range(n_dims):
@@ -49,8 +50,18 @@ def sample_latin_hypercube(low, high, n_samples, rng=None):
     return samples.T
 
 
-def lhs_start():
+def lhs_start(hyperbounds, n_samples, rng=None):
     """
     Creates the initial search space using latin hypercube sampling.
     """
+    low_bounds = []
+    high_bounds = []
+    for space in hyperbounds:
+        for bounds in space:
+            low_bounds.append(bounds[0])
+            high_bounds.append(bounds[1])
 
+    n_dims = len(hyperbounds)
+    samples = sample_latin_hypercube(low_bounds, high_bounds, n_samples, n_dims=n_dims, rng=rng)
+    samples = samples.tolist()
+    return samples
