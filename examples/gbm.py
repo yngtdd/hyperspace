@@ -18,7 +18,7 @@ import numpy as np
 import argparse
 
 from hyperspace import hyperdrive
-
+from hyperspace import dualdrive
 
 boston = load_boston()
 X, y = boston.data, boston.target
@@ -65,7 +65,7 @@ def main():
                hyperparameters=hparams,
                results_path=args.results_dir,
                model="GP",
-               n_iterations=100,
+               n_iterations=15,
                verbose=True,
                random_state=0,
                sampler="lhs",

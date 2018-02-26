@@ -1,4 +1,6 @@
 from hyperspace.space import create_hyperspace
+from hyperspace.space import create_hyperbounds
+from hyperspace.rover.sampler import lhs_start
 
 from skopt import gp_minimize
 from skopt import gbrt_minimize
@@ -11,7 +13,7 @@ from mpi4py import MPI
 
 
 def dualdrive(objective, hyperparameters, results_path, model="GP", n_iterations=50,
-              verbose=False, deadline=None, random_state=0):
+              verbose=False, deadline=None, sampler=None, n_samples=None, random_state=0):
     """
     Distributed optimization - two optimizations per node.
 
@@ -54,12 +56,33 @@ def dualdrive(objective, hyperparameters, results_path, model="GP", n_iterations
     if rank == 0:
         hyperspace = create_hyperspace(hyperparameters)
         hyperspace = [hyperspace[i:i+2] for i in range(0, len(hyperspace), 2)]
+
+        if sampler and not n_samples:
+            raise ValueError('Sampler requires n_samples > 0. Got {}'.format(n_samples))
+        elif sampler and n_samples:
+            hyperbounds = create_hyperbounds(hyperparameters)
+            hyperbounds = [hyperbounds[i:i+2] for i in range(0, len(hyperbounds), 2)]
     else:
         hyperspace = None
+        if sampler is not None:
+            hyperbounds = None
 
     spaces = comm.scatter(hyperspace, root=0)
     space0 = spaces[0]
     space1 = spaces[1]
+
+    if sampler:
+        bounds = comm.scatter(hyperbounds, root=0)
+        bounds0 = bounds[0]
+        bounds1 = bounds[1]
+        # Get initial points in the obj. function domain via latin hypercube sampling
+        init_points0 = lhs_start(bounds0, n_samples)
+        init_points1 = lhs_start(bounds1, n_samples)
+        n_rand = 10 - len(init_points0)
+    else:
+        init_points0 = None
+        init_points1 = None
+        r_rand = 10
 
     if deadline:
         deadline = DeadlineStopper(deadline)
@@ -70,34 +93,42 @@ def dualdrive(objective, hyperparameters, results_path, model="GP", n_iterations
         # Verbose mode should only run on node 0.
         if verbose and rank == 0:
             result0 = gp_minimize(objective, space0, n_calls=n_iterations, verbose=verbose,
-                                  callback=deadline, random_state=random_state)
-        # Also run on the second space 
+                                 callback=deadline, x0=init_points0, n_random_starts=n_rand,
+                                 random_state=random_state)
+        # Also run on the second space
         result1 = gp_minimize(objective, space1, n_calls=n_iterations,
-                             callback=deadline, random_state=random_state)
+                             callback=deadline, x0=init_points1, n_random_starts=n_rand,
+                             random_state=random_state)
     # Case 1
     elif model == "RF":
         if verbose and rank == 0:
             result0 = forest_minimize(objective, space0, n_calls=n_iterations, verbose=verbose,
-                                      callback=deadline, random_state=random_state)
-            
+                                      callback=deadline, x0=init_points0, n_random_starts=n_rand,
+                                      random_state=random_state)
+
         result1 = forest_minimize(objective, space1, n_calls=n_iterations,
-                                  callback=deadline, random_state=random_state)
+                                  callback=deadline, x0=init_points1, n_random_starts=n_rand,
+                                  random_state=random_state)
     # Case 2
     elif model == "GRBRT":
         if verbose and rank == 0:
             result0 = gbrt_minimize(objective, space0, n_calls=n_iterations, verbose=verbose,
-                                    callback=deadline, random_state=random_state)
+                                    callback=deadline, x0=init_points0, n_random_starts=n_rand,
+                                    random_state=random_state)
 
         result1 = gbrt_minimize(objective, space1, n_calls=n_iterations,
-                                callback=deadline, random_state=random_state)
+                                callback=deadline, x0=init_points1, n_random_starts=n_rand,
+                                random_state=random_state)
     # Case 3
     elif model == "RAND":
         if verbose and rank == 0:
-            result0 = dummy_minimize(objective, space, n_calls=n_iterations, verbose=verbose,
-                                     callback=deadline, random_state=random_state)
-            
-        result1 = dummy_minimize(objective, space, n_calls=n_iterations,
-                                 callback=deadline, random_state=random_state)
+            result0 = dummy_minimize(objective, space0, n_calls=n_iterations, verbose=verbose,
+                                     callback=deadline, x0=init_points0, n_random_starts=n_rand,
+                                     random_state=random_state)
+
+        result1 = dummy_minimize(objective, space1, n_calls=n_iterations,
+                                 callback=deadline, x0=init_points1, n_random_starts=n_rand,
+                                 random_state=random_state)
     else:
         raise ValueError("Invalid model {}. Read the documentation for "
                          "supported models.".format(model))
@@ -105,5 +136,3 @@ def dualdrive(objective, hyperparameters, results_path, model="GP", n_iterations
     # Each worker will independently write their results to disk
     dump(result0, results_path + '/hyperspace0' + '_rank' + str(rank))
     dump(result1, results_path + '/hyperspace1' + '_rank' + str(rank))
-
-

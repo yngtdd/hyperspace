@@ -69,7 +69,6 @@ def hyperdrive(objective, hyperparameters, results_path,model="GP", n_iterations
             raise ValueError('Sampler requires n_samples > 0. Got {}'.format(n_samples))
         elif sampler and n_samples:
             hyperbounds = create_hyperbounds(hyperparameters)
-
     else:
         hyperspace = None
         if sampler is not None:
