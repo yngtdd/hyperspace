@@ -1,5 +1,6 @@
 """Latin Hypercube Sampling"""
 import numbers
+import random
 import numpy as np
 
 
@@ -56,10 +57,9 @@ def lhs_start(hyperbounds, n_samples, rng=None):
     """
     low_bounds = []
     high_bounds = []
-    for space in hyperbounds:
-        for bounds in space:
-            low_bounds.append(bounds[0])
-            high_bounds.append(bounds[1])
+    for bound in hyperbounds:
+        low_bounds.append(bound[0])
+        high_bounds.append(bound[1])
 
     n_dims = len(hyperbounds)
     samples = sample_latin_hypercube(low_bounds, high_bounds, n_samples, n_dims=n_dims, rng=rng)
