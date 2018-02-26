@@ -54,6 +54,23 @@ def sample_latin_hypercube(low, high, n_samples, rng=None):
 def lhs_start(hyperbounds, n_samples, rng=None):
     """
     Creates the initial search space using latin hypercube sampling.
+
+    Parameters:
+    ----------
+    * `hyperbounds` [list of tuples, shape=(1, n_dims)]
+        Lower and Upper bounds of each hyperparameter dimension in a hyperspace.
+
+    * `n_samples` [int]
+        Number of random samples to be drawn from a latin hypercube
+        - Must be <= the number of elements in the smallest hyperparameter bound's set.
+
+    * `rng` [int, default=None]
+        Random seed for the latin hypercube sampler.
+
+    Returns:
+    -------
+    * `samples` [list of lists, shape=(n_samples, n_dims)
+        Sequence of initial points to try the Bayesian optimization loop.    
     """
     low_bounds = []
     high_bounds = []
