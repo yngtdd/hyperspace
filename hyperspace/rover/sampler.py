@@ -47,3 +47,10 @@ def sample_latin_hypercube(low, high, n_samples, rng=None):
         rng.shuffle(samples[i, :])
 
     return samples.T
+
+
+def lhs_start():
+    """
+    Creates the initial search space using latin hypercube sampling.
+    """
+

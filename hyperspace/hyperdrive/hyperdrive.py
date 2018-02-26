@@ -1,4 +1,5 @@
 from hyperspace.space import create_hyperspace
+from hyperspace.space import create_hyperbounds
 
 from skopt import gp_minimize
 from skopt import gbrt_minimize
@@ -10,8 +11,8 @@ from skopt import dump
 from mpi4py import MPI
 
 
-def hyperdrive(objective, hyperparameters, results_path, model="GP", n_iterations=50,
-               verbose=False, deadline=None, random_state=0):
+def hyperdrive(objective, hyperparameters, results_path, sampler=None, model="GP",
+               n_iterations=50, verbose=False, deadline=None, random_state=0):
     """
     Distributed optimization - one optimization per node.
 
@@ -34,6 +35,8 @@ def hyperdrive(objective, hyperparameters, results_path, model="GP", n_iteration
         - "GBRT": Gradient boosted regression trees
         - "RAND": Random search
 
+    * `sampler`
+
     * `n_iterations` [int, default=50]
         Number of optimization iterations
 
@@ -53,10 +56,17 @@ def hyperdrive(objective, hyperparameters, results_path, model="GP", n_iteration
 
     if rank == 0:
         hyperspace = create_hyperspace(hyperparameters)
+        if sampler is not None:
+            hyperbounds = create_hyperbounds
+
     else:
         hyperspace = None
+        if sampler is not None:
+            hyperbounds = None
 
     space = comm.scatter(hyperspace, root=0)
+    if sampler is not None:
+        bounds = comm.scatter(hyperbounds, root=0)
 
     if deadline:
         deadline = DeadlineStopper(deadline)
