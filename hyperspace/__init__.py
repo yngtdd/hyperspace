@@ -6,6 +6,7 @@ from .space import space
 
 from .hyperdrive.hyperdrive import hyperdrive
 from .hyperdrive.dualdrive import dualdrive
+from .rover.sampler import sample_latin_hypercube
 from .space.mapping_space import check_dimension
 from .space.mapping_space import create_hyperspace
 from .space import HyperInteger
@@ -23,5 +24,6 @@ __all__ = (
     "hyperdrive",
     "HyperInteger",
     "HyperReal"
+    "sample_latin_hypercube"
 )
  

@@ -1,0 +1,4 @@
+numpy
+scikit-optimize
+scikit-learn
+mpi4py
