@@ -1,6 +1,6 @@
 from hyperspace.space import create_hyperspace
 from hyperspace.space import create_hyperbounds
-from hyperspace.rover import lhs_start
+from hyperspace.rover.sampler import lhs_start
 
 from skopt import gp_minimize
 from skopt import gbrt_minimize
@@ -65,10 +65,10 @@ def hyperdrive(objective, hyperparameters, results_path,model="GP", n_iterations
 
     if rank == 0:
         hyperspace = create_hyperspace(hyperparameters)
-        if sampler and n_samples:
-            hyperbounds = create_hyperbounds(hyperparameters)
-        else:
+        if sampler and not n_samples:
             raise ValueError('Sampler requires n_samples > 0. Got {}'.format(n_samples))
+        elif sampler and n_samples:
+            hyperbounds = create_hyperbounds(hyperparameters)
 
     else:
         hyperspace = None

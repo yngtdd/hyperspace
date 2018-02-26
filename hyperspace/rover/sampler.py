@@ -78,8 +78,8 @@ def lhs_start(hyperbounds, n_samples, rng=None):
         low_bounds.append(bound[0])
         high_bounds.append(bound[1])
 
-    low_bounds = np.array(low_bounds)
-    high_bounds = np.array(high_bounds)
+    low_bounds = np.array(low_bounds, dtype=object)
+    high_bounds = np.array(high_bounds, dtype=object)
 
     samples = sample_latin_hypercube(low_bounds, high_bounds, n_samples, rng=rng)
     samples = samples.tolist()
