@@ -17,8 +17,8 @@ from sklearn.model_selection import cross_val_score
 import numpy as np
 import argparse
 
-#from hyperspace import hyperdrive
-from hyperspace import dualdrive
+from hyperspace import hyperdrive
+
 
 boston = load_boston()
 X, y = boston.data, boston.target
@@ -61,14 +61,15 @@ def main():
                (2, 100),            # min_samples_split
                (1, 100)]            # min_samples_leaf
 
-    dualdrive(objective=objective,
+    hyperdrive(objective=objective,
                hyperparameters=hparams,
                results_path=args.results_dir,
                model="GP",
                n_iterations=100,
                verbose=True,
                random_state=0,
-               deadline=120)
+               sampler="lhs",
+               n_samples=5)
 
 
 if __name__ == '__main__':
