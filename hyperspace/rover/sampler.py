@@ -4,7 +4,7 @@ import random
 import numpy as np
 
 
-def sample_latin_hypercube(low, high, n_samples, n_dims=None, rng=None):
+def sample_latin_hypercube(low, high, n_samples, rng=None):
     """
     Creates initial design of n_samples drawn from a latin hypercube.
 
@@ -26,8 +26,8 @@ def sample_latin_hypercube(low, high, n_samples, n_dims=None, rng=None):
     """
     if rng is None:
         rng = np.random.RandomState(np.random.randint(0, 10000))
-    if n_dims is None:
-        n_dims = low.shape[0]
+
+    n_dims = low.shape[0]
 
     samples = []
     for i in range(n_dims):
@@ -61,7 +61,9 @@ def lhs_start(hyperbounds, n_samples, rng=None):
         low_bounds.append(bound[0])
         high_bounds.append(bound[1])
 
-    n_dims = len(hyperbounds)
-    samples = sample_latin_hypercube(low_bounds, high_bounds, n_samples, n_dims=n_dims, rng=rng)
+    low_bounds = np.array(low_bounds)
+    high_bounds = np.array(high_bounds)
+
+    samples = sample_latin_hypercube(low_bounds, high_bounds, n_samples, rng=rng)
     samples = samples.tolist()
     return samples
