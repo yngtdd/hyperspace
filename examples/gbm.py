@@ -69,7 +69,7 @@ def main():
                verbose=True,
                random_state=0,
                sampler="lhs",
-               n_samples=2)
+               n_samples=5)
 
 
 if __name__ == '__main__':
