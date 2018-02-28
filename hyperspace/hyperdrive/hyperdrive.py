@@ -1,6 +1,6 @@
 from hyperspace.space import create_hyperspace
 from hyperspace.space import create_hyperbounds
-from hyperspace.rover.sampler import lhs_start
+from hyperspace.rover.latin_hypercube_sampler import lhs_start
 
 from skopt import gp_minimize
 from skopt import gbrt_minimize
