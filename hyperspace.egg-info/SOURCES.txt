@@ -1,5 +1,6 @@
 README.md
 setup.cfg
+setup.py
 examples/__init__.py
 examples/example.py
 examples/gbm.py
@@ -16,7 +17,7 @@ hyperspace/kepler/__init__.py
 hyperspace/kepler/data_utils.py
 hyperspace/kepler/plots.py
 hyperspace/rover/__init__.py
-hyperspace/rover/sampler.py
+hyperspace/rover/latin_hypercube_sampler.py
 hyperspace/space/__init__.py
 hyperspace/space/mapping_space.py
 hyperspace/space/space.py

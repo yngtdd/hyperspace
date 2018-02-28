@@ -4,8 +4,8 @@ from .space import space
 
 from .hyperdrive.hyperdrive import hyperdrive
 from .hyperdrive.dualdrive import dualdrive
-from .rover.sampler import sample_latin_hypercube
-from .rover.sampler import lhs_start
+from .rover.latin_hypercube_sampler import sample_latin_hypercube
+from .rover.latin_hypercube_sampler import lhs_start
 from .space.mapping_space import check_dimension
 from .space.mapping_space import create_hyperspace
 from .space import HyperInteger
