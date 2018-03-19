@@ -82,7 +82,7 @@ def hyperdrive(objective, hyperparameters, results_path,model="GP", n_iterations
         n_rand = 10 - len(init_points)
     else:
         init_points = None
-        r_rand = 10
+        n_rand = 10
 
     if deadline:
         deadline = DeadlineStopper(deadline)
