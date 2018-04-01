@@ -7,6 +7,7 @@ from hyperspace.hyperdrive.engine_models import minimize
 
 
 TAG_WORKER_FINISHED = 20
+TAG_NAME = 15
 TAG_RAW_DATA = 10
 TAG_SETUP = 0
 TAG_KILL = 5
@@ -61,8 +62,10 @@ def control(comm, rank, nprocs, hyperspace, hyperbounds=None):
             worker_rank = worker_queue.pop()
             try:
                 # Get the next hyperspace from queue
+                space_number = len(space_queue)
                 space = space_queue.pop()
                 comm.send(space, dest=worker_rank, tag=TAG_RAW_DATA)
+                comm.send(space_number, dest=worker_rank, tag=TAG_NAME)
                 print("Sent space {}".format(space))
 
                 if hyperbounds:
@@ -131,12 +134,14 @@ def satelites(comm, rank, objective, model, n_iterations,
         if msg:
             status = MPI.Status()
             space = comm.recv(source=0, tag=MPI.ANY_TAG, status=status)
+            space_number = comm.recv(source=0, tag=TAG_NAME, status=status)
             
             try:
                 result = minimize(objective=objective, space=space, rank=rank,
                                   results_path=results_path, model=model,
                                   n_iterations=n_iterations, verbose=verbose,
-                                  deadline=deadline, random_state=random_state)
+                                  deadline=deadline, name=space_number, 
+                                  random_state=random_state)
 
                 comm.send(result, dest=0, tag=TAG_WORKER_FINISHED)
             except ValueError:

@@ -10,7 +10,7 @@ from hyperspace.rover.latin_hypercube_sampler import lhs_start
 
 def minimize(objective, space, rank, results_path, model="GP", n_iterations=50,
              verbose=False, deadline=None, sampler=None, n_samples=None,
-             hyperbounds=None, random_state=0):
+             hyperbounds=None, name=None, random_state=0):
 
     if deadline:
         deadline = DeadlineStopper(deadline)
@@ -49,4 +49,4 @@ def minimize(objective, space, rank, results_path, model="GP", n_iterations=50,
                          "supported models.".format(model))
 
     # Each worker will independently write their results to disk
-    dump(result, results_path + '/hyperspace' + str(rank))
+    dump(result, results_path + '/hyperspace' + str(name))
