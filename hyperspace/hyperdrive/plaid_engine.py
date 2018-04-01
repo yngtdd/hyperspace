@@ -81,6 +81,7 @@ def control(comm, rank, nprocs, hyperspace, hyperbounds=None):
         comm.send("KILL", dest=i, tag=TAG_KILL)
         print("master sending KILL to {}".format(i))
     print('Number of workers finished: {}'.format(workers_finished))
+    MPI.Finalize()
 
 
 def satelites(comm, rank, objective, model, n_iterations,
@@ -134,9 +135,10 @@ def satelites(comm, rank, objective, model, n_iterations,
         if msg:
             status = MPI.Status()
             space = comm.recv(source=0, tag=MPI.ANY_TAG, status=status)
-            space_number = comm.recv(source=0, tag=TAG_NAME, status=status)
             
             try:
+                space_number = comm.recv(source=0, tag=MPI.ANY_TAG, status=status)
+
                 result = minimize(objective=objective, space=space, rank=rank,
                                   results_path=results_path, model=model,
                                   n_iterations=n_iterations, verbose=verbose,
