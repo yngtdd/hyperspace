@@ -3,7 +3,8 @@ from mpi4py import MPI
 from collections import deque
 
 from skopt import dump
-from engine_models import minimize
+from hyperspace.hyperdrive.engine_models import minimize
+
 
 TAG_WORKER_FINISHED = 20
 TAG_RAW_DATA = 10
@@ -130,12 +131,17 @@ def satelites(comm, rank, objective, model, n_iterations,
         if msg:
             status = MPI.Status()
             space = comm.recv(source=0, tag=MPI.ANY_TAG, status=status)
+            
+            try:
+                result = minimize(objective=objective, space=space, rank=rank,
+                                  results_path=results_path, model=model,
+                                  n_iterations=n_iterations, verbose=verbose,
+                                  deadline=deadline, random_state=random_state)
 
-            result = minimize(objective=objective, space=space, rank=rank,
-                              results_path=results_path, model=model,
-                              n_iterations=n_iterations, verbose=verbose,
-                              deadline=deadline, random_state=random_state):
+                comm.send(result, dest=0, tag=TAG_WORKER_FINISHED)
+            except ValueError:
+                # Control's space_queue is empty, wrap up
+                stillWorking = False
 
-            comm.send(result, dest=0, tag=TAG_WORKER_FINISHED)
             if status.tag == TAG_KILL:
                 stillWorking = False

@@ -2,6 +2,7 @@ from skopt import gp_minimize
 from skopt import gbrt_minimize
 from skopt import forest_minimize
 from skopt import dummy_minimize
+from skopt import dump
 from skopt.callbacks import DeadlineStopper
 
 from hyperspace.rover.latin_hypercube_sampler import lhs_start
@@ -19,6 +20,7 @@ def minimize(objective, space, rank, results_path, model="GP", n_iterations=50,
         init_points = lhs_start(hyperbounds, n_samples)
         n_rand = 10 - len(init_points)
     else:
+        init_points = None
         n_rand = 10
 
     # Thanks Guido for refusing to believe in switch statements.

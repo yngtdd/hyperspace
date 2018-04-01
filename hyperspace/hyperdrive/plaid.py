@@ -1,8 +1,8 @@
 from mpi4py import MPI
 
-from plaid_engine import control, satelites
 from hyperspace.space import create_hyperspace
 from hyperspace.space import create_hyperbounds
+from hyperspace.hyperdrive import control, satelites
 
 
 def hyperdrive(objective, hyperparameters, results_path, model="GP", n_iterations=50,
@@ -66,7 +66,6 @@ def hyperdrive(objective, hyperparameters, results_path, model="GP", n_iteration
             hyperbounds = None
 
         control(comm=comm, rank=0, nprocs=nprocs, hyperspace=hyperspace, hyperbounds=hyperbounds)
-        print("Total Time: ",  time.time()-start_time)
 
     else:
         satelites(comm=comm, rank=rank, objective=objective, model=model,

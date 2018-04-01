@@ -17,8 +17,8 @@ from sklearn.model_selection import cross_val_score
 import numpy as np
 import argparse
 
-from hyperspace import hyperdrive
-from hyperspace import dualdrive
+from hyperspace.hyperdrive.plaid import hyperdrive 
+
 
 boston = load_boston()
 X, y = boston.data, boston.target
@@ -67,9 +67,7 @@ def main():
                model="GP",
                n_iterations=15,
                verbose=True,
-               random_state=0,
-               sampler="lhs",
-               n_samples=5)
+               random_state=0)
 
 
 if __name__ == '__main__':
