@@ -8,9 +8,10 @@ from hyperspace.hyperdrive.engine_models import minimize
 
 TAG_WORKER_FINISHED = 20
 TAG_NAME = 15
-TAG_RAW_DATA = 10
-TAG_SETUP = 0
-TAG_KILL = 5
+TAG_SPACE = 10
+TAG_BOUNDS = 5
+TAG_SETUP = 1
+TAG_KILL = 0
 
 
 def control(comm, rank, nprocs, hyperspace, hyperbounds=None):
@@ -36,13 +37,13 @@ def control(comm, rank, nprocs, hyperspace, hyperbounds=None):
         worker_queue.append(worker_rank)
         sys.stdout.flush()
 
-    #print('worker_queue now has {} workers'.format(len(worker_queue)))
+    print('worker_queue now has {} workers'.format(len(worker_queue)))
 
     stillWorking = True
     currentJobs = {}
 
     workers_finished = 0
-    while stillWorking: # or (len(space) > 0):
+    while stillWorking:
         msg = comm.Iprobe(source=MPI.ANY_SOURCE, tag=MPI.ANY_TAG)
         if msg:
             status = MPI.Status()
@@ -63,18 +64,21 @@ def control(comm, rank, nprocs, hyperspace, hyperbounds=None):
             try:
                 # Get the next hyperspace from queue
                 space_number = len(space_queue)
-                space = space_queue.pop()
-                comm.send(space, dest=worker_rank, tag=TAG_RAW_DATA)
                 comm.send(space_number, dest=worker_rank, tag=TAG_NAME)
+
+                space = space_queue.pop()
+                comm.send(space, dest=worker_rank, tag=TAG_SPACE)
                 print("Sent space {}".format(space))
+                #print("Sent space number {}".format(space_number))
 
                 if hyperbounds:
                     bounds = bounds_queue.pop()
-                    comm.send(bounds, dest=worker_rank, tag=TAG_RAW_DATA)
+                    comm.send(bounds, dest=worker_rank, tag=TAG_BOUNDS)
                     print("Sent bounds {}".format(bounds))
             except IndexError:
                 # There is no longer any hyperspace to be searched over.
                 stillWorking = False
+        #print('Still working? {}'.format(stillWorking))
 
     # KILL ALL PROCESSES WHEN DONE
     for i in range(1, nprocs):
@@ -82,6 +86,7 @@ def control(comm, rank, nprocs, hyperspace, hyperbounds=None):
         print("master sending KILL to {}".format(i))
     print('Number of workers finished: {}'.format(workers_finished))
     MPI.Finalize()
+    print('Still working after finalize...')
 
 
 def satelites(comm, rank, objective, model, n_iterations,
@@ -134,15 +139,23 @@ def satelites(comm, rank, objective, model, n_iterations,
         msg = comm.Iprobe(source=0, tag=MPI.ANY_TAG)
         if msg:
             status = MPI.Status()
+            print(status.tag)
+            if status.tag == TAG_SPACE:
+                print("got space tag")
+            space_number = comm.recv(source=0, tag=TAG_NAME, status=status)
             space = comm.recv(source=0, tag=MPI.ANY_TAG, status=status)
-            
-            try:
-                space_number = comm.recv(source=0, tag=MPI.ANY_TAG, status=status)
+            if status.tag == TAG_NAME:
+                print("Got TAG_NAME")
+            #space_number = comm.recv(source=0, tag=TAG_NAME, status=status)
+            #space = comm.recv(source=0, tag=MPI.ANY_TAG, status=status)
+            if status.tag == TAG_KILL:
+                print('space has tag kill')
 
+            try:
                 result = minimize(objective=objective, space=space, rank=rank,
                                   results_path=results_path, model=model,
                                   n_iterations=n_iterations, verbose=verbose,
-                                  deadline=deadline, name=space_number, 
+                                  deadline=deadline, name=space_number,
                                   random_state=random_state)
 
                 comm.send(result, dest=0, tag=TAG_WORKER_FINISHED)
@@ -151,4 +164,7 @@ def satelites(comm, rank, objective, model, n_iterations,
                 stillWorking = False
 
             if status.tag == TAG_KILL:
+                print('working is shutting down at rank {}'.format(rank))
                 stillWorking = False
+        #print("Still Working at rank {}!".format(rank))
+    print("Outside of worker while loop")

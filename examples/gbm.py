@@ -1,16 +1,3 @@
-"""
-Gradient Boosting Regressor
-A hyperspace distributed version of Scikit-Optimize's hyperparameter optimization example
-
-To Run:
-If using hyperdrive -- 1 process per node:
-mpirun -n 32 python gbm.py --results_dir <full_path_to.../gbm_results>
-If using dualdrive -- 2 processes per node:
-mpirun -n 16 python gbm.py -results_dir <path_to.../gbm_results>
-
-Note: we use 32 processes in this example (hence -n 32 above) since we have 2**5
-combinations of hyperparameter subspaces.
-"""
 from sklearn.datasets import load_boston
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.model_selection import cross_val_score
