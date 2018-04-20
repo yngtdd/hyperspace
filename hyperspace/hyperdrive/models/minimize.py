@@ -4,7 +4,8 @@ from skopt import forest_minimize
 from skopt import dummy_minimize
 
 
-def minimize(model="GP", n_calls=50, verbose=False, deadline=None, x_init=None, n_random_starts=None,
+def minimize(objective, space, model="GP", n_calls=50, verbose=False,
+             deadline=None, x_init=None, n_random_starts=None,
              sampler=None, n_samples=None, hyperbounds=None, name=None, random_state=0):
     """
     Surrogate models for objective functions.
@@ -28,8 +29,7 @@ def minimize(model="GP", n_calls=50, verbose=False, deadline=None, x_init=None, 
     # Case 3
     elif model == "RAND":
         result = dummy_minimize(objective, space, n_calls=n_calls, verbose=verbose,
-                                callback=deadline, x0=init_points, n_random_starts=n_random_starts,
-                                random_state=random_state)
+                                callback=deadline, x0=x_init, random_state=random_state)
     else:
         raise ValueError("Invalid model {}. Read the documentation for "
                          "supported models.".format(model))

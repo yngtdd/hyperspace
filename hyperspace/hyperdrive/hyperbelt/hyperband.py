@@ -4,8 +4,8 @@ from math import log, ceil
 from hyperspace.hyperdrive.models.minimize import minimize
 
 
-def hyperband(objective, space, model="GP", max_iter=50, eta=3,
-              x_init=None, n_random_starts=None, verbose=False, random_state=0, debug=False):
+def hyperband(objective, space, model, max_iter=50, eta=3, random_state=0,
+              x_init=None, n_random_starts=None, verbose=True, debug=False):
     """
     Hyperband algorithm as defined by Kevin Jamieson.
 
