@@ -58,7 +58,7 @@ def hyperband(objective, space, model='RAND', max_iter=50, eta=3,
             else:
                 # use the random params from the hyperband algo.
                 result = minimize(objective, space, model=model,
-                                  n_calls=int( n_i/eta ), x0=T, verbose=verbose)
+                                  n_calls=int( n_i/eta ), x_init=T, verbose=verbose)
 
                 all_results.append(result)
 
