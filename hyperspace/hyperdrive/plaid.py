@@ -2,7 +2,8 @@ from mpi4py import MPI
 
 from hyperspace.space import create_hyperspace
 from hyperspace.space import create_hyperbounds
-from hyperspace.hyperdrive import control, satelites
+#from hyperspace.hyperdrive import control, satelites
+from .test_flight import control, satelites
 
 
 def hyperdrive(objective, hyperparameters, results_path, model="GP", n_iterations=50,
