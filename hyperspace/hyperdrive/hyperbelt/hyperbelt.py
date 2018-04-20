@@ -1,7 +1,7 @@
-from hyperspace.hyperdrive import hyperband
 from hyperspace.space import create_hyperspace
 from hyperspace.space import create_hyperbounds
 from hyperspace.rover.latin_hypercube_sampler import lhs_start
+from hyperspace.hyperdrive import hyperband
 
 from skopt.callbacks import DeadlineStopper
 from skopt import dump
@@ -9,7 +9,7 @@ from skopt import dump
 from mpi4py import MPI
 
 
-def hyperdrive(objective, hyperparameters, results_path, model="RAND", n_iterations=50,
+def hyperdrive(objective, hyperparameters, results_path, model="GP", n_iterations=50,
                verbose=False, deadline=None, sampler=None, n_samples=None, random_state=0):
     """
     Distributed optimization - one optimization per node.
@@ -86,6 +86,6 @@ def hyperdrive(objective, hyperparameters, results_path, model="RAND", n_iterati
     if deadline:
         deadline = DeadlineStopper(deadline)
 
-    result = hyperband(objective, space, model='RAND', x_init=init_points, n_random_starts=n_rand,
+    result = hyperband(objective, space, model=model, x_init=init_points, n_random_starts=n_rand)
     # Each worker will independently write their results to disk
     dump(result, results_path + '/hyperspace' + str(rank))

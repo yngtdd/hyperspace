@@ -4,7 +4,7 @@ from sklearn.model_selection import cross_val_score
 import numpy as np
 import argparse
 
-from hyperspace.hyperdrive.hyperbelt import hyperdrive
+from hyperspace.hyperdrive.hyperbelt.hyperbelt import hyperdrive
 
 
 boston = load_boston()
