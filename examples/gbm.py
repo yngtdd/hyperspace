@@ -1,3 +1,4 @@
+from comet_ml import Experiment
 from sklearn.datasets import load_boston
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.model_selection import cross_val_score
@@ -5,6 +6,9 @@ import numpy as np
 import argparse
 
 from hyperspace.hyperdrive.plaid import hyperdrive 
+
+
+experiment  = Experiment(api_key="1gZw4BPQhKSQ63qn9buShJCcs", project_name="gbm_demo")
 
 
 boston = load_boston()
@@ -33,8 +37,20 @@ def objective(params):
                    min_samples_split=min_samples_split,
                    min_samples_leaf=min_samples_leaf)
 
-    return -np.mean(cross_val_score(reg, X, y, cv=5, n_jobs=-1,
-                                    scoring="neg_mean_absolute_error"))
+    crossval_mean = -np.mean(cross_val_score(reg, X, y, cv=5, n_jobs=-1,
+                             scoring="neg_mean_absolute_error"))
+
+    metrics = {'score': crossval_mean}
+    parameters = {'max_depth': max_depth, 
+                  'learning_rate': learning_rate,
+                  'max_features': max_features,
+                  'min_samples_split': min_samples_split,
+                  'min_samples_leaf': min_samples_leaf}
+
+    experiment.log_multiple_metrics(metrics)
+    experiment.log_multiple_params(parameters)
+
+    return crossval_mean
 
 
 def main():
