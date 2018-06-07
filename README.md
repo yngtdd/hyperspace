@@ -4,6 +4,8 @@
 
 ---------------------------
 
+[![DOI](https://zenodo.org/badge/113602572.svg)](https://zenodo.org/badge/latestdoi/113602572)
+
 ### Welcome to HyperSpace!
 
 If you have a complicated model with many hyperparameters, there is a lot to explore here.
