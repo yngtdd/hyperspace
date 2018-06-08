@@ -51,3 +51,12 @@ of our hyperparameter search space to be distributed across cluster resources.
 
 In [hyperdrive](https://github.com/yngtodd/hyperspace/tree/master/hyperspace/hyperdrive)
 we have various methods for distributing our optimization procedure.
+
+@misc{hyperspace,
+  author = {M.Todd Young},
+  title = {HyperSpace},
+  year = {2017},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  howpublished = {\url{https://github.com/yngtodd/hyperspace}},
+}
