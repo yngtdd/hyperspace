@@ -7,7 +7,7 @@ from setuptools import setup, find_packages
 #     long_description = f.read()
 
 setup(
-    name='HyperSpaces',
+    name='hyperspace',
     version="0.2.0",
     packages=find_packages(),
     install_requires=['numpy', 'scikit-optimize', 'scikit-learn', 'mpi4py'],
