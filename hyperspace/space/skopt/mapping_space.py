@@ -4,9 +4,9 @@ import numpy as np
 from skopt.space import Dimension
 from skopt.space import Space
 
-from .space import HyperInteger
-from .space import HyperReal
-from .space import HyperCategorical
+from hyperspace.space.skopt.space import HyperInteger
+from hyperspace.space.skopt.space import HyperReal
+from hyperspace.space.skopt.space import HyperCategorical
 
 
 def check_dimension(dimension, transform=None):
