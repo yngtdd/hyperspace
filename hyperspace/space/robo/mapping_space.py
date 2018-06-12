@@ -132,7 +132,7 @@ def convert_robospace(robospace):
     * `robospaces`: [list of lists of np.arrays, shape(n_spaces, n_hyperparameters)]
     """
     robospaces = []
-    for space in hyperspace:
+    for space in robospace:
         lower_bounds = []
         upper_bounds = []
         for dim in space:
