@@ -1,28 +1,35 @@
 from .hyperdrive import hyperdrive
 from .hyperdrive import dualdrive
-from .space import space
-
 from .hyperdrive.hyperdrive import hyperdrive
 from .hyperdrive.dualdrive import dualdrive
+
 from .rover.latin_hypercube_sampler import sample_latin_hypercube
 from .rover.latin_hypercube_sampler import lhs_start
-from .space.mapping_space import check_dimension
-from .space.mapping_space import create_hyperspace
-from .space import HyperInteger
-from .space import HyperReal
-from .space import HyperCategorical
 
+from .space.skopt.space import HyperInteger
+from .space.skopt.space import HyperReal
+from .space.skopt.space import HyperCategorical
+from .space.skopt.mapping_space import check_dimension
+from .space.skopt.mapping_space import create_hyperspace
+
+from .space.robo.space import RoboInteger
+from .space.robo.space import RoboReal
+from .space.robo.mapping_space import check_robo_dimension
+from .space.robo.mapping_space import create_robospace
 
 __version__ = "0.2"
 
 __all__ = (
     "check_dimension",
+    "check_robo_dimension",
     "create_hyperspace",
-    "dualdrive"
-    "HyperCategorical"
+    "dualdrive",
+    "HyperCategorical",
     "hyperdrive",
     "HyperInteger",
-    "HyperReal"
-    "lhs_start"
+    "HyperReal",
+    "RoboInteger",
+    "RoboReal",
+    "lhs_start",
     "sample_latin_hypercube"
 )

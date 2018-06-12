@@ -1,12 +1,10 @@
-from .space import HyperInteger
-from .space import HyperReal
-from .mapping_space import create_hyperspace
-from .mapping_space import create_hyperbounds
+from .space import RoboInteger
+from .space import RoboReal
+from .mapping_space import create_robospace
 
 
 __all__ = (
-    "create_hyperbounds"
-    "create_hyperspace",
-    "HyperInteger",
-    "HyperReal"
+    "create_robospace",
+    "RoboInteger",
+    "RoboReal"
 )
