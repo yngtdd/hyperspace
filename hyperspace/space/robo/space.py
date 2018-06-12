@@ -130,4 +130,5 @@ class RoboReal:
         """
         Create integer HyperSpaces.
         """
-        return (self.space0_low, self.space0_high), (self.space1_low, self.space1_high)
+        return (self.space0_low, self.space0_high), \
+               (self.space1_low, self.space1_high)
