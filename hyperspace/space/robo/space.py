@@ -23,6 +23,8 @@ class RoboInteger:
         - If overlap=1, two copies of the search space is made.
     """
     def __init__(self, low, high, overlap=0.25, name=None):
+        self.low = low
+        self.high = high
         self.overlap = overlap
         self.name = name
         self.space0_low = None
