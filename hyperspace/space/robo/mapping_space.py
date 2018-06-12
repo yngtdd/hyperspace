@@ -136,6 +136,7 @@ def convert_robospace(robospace):
         lower_bounds = []
         upper_bounds = []
         for dim in space:
+            # We are guaranteed to have just two dimension bounds.
             lower_bounds.append(dim[0])
             upper_bounds.append(dim[1])
 
