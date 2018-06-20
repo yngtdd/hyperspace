@@ -1,5 +1,6 @@
 from hyperspace.space import create_hyperspace
 from hyperspace.space import create_hyperbounds
+from hyperspace.rover.checkpoints import CheckpointSaver
 from hyperspace.rover.latin_hypercube_sampler import lhs_start
 
 from skopt import gp_minimize
@@ -9,11 +10,12 @@ from skopt import dummy_minimize
 from skopt.callbacks import DeadlineStopper
 from skopt import dump
 
+import os
 from mpi4py import MPI
 
 
-def hyperdrive(objective, hyperparameters, results_path,model="GP", n_iterations=50,
-               verbose=False, deadline=None, sampler=None, n_samples=None, random_state=0):
+def hyperdrive(objective, hyperparameters, results_path, model="GP", n_iterations=50,
+               verbose=False, deadline=None, checkpoints=False, sampler=None, n_samples=None, random_state=0):
     """
     Distributed optimization - one optimization per node.
 
@@ -63,6 +65,9 @@ def hyperdrive(objective, hyperparameters, results_path,model="GP", n_iterations
     size = comm.Get_size()
 
 
+    filename = 'hyperspace' + str(rank)
+    savefile = os.path.join(results_path, filename)
+
     if rank == 0:
         hyperspace = create_hyperspace(hyperparameters)
         if sampler and not n_samples:
@@ -84,8 +89,14 @@ def hyperdrive(objective, hyperparameters, results_path,model="GP", n_iterations
         init_points = None
         n_rand = 10
 
+    callbacks = []
     if deadline:
         deadline = DeadlineStopper(deadline)
+        callbacks.append(deadline)
+
+    if checkpoints:
+        checkpoint = CheckpointSaver(results_path, filename)
+        callbacks.append(checkpoint)
 
     # Thanks Guido for refusing to believe in switch statements.
     # Case 0
@@ -93,45 +104,45 @@ def hyperdrive(objective, hyperparameters, results_path,model="GP", n_iterations
         # Verbose mode should only run on node 0.
         if verbose and rank == 0:
             result = gp_minimize(objective, space, n_calls=n_iterations, verbose=verbose,
-                                 callback=deadline, x0=init_points, n_random_starts=n_rand,
+                                 callback=callbacks, x0=init_points, n_random_starts=n_rand,
                                  random_state=random_state)
         else:
             result = gp_minimize(objective, space, n_calls=n_iterations,
-                                 callback=deadline, x0=init_points, n_random_starts=n_rand,
+                                 callback=callbacks, x0=init_points, n_random_starts=n_rand,
                                  random_state=random_state)
     # Case 1
     elif model == "RF":
         if verbose and rank == 0:
             result = forest_minimize(objective, space, n_calls=n_iterations, verbose=verbose,
-                                     callback=deadline, x0=init_points, n_random_starts=n_rand,
+                                     callback=callbacks, x0=init_points, n_random_starts=n_rand,
                                      random_state=random_state)
         else:
             result = forest_minimize(objective, space, n_calls=n_iterations,
-                                     callback=deadline, x0=init_points, n_random_starts=n_rand,
+                                     callback=callbacks, x0=init_points, n_random_starts=n_rand,
                                      random_state=random_state)
     # Case 2
     elif model == "GRBRT":
         if verbose and rank == 0:
             result = gbrt_minimize(objective, space, n_calls=n_iterations, verbose=verbose,
-                                   callback=deadline, x0=init_points, n_random_starts=n_rand,
+                                   callback=callbacks, x0=init_points, n_random_starts=n_rand,
                                    random_state=random_state)
         else:
             result = gbrt_minimize(objective, space, n_calls=n_iterations,
-                                   callback=deadline, x0=init_points, n_random_starts=n_rand,
+                                   callback=callbacks, x0=init_points, n_random_starts=n_rand,
                                    random_state=random_state)
     # Case 3
     elif model == "RAND":
         if verbose and rank == 0:
             result = dummy_minimize(objective, space, n_calls=n_iterations, verbose=verbose,
-                                    callback=deadline, x0=init_points, n_random_starts=n_rand,
+                                    callback=callbacks, x0=init_points, n_random_starts=n_rand,
                                     random_state=random_state)
         else:
             result = dummy_minimize(objective, space, n_calls=n_iterations,
-                                    callback=deadline, x0=init_points, n_random_starts=n_rand,
+                                    callback=callbacks, x0=init_points, n_random_starts=n_rand,
                                     random_state=random_state)
     else:
         raise ValueError("Invalid model {}. Read the documentation for "
                          "supported models.".format(model))
 
     # Each worker will independently write their results to disk
-    dump(result, results_path + '/hyperspace' + str(rank))
+    dump(result, savefile)

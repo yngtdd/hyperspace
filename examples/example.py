@@ -59,7 +59,8 @@ def main():
                n_iterations=100,
                verbose=True,
                random_state=0,
-               deadline=120)
+               deadline=120,
+               checkpoints=True)
 
 
 if __name__ == '__main__':
