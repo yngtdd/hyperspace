@@ -64,8 +64,12 @@ def hyperdrive(objective, hyperparameters, results_path, model="GP", n_iteration
     rank = comm.Get_rank()
     size = comm.Get_size()
 
+    if rank < 10:
+        # Leading zero allows us to sort results by rank
+        filename = 'hyperspace' + str(0) + str(rank)
+    else:
+        filename = 'hyperspace' + str(rank)
 
-    filename = 'hyperspace' + str(rank)
     savefile = os.path.join(results_path, filename)
 
     if rank == 0:
