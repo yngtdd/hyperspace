@@ -14,8 +14,8 @@ import os
 from mpi4py import MPI
 
 
-def hyperdrive(objective, hyperparameters, results_path, model="GP", n_iterations=50,
-               verbose=False, deadline=None, checkpoints=False, sampler=None, n_samples=None, random_state=0):
+def hyperdrive(objective, hyperparameters, results_path, model="GP", n_iterations=50, verbose=False,
+               checkpoints=False, deadline=None, restart=None, sampler=None, n_samples=None, random_state=0):
     """
     Distributed optimization - one optimization per node.
 
@@ -64,8 +64,13 @@ def hyperdrive(objective, hyperparameters, results_path, model="GP", n_iteration
     rank = comm.Get_rank()
     size = comm.Get_size()
 
+    if restart and sampler:
+        raise ValueError('Cannot use both a restart from a previous run and ' \
+                         'use latin hypercube sampling for initial search points!')
+
+    # Setup savefile 
     if rank < 10:
-        # Leading zero allows us to sort results by rank
+        # Ensure results are sorted by rank
         filename = 'hyperspace' + str(0) + str(rank)
     else:
         filename = 'hyperspace' + str(rank)
@@ -73,26 +78,48 @@ def hyperdrive(objective, hyperparameters, results_path, model="GP", n_iteration
     savefile = os.path.join(results_path, filename)
 
     if rank == 0:
+        # Create hyperspaces, and either sampling bounds or checkpoints
         hyperspace = create_hyperspace(hyperparameters)
+        
+        # Latin hypercube sampling
         if sampler and not n_samples:
-            raise ValueError('Sampler requires n_samples > 0. Got {}'.format(n_samples))
+            raise ValueError(f'Sampler requires n_samples > 0. Got {n_samples}')
         elif sampler and n_samples:
             hyperbounds = create_hyperbounds(hyperparameters)
+
+        # Resuming from checkpoint
+        if len(restart) < len(hyperspace):
+            n_nulls = len(hyperspace) - len(restart)
+            restarts = restart.extend([None] * n_nulls)
     else:
         hyperspace = None
         if sampler is not None:
             hyperbounds = None
+        if restart is not None:
+            restarts = None
 
     space = comm.scatter(hyperspace, root=0)
+
     if sampler:
         bounds = comm.scatter(hyperbounds, root=0)
-        # Get initial points in the obj. function domain via latin hypercube sampling
+        # Get initial points in domain via latin hypercube sampling
         init_points = lhs_start(bounds, n_samples)
+        init_response = None
         n_rand = 10 - len(init_points)
     else:
         init_points = None
+        init_response = None
         n_rand = 10
 
+    if restart:
+        restart = comm.scatter(restarts, root=0) 
+        # Get initial points and responses from previous checkpoint
+        init_points = restart.x0
+        init_response = restart.y0
+    else:
+        init_points = None
+        init_response = None
+        
     callbacks = []
     if deadline:
         deadline = DeadlineStopper(deadline)
