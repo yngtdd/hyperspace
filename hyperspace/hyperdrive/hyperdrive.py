@@ -91,7 +91,6 @@ def hyperdrive(objective, hyperparameters, results_path, model="GP", n_iteration
         if restart and len(restart) < len(hyperspace): 
             # Check if we are missing saves for certain spaces
             n_nulls = len(hyperspace) - len(restart)
-            print(f'Number of nulls: {n_nulls}')
             # Missing saves will be of None type for ranks starting from scratch.
             restarts = restart.extend([None] * n_nulls)
         else:
