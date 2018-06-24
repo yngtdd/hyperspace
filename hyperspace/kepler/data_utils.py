@@ -26,7 +26,6 @@ def load_results(results_path, sort=False, reverse_sort=False):
     files = []
     for file in os.listdir(results_path):
         # Sort files by MPI rank: used for checkpointing.
-        print(f'filename = {file}')
         files.append(file)
         files = sorted(files)
 
@@ -45,5 +44,4 @@ def load_results(results_path, sort=False, reverse_sort=False):
     if sort:
         results = sorted(results, key=lambda result: result.fun)
 
-    print(f"Number of results: {len(results)}\n")
-    return results, ranks
+    return results

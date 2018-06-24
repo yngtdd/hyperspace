@@ -88,11 +88,15 @@ def hyperdrive(objective, hyperparameters, results_path, model="GP", n_iteration
             hyperbounds = create_hyperbounds(hyperparameters)
 
         # Resuming from checkpoint
-        if len(restart) < len(hyperspace):
+        if restart and len(restart) < len(hyperspace): 
             # Check if we are missing saves for certain spaces
             n_nulls = len(hyperspace) - len(restart)
+            print(f'Number of nulls: {n_nulls}')
             # Missing saves will be of None type for ranks starting from scratch.
             restarts = restart.extend([None] * n_nulls)
+        else:
+            restarts = restart
+
     else:
         hyperspace = None
         if sampler is not None:
@@ -117,15 +121,18 @@ def hyperdrive(objective, hyperparameters, results_path, model="GP", n_iteration
         restart = comm.scatter(restarts, root=0) 
         # Get initial points and responses from previous checkpoint
         try:
-            init_points = restart.x0
-            init_response = restart.y0
+            init_points = restart.x_iters
+            init_response = restart.func_vals
+            n_rand = 10 - len(init_points)
         except AttributeError:
             # Missing saves won't have initial values.
             init_points = None
             init_response = None
+            n_rand = 10
     else:
         init_points = None
         init_response = None
+        n_rand = 10
         
     callbacks = []
     if deadline:

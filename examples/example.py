@@ -54,7 +54,7 @@ def main():
                (10.0**-2, 10.0**0)] # learning_rate
 
     # Load results from previous run  
-    checkpoint, ranks = load_results(args.results_dir)
+    checkpoint = load_results(args.results_dir)
 
     hyperdrive(objective=objective,
                hyperparameters=hparams,
