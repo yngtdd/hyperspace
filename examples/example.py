@@ -15,6 +15,7 @@ import numpy as np
 import argparse
 
 from hyperspace import hyperdrive
+from hyperspace.kepler import load_results
 
 
 boston = load_boston()
@@ -52,6 +53,9 @@ def main():
     hparams = [(2, 10),             # max_depth
                (10.0**-2, 10.0**0)] # learning_rate
 
+    # Load results from previous run  
+    checkpoint, ranks = load_results(args.results_dir)
+
     hyperdrive(objective=objective,
                hyperparameters=hparams,
                results_path=args.results_dir,
@@ -60,7 +64,8 @@ def main():
                verbose=True,
                random_state=0,
                deadline=120,
-               checkpoints=True)
+               checkpoints=True,
+               restart=checkpoint)
 
 
 if __name__ == '__main__':

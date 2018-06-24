@@ -89,7 +89,9 @@ def hyperdrive(objective, hyperparameters, results_path, model="GP", n_iteration
 
         # Resuming from checkpoint
         if len(restart) < len(hyperspace):
+            # Check if we are missing saves for certain spaces
             n_nulls = len(hyperspace) - len(restart)
+            # Missing saves will be of None type for ranks starting from scratch.
             restarts = restart.extend([None] * n_nulls)
     else:
         hyperspace = None
@@ -114,8 +116,13 @@ def hyperdrive(objective, hyperparameters, results_path, model="GP", n_iteration
     if restart:
         restart = comm.scatter(restarts, root=0) 
         # Get initial points and responses from previous checkpoint
-        init_points = restart.x0
-        init_response = restart.y0
+        try:
+            init_points = restart.x0
+            init_response = restart.y0
+        except AttributeError:
+            # Missing saves won't have initial values.
+            init_points = None
+            init_response = None
     else:
         init_points = None
         init_response = None
@@ -135,42 +142,43 @@ def hyperdrive(objective, hyperparameters, results_path, model="GP", n_iteration
         # Verbose mode should only run on node 0.
         if verbose and rank == 0:
             result = gp_minimize(objective, space, n_calls=n_iterations, verbose=verbose,
-                                 callback=callbacks, x0=init_points, n_random_starts=n_rand,
-                                 random_state=random_state)
+                                 callback=callbacks, x0=init_points, y0=init_response,
+                                 n_random_starts=n_rand, random_state=random_state)
         else:
             result = gp_minimize(objective, space, n_calls=n_iterations,
-                                 callback=callbacks, x0=init_points, n_random_starts=n_rand,
-                                 random_state=random_state)
+                                 callback=callbacks, x0=init_points, y0=init_response,
+                                 n_random_starts=n_rand, random_state=random_state)
+
     # Case 1
     elif model == "RF":
         if verbose and rank == 0:
             result = forest_minimize(objective, space, n_calls=n_iterations, verbose=verbose,
-                                     callback=callbacks, x0=init_points, n_random_starts=n_rand,
-                                     random_state=random_state)
+                                     callback=callbacks, x0=init_points, y0=init_response,
+                                     n_random_starts=n_rand, random_state=random_state)
         else:
             result = forest_minimize(objective, space, n_calls=n_iterations,
-                                     callback=callbacks, x0=init_points, n_random_starts=n_rand,
-                                     random_state=random_state)
+                                     callback=callbacks, x0=init_points, y0=init_response, 
+                                     n_random_starts=n_rand, random_state=random_state)
     # Case 2
     elif model == "GRBRT":
         if verbose and rank == 0:
             result = gbrt_minimize(objective, space, n_calls=n_iterations, verbose=verbose,
-                                   callback=callbacks, x0=init_points, n_random_starts=n_rand,
-                                   random_state=random_state)
+                                   callback=callbacks, x0=init_points, y0=init_response, 
+                                   n_random_starts=n_rand, random_state=random_state)
         else:
             result = gbrt_minimize(objective, space, n_calls=n_iterations,
-                                   callback=callbacks, x0=init_points, n_random_starts=n_rand,
-                                   random_state=random_state)
+                                   callback=callbacks, x0=init_points, y0=init_response, 
+                                   n_random_starts=n_rand, random_state=random_state)
     # Case 3
     elif model == "RAND":
         if verbose and rank == 0:
             result = dummy_minimize(objective, space, n_calls=n_iterations, verbose=verbose,
-                                    callback=callbacks, x0=init_points, n_random_starts=n_rand,
-                                    random_state=random_state)
+                                    callback=callbacks, x0=init_points, y0=init_response, 
+                                    n_random_starts=n_rand, random_state=random_state)
         else:
             result = dummy_minimize(objective, space, n_calls=n_iterations,
-                                    callback=callbacks, x0=init_points, n_random_starts=n_rand,
-                                    random_state=random_state)
+                                    callback=callbacks, x0=init_points, y0=init_response,
+                                    n_random_starts=n_rand, random_state=random_state)
     else:
         raise ValueError("Invalid model {}. Read the documentation for "
                          "supported models.".format(model))
