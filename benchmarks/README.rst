@@ -14,7 +14,7 @@ Branin
 To reproduce, run 
 
 .. code-block:: python
-    mpirun -n 4 python bench_branin.py --results_dir ./results`
+   mpirun -n 4 python bench_branin.py --results_dir ./results`
 
 =========== =============== ============ =================== ================== ======================
 Method      Minimum         Best minimum Mean f_calls to min Std f_calls to min Fastest f_calls to min
