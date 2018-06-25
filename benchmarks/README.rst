@@ -8,6 +8,9 @@ All optimizers are run with default values and with `n_calls=50`. Runs are repea
 Here we report the results of the best HyperSpace rank for each of the benchmarks. The results from
 all the of the distributed ranks on each benchmark can be found in the respective benchmark directories.
 
+.. role:: python(code)
+   :language: python
+
 Branin
 ------
 
@@ -19,6 +22,3 @@ Method      Minimum         Best minimum Mean f_calls to min Std f_calls to min 
 ----------- --------------- ------------ ------------------- ------------------ ----------------------
 gp_minimize 0.398 +/- 0.000  0.398        33.1                5.7                27
 =========== =============== ============ =================== ================== ======================
-
-.. role:: python(code)
-   :language: python 
