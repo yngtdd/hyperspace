@@ -8,6 +8,7 @@ All optimizers are run with default values and with `n_calls=50`. Runs are repea
 Here we report the results of the best HyperSpace rank for each of the benchmarks. The results from
 all the of the distributed ranks on each benchmark can be found in the respective benchmark directories.
 
+.. Inline code highlighting
 .. role:: python(code)
    :language: python
 
