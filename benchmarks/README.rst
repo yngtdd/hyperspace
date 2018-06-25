@@ -11,9 +11,7 @@ all the of the distributed ranks on each benchmark can be found in the respectiv
 Branin
 ------
 
-To reproduce, run 
-
-.. highlight:: python mpirun -n 4 python bench_branin.py --results_dir ./results
+To reproduce, run :python:`mpirun -n 4 python bench_branin.py --results_dir ./results`.
 
 
 =========== =============== ============ =================== ================== ======================
