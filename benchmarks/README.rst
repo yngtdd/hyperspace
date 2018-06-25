@@ -1,16 +1,17 @@
 Benchmarks
 ----------
 
-These results are obtained by running our optimizers on the set of benchmark
+These results are obtained by running the distributed optimizers on the set of benchmark
 functions provided in Table 2 of http://www.automl.org/papers/13-BayesOpt_EmpiricalFoundation.pdf
 
-All optimizers are run with default values and with `n_calls=200`. Runs are
-repeated 10 times.
+All optimizers are run with default values and with `n_calls=50`. Runs are repeated five times.
+Here we report the results of the best HyperSpace rank for each of the benchmarks. The results from
+all the of the distributed ranks on each benchmark can be found in the respective benchmark directories.
 
 Branin
 ------
 
-To reproduce, run `python bench_branin.py`
+To reproduce, run `mpirun -n 4 python bench_branin.py --results_dir ./branin/results`
 
 =========== =============== ============ =================== ================== ======================
 Method      Minimum         Best minimum Mean f_calls to min Std f_calls to min Fastest f_calls to min
