@@ -11,7 +11,10 @@ all the of the distributed ranks on each benchmark can be found in the respectiv
 Branin
 ------
 
-To reproduce, run `mpirun -n 4 python bench_branin.py --results_dir ./results`
+To reproduce, run 
+
+.. code-block:: python
+    mpirun -n 4 python bench_branin.py --results_dir ./results`
 
 =========== =============== ============ =================== ================== ======================
 Method      Minimum         Best minimum Mean f_calls to min Std f_calls to min Fastest f_calls to min
