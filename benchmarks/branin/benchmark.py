@@ -1,6 +1,5 @@
 import os
 import argparse
-import numpy as np
 
 from hyperspace import hyperdrive
 from hyperspace.kepler import load_results
@@ -15,10 +14,10 @@ def run(results_dir, n_calls=200, n_runs=10):
     for random_state in range(n_runs):
         directory = os.path.join(results_dir, 'run' + str(random_state))
 
-        checkpoint = load_results(directory)
-
         if not os.path.exists(directory):
             os.makedirs(directory)
+
+        checkpoint = load_results(directory)
 
         hyperdrive(
           branin, bounds, directory, n_iterations=n_calls, 
