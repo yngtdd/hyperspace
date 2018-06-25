@@ -13,7 +13,7 @@ Branin
 
 To reproduce, run 
 
-.. code-block:: python
+.. highlight:: python
 
    mpirun -n 4 python bench_branin.py --results_dir ./results`
 
