@@ -9,21 +9,27 @@ from skopt.benchmarks import branin
 
 def run(results_dir, n_calls=200, n_runs=10):
     """Run benchmark for Branin function."""
-
+    models = ['GP', 'RF', 'GBRT', 'Rand']
     bounds = [(-5.0, 10.0), (0.0, 15.0)]
-    for random_state in range(n_runs):
-        directory = os.path.join(results_dir, 'run' + str(random_state))
 
-        if not os.path.exists(directory):
-            os.makedirs(directory)
+    for model in models:
+        model_dir = os.path.join(results_dir, model)
+        if not os.path.exists(model_dir):
+            os.makedirs(model_dir)
 
-        checkpoint = load_results(directory)
+        for random_state in range(n_runs):
+            directory = os.path.join(model_dir, 'run' + str(random_state))
 
-        hyperdrive(
-          branin, bounds, directory, n_iterations=n_calls, 
-          verbose=True, random_state=random_state, 
-          checkpoints=True, restart=checkpoint
-        )
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+
+            checkpoint = load_results(directory)
+
+            hyperdrive(
+              branin, bounds, directory, n_iterations=n_calls,
+              verbose=True, random_state=random_state,
+              checkpoints=True, restart=checkpoint
+            )
 
 
 def main():
