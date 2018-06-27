@@ -9,7 +9,7 @@ class StyblinksiTang:
         self.upper = upper
 
     def __repr__(self):
-        return f'Styblinkski-Tang function defined over xi ∈ [{self.lower}, {self.upper}] for all i = 1, …, dims.' 
+        return f'Styblinkski-Tang function defined over xi ∈ [{self.lower}, {self.upper}] for all i = 1, …, {self.dims}.' 
 
     def __call__(self, x):
         """
@@ -25,7 +25,7 @@ class StyblinksiTang:
           Usually evaluated on the hypercube xi ∈ [-5, 5], for all i = 1, …, dims.
 
         Global minimum:
-          f(x*) = -39.16599 * d  at x* = (-2.903534, ..., -2.903534)
+          f(x*) = -39.16599 * dims  at x* = (-2.903534, ..., -2.903534)
 
         Reference: 
         ---------
