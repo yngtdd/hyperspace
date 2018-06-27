@@ -3,8 +3,13 @@ import numpy as np
 
 class StyblinksiTang:
 
-    def __init__(self, dims):
+    def __init__(self, dims, lower=-5., upper=5.):
         self.dims = dims
+        self.lower = lower
+        self.upper = upper
+
+    def __repr__(self):
+        return f'Styblinkski-Tang function defined over xi ∈ [{self.lower}, {self.upper}] for all i = 1, …, dims.' 
 
     def __call__(self, x):
         """
