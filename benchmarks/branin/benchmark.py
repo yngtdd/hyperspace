@@ -15,13 +15,13 @@ def run(results_dir, n_calls=200, n_runs=10):
     for model in models:
         model_dir = os.path.join(results_dir, model)
         if not os.path.exists(model_dir):
-            os.makedirs(model_dir)
+            os.makedirs(model_dir, exist_ok=True)
 
         for random_state in range(n_runs):
             directory = os.path.join(model_dir, 'run' + str(random_state))
 
             if not os.path.exists(directory):
-                os.makedirs(directory)
+                os.makedirs(directory, exist_ok=True)
 
             checkpoint = load_results(directory)
 
