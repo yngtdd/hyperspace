@@ -159,8 +159,8 @@ class HyperReal(HyperSpace, Real):
         """
         return "HyperReal(low={}, high={}, prior={}, transform={})\n" \
                "HyperReal(low={}, high={}, prior={}, transform={})" \
-               "".format(self.space0_low, self.space0_high, prior, transform,
-                         self.space1_low, self.space1_high, prior, transform)
+               "".format(self.space0_low, self.space0_high, self.prior, self.transform,
+                         self.space1_low, self.space1_high, self.prior, self.transform)
 
     def _divide_space(self):
         """
