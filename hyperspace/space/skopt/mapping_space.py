@@ -4,6 +4,7 @@ import numpy as np
 from skopt.space import Dimension
 from skopt.space import Space
 
+from hyperspace.space.skopt.space import HyperSpace
 from hyperspace.space.skopt.space import HyperInteger
 from hyperspace.space.skopt.space import HyperReal
 from hyperspace.space.skopt.space import HyperCategorical
@@ -46,8 +47,8 @@ def check_dimension(dimension, transform=None):
     * `dimension`:
         Dimension instance.
     """
-    if isinstance(dimension, Dimension):
-        return dimension
+    if isinstance(dimension, HyperSpace):
+        return dimension.get_hyperspace()
 
     if not isinstance(dimension, (list, tuple, np.ndarray)):
         raise ValueError("Dimension has to be a list or tuple.")
