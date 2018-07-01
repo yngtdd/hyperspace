@@ -1,7 +1,7 @@
 import numpy as np
 
 from hyperspace.benchmarks import StyblinksiTang 
-from hyperspace.hyperdrive.robo.hyperbayes import hyperdrive
+from hyperspace.hyperdrive.robo.hyperbayes import robodrive
 
 
 def main():
@@ -11,7 +11,7 @@ def main():
 
     stybtang = StyblinksiTang(2)
     bounds = np.tile((-5., 5.), (2, 1))
-    hyperdrive(stybtang, bounds, args.results_path, n_iterations=10)
+    robodrive(stybtang, bounds, args.results_path, n_iterations=10)
 
 
 if __name__=='__main__':

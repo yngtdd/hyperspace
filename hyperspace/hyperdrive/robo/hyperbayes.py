@@ -8,7 +8,7 @@ from robo.fmin import bayesian_optimization
 from mpi4py import MPI
 
 
-def hyperdrive(objective, hyperparameters, results_path, n_iterations=50):
+def robodrive(objective, hyperparameters, results_path, n_iterations=50):
     """
     Distributed Bayesian optimization with Robo.
 
