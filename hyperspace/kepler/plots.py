@@ -65,7 +65,7 @@ def plot_convergence(*args, **kwargs):
     if yscale is not None:
         ax.set_yscale(yscale)
 
-    colors = cm.plasma(np.linspace(0.25, 1.0, len(args)))
+    colors = cm.coolwarm(np.linspace(0.25, 1.0, len(args)))
 
     for results, color in zip(args, colors):
         if isinstance(results, tuple):
