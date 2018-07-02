@@ -67,7 +67,7 @@ class Rosenbrock:
 
         Reference:
         ---------
-        https://www.sfu.ca/~ssurjano/stybtang.html
+        https://www.sfu.ca/~ssurjano/rosen.html
         """
         val = 0.0
         for i in range(self.dims-1):
