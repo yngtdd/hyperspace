@@ -32,7 +32,8 @@ def main():
               n_iterations=50,
 #              sampler='lhs',
 #              n_samples=2,
-              verbose=True,
+              model_verbose=False,
+              hyperband_verbose=True,
               random_state=0)
 
 
