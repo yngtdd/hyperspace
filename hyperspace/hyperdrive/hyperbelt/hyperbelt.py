@@ -59,7 +59,6 @@ def hyperbelt(objective, hyperparameters, results_path, model="GP", n_iterations
     rank = comm.Get_rank()
     size = comm.Get_size()
 
-
     if rank == 0:
         hyperspace = create_hyperspace(hyperparameters)
 
