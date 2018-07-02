@@ -38,7 +38,7 @@ def robodrive(objective, hyperparameters, results_path, n_iterations=50):
         filename = 'hyperspace' + str(rank)
 
     if not os.path.exists(results_path):
-        os.makedirs(results_dir, exist_ok=True)    
+        os.makedirs(results_path, exist_ok=True)    
 
     savefile = os.path.join(results_path, filename)
 
