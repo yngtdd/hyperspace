@@ -1,13 +1,3 @@
-"""
-Distributed Hyperband with SMBO. 
-
-We take the Hyperband algorithm, replace the random sampling with Bayesian
-optimization using a Gaussian process, and run in parallel according to the
-HyperSpace algorithm.
-
-Usage:
-mpirun -n 32 python hyperbelt.py --results_dir ./results/hyperbelt
-"""
 import argparse
 import numpy as np
 
