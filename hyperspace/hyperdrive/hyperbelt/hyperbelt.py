@@ -99,7 +99,7 @@ def hyperbelt(objective, hyperparameters, results_path, model="GP", n_iterations
         deadline = DeadlineStopper(deadline)
 
     result = hyperband(objective, space, model=model, x_init=init_points, model_verbose=model_verbose,
-                       hyperband_verbose=hyperband_verbose, n_random_starts=n_rand)
+                       hyperband_verbose=hyperband_verbose, n_random_starts=n_rand, rank=rank)
 
     # Each worker will independently write their results to disk
     dump(result, savefile)

@@ -6,7 +6,7 @@ optimization using a Gaussian process, and run in parallel according to the
 HyperSpace algorithm.
 
 Usage:
-mpirun -n 32 python hyperbelt.py --results_dir ./results/hyperbelt
+mpirun -n 8 python hyperbelt.py --results_dir ./results/hyperbelt
 """
 from sklearn.datasets import load_boston
 from sklearn.ensemble import GradientBoostingRegressor
@@ -35,13 +35,11 @@ def objective(params):
         - Controlled by hyperspaces's hyperdrive function.
         - Order preserved from list passed to hyperdrive's hyperparameters argument.
     """
-    max_depth, learning_rate, max_features, min_samples_split, min_samples_leaf = params
+    max_depth, learning_rate, max_features = params
 
     reg.set_params(max_depth=max_depth,
                    learning_rate=learning_rate,
-                   max_features=max_features,
-                   min_samples_split=min_samples_split,
-                   min_samples_leaf=min_samples_leaf)
+                   max_features=max_features)
 
     return -np.mean(cross_val_score(reg, X, y, cv=5, n_jobs=-1,
                                     scoring="neg_mean_absolute_error"))
@@ -54,18 +52,17 @@ def main():
 
     hparams = [(2, 10),             # max_depth
                (10.0**-2, 10.0**0), # learning_rate
-               (1, 10),             # max_features
-               (2, 100),            # min_samples_split
-               (1, 100)]            # min_samples_leaf
+               (1, 10)]             # max_features
 
     hyperbelt(objective=objective,
               hyperparameters=hparams,
               results_path=args.results_dir,
-              model="GP",
+              model="RAND",
               n_iterations=50,
-#              sampler='lhs',
-#              n_samples=2,
-              verbose=True,
+              sampler='lhs',
+              n_samples=2,
+              model_verbose=False,
+              hyperband_verbose=True,
               random_state=0)
 
 

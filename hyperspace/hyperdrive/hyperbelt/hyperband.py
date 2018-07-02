@@ -5,7 +5,7 @@ from hyperspace.hyperdrive.skopt.models import minimize
 
 
 def hyperband(objective, space, model, max_iter=50, eta=3, random_state=0, x_init=None,
-              n_random_starts=None, model_verbose=False, hyperband_verbose=True, debug=False):
+              n_random_starts=None, model_verbose=False, hyperband_verbose=True, debug=False, rank=None):
     """
     Hyperband algorithm as defined by Kevin Jamieson.
 
@@ -66,9 +66,9 @@ def hyperband(objective, space, model, max_iter=50, eta=3, random_state=0, x_ini
             T = [ T[i] for i in np.argsort(result.func_vals)[0:int( n_i/eta )] ]
 
             if hyperband_verbose:
-                print('Iteration number: {}, Func value: {}'.format(i, result.fun))
+                print(f'Rank {rank} Iteration number: {i}, Func value: {result.fun}')
             if debug:
-                print('Number of hyperparameter configurations: {}'.format(len(T)))
+                print(f'Number of hyperparameter configurations: {len(T)}')
 
         # End Finite Horizon Successive Halving with (n,r)
         return result
