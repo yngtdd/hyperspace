@@ -1,7 +1,4 @@
 from .hyperdrive import hyperdrive
-#from .hyperdrive.skopt.hyperdrive import hyperdrive
-#from .hyperdrive.skopt.dualdrive import dualdrive
-
 from .hyperdrive import robodrive 
 
 from .rover.latin_hypercube_sampler import sample_latin_hypercube
