@@ -1,3 +1,5 @@
+from .hyperdrive import hyperband
+from .hyperdrive import hyperbelt
 from .hyperdrive import hyperdrive
 from .hyperdrive import robodrive 
 
