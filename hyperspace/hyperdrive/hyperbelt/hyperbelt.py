@@ -9,8 +9,8 @@ from skopt import dump
 from mpi4py import MPI
 
 
-def hyperbelt(objective, hyperparameters, results_path, model="GP", n_iterations=50,
-               verbose=False, deadline=None, sampler=None, n_samples=None, random_state=0):
+def hyperbelt(objective, hyperparameters, results_path, model="GP", n_iterations=50, model_verbose=False,
+              hyperband_verbose=True, deadline=None, sampler=None, n_samples=None, random_state=0):
     """
     Distributed HyperBand with SMBO - one hyperspace per node.
 
@@ -85,7 +85,9 @@ def hyperbelt(objective, hyperparameters, results_path, model="GP", n_iterations
     if deadline:
         deadline = DeadlineStopper(deadline)
 
-    result = hyperband(objective, space, model=model, x_init=init_points, n_random_starts=n_rand)
+    result = hyperband(objective, space, model=model, x_init=init_points, model_verbose=model_verbose,
+                       hyperband_verbose=hyperband_verbose, n_random_starts=n_rand)
+
     # Each worker will independently write their results to disk
     dump(result, results_path + '/hyperspace' + str(rank))
 

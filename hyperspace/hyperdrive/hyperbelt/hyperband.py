@@ -4,8 +4,8 @@ from math import log, ceil
 from hyperspace.hyperdrive.skopt.models import minimize
 
 
-def hyperband(objective, space, model, max_iter=50, eta=3, random_state=0,
-              x_init=None, n_random_starts=None, verbose=True, debug=False):
+def hyperband(objective, space, model, max_iter=50, eta=3, random_state=0, x_init=None,
+              n_random_starts=None, model_verbose=False, hyperband_verbose=True, debug=False):
     """
     Hyperband algorithm as defined by Kevin Jamieson.
 
@@ -50,7 +50,7 @@ def hyperband(objective, space, model, max_iter=50, eta=3, random_state=0,
                 # Let Scikit-Optimize generate the initial hyperparameter set.
                 result = minimize(objective, space, model=model, n_calls=n,
                                   x_init=x_init, n_random_starts=n_random_starts,
-                                  random_state=random_state, verbose=verbose)
+                                  random_state=random_state, verbose=model_verbose)
 
                 all_results.append(result)
                 # Get hyperparameters used in random search
@@ -58,14 +58,14 @@ def hyperband(objective, space, model, max_iter=50, eta=3, random_state=0,
             else:
                 # use the random params from the hyperband algo.
                 result = minimize(objective, space, model=model,
-                                  n_calls=int( n_i/eta ), x_init=T, verbose=verbose)
+                                  n_calls=int( n_i/eta ), x_init=T, verbose=model_verbose)
 
                 all_results.append(result)
 
             # Get next hyperparameter configurations
             T = [ T[i] for i in np.argsort(result.func_vals)[0:int( n_i/eta )] ]
 
-            if verbose:
+            if hyperband_verbose:
                 print('Iteration number: {}, Func value: {}'.format(i, result.fun))
             if debug:
                 print('Number of hyperparameter configurations: {}'.format(len(T)))
