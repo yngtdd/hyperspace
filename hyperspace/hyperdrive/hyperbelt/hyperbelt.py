@@ -6,6 +6,7 @@ from hyperspace.hyperdrive.hyperbelt.hyperband import hyperband
 from skopt.callbacks import DeadlineStopper
 from skopt import dump
 
+import os
 from mpi4py import MPI
 
 

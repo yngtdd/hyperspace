@@ -6,7 +6,7 @@ optimization using a Gaussian process, and run in parallel according to the
 HyperSpace algorithm.
 
 Usage:
-mpirun -n 2 python hyperbelt.py --results_dir ./results/hyperbelt
+mpirun -n 32 python hyperbelt.py --results_dir ./results/hyperbelt
 """
 import argparse
 import numpy as np
@@ -15,7 +15,7 @@ from hyperspace import hyperbelt
 from hyperspace.benchmarks import StyblinksiTang 
 
 
-stybtang = StyblinksiTang(1)
+stybtang = StyblinksiTang(5)
 
 
 def main():
@@ -23,7 +23,7 @@ def main():
     parser.add_argument('--results_dir', type=str, help='Path to results directory.')
     args = parser.parse_args()
 
-    bounds = np.tile((-5., 5.), (1, 1))
+    bounds = np.tile((-5., 5.), (5, 1))
 
     hyperbelt(objective=stybtang,
               hyperparameters=bounds,
