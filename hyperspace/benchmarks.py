@@ -36,3 +36,41 @@ class StyblinksiTang:
             val += (np.power(x[i], 4, dtype=np.longdouble) - 16.0 * np.power(x[i], 2, dtype=np.longdouble) + 5.0 * x[i])
 
         return 0.5 * val
+
+
+class Rosenbrock:
+
+    def __init__(self, dims, lower=-5., upper=10.):
+        self.dims = dims
+        self.lower = lower
+        self.upper = upper
+
+    def __repr__(self):
+        return f'Rosenbrock function defined over xi ∈ [{self.lower}, {self.upper}] for all i = 1, …, {self.dims}.'
+
+    def __call__(self, x):
+        """
+        Rosenbrock function.
+
+        Parameters:
+        * `x`: [array-like, shape=(,self.dims)]
+          Points in domain to be evaluated.
+
+        Notes:
+        -----
+        Domain:
+          Usually evaluated on the hypercube xi ∈ [-5, 10], for all i = 1, …, dims.
+          However, it is sometimes evaluated on the hypercube xi ∈ [-2.048, 2.048], fro all i = 1, …, dims.
+
+        Global minimum:
+          f(x*) = 0  at x* = (1, …, 1)
+
+        Reference:
+        ---------
+        https://www.sfu.ca/~ssurjano/stybtang.html
+        """
+        val = 0.0
+        for i in range(self.dims-1):
+            val += (100 * np.power(x[i+1] - x[i]**2, 2, dtype=np.longdouble)) - np.power(1 - x[i], 2, dtype=np.longdouble) 
+        
+        return val
