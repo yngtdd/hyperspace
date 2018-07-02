@@ -5,7 +5,7 @@ from .mapping_space import convert_robospace
 
 
 __all__ = (
-    "conver_robospace",         
+    "convert_robospace",
     "create_robospace",
     "RoboInteger",
     "RoboReal"

@@ -1,7 +1,8 @@
 from .hyperdrive import hyperdrive
-from .hyperdrive import dualdrive
-from .hyperdrive.hyperdrive import hyperdrive
-from .hyperdrive.dualdrive import dualdrive
+#from .hyperdrive.skopt.hyperdrive import hyperdrive
+#from .hyperdrive.skopt.dualdrive import dualdrive
+
+from .hyperdrive import robodrive 
 
 from .rover.latin_hypercube_sampler import sample_latin_hypercube
 from .rover.latin_hypercube_sampler import lhs_start
@@ -28,6 +29,7 @@ __all__ = (
     "hyperdrive",
     "HyperInteger",
     "HyperReal",
+    "robodrive",
     "RoboInteger",
     "RoboReal",
     "lhs_start",
