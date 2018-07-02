@@ -59,6 +59,18 @@ def hyperbelt(objective, hyperparameters, results_path, model="GP", n_iterations
     rank = comm.Get_rank()
     size = comm.Get_size()
 
+    # Setup savefile
+    if rank < 10:
+        # Ensure results are sorted by rank
+        filename = 'hyperspace' + str(0) + str(rank)
+    else:
+        filename = 'hyperspace' + str(rank)
+
+    if not os.path.exists(results_path):
+        os.makedirs(results_path, exist_ok=True)
+
+    savefile = os.path.join(results_path, filename)
+
     if rank == 0:
         hyperspace = create_hyperspace(hyperparameters)
 
@@ -89,5 +101,4 @@ def hyperbelt(objective, hyperparameters, results_path, model="GP", n_iterations
                        hyperband_verbose=hyperband_verbose, n_random_starts=n_rand)
 
     # Each worker will independently write their results to disk
-    dump(result, results_path + '/hyperspace' + str(rank))
-
+    dump(result, savefile)
