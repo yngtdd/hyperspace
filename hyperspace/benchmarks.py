@@ -1,35 +1,43 @@
+import math
 import numpy as np
 
 
-class StyblinksiTang:
+class StyblinskiTang:
+    """
+    Styblinski-Tang function.
 
+    Parameters:
+    * `x`: [array-like, shape=(,self.dims)]
+      Points in domain to be evaluated.
+
+    Notes:
+    -----
+    Domain:
+      Usually evaluated on the hypercube xi ∈ [-5, 5], for all i = 1, …, dims.
+
+    Global minimum:
+      f(x*) = -39.16599 * dims  at x* = (-2.903534, ..., -2.903534)
+
+    Reference:
+    ---------
+    https://www.sfu.ca/~ssurjano/stybtang.html
+    """
     def __init__(self, dims, lower=-5., upper=5.):
         self.dims = dims
         self.lower = lower
         self.upper = upper
 
     def __repr__(self):
-        return f'Styblinkski-Tang function defined over xi ∈ [{self.lower}, {self.upper}] for all i = 1, …, {self.dims}.' 
+        return f'Styblinski-Tang function defined over xi ∈ [{self.lower}, {self.upper}] for all i = 1, …, {self.dims}.' 
 
     def __call__(self, x):
         """
-        Styblinski-Tang function.
-
+        Query the Styblinski-Tang function at x.
+        
         Parameters:
+        ----------
         * `x`: [array-like, shape=(,self.dims)]
           Points in domain to be evaluated.
-
-        Notes:
-        -----
-        Domain:
-          Usually evaluated on the hypercube xi ∈ [-5, 5], for all i = 1, …, dims.
-
-        Global minimum:
-          f(x*) = -39.16599 * dims  at x* = (-2.903534, ..., -2.903534)
-
-        Reference: 
-        ---------
-        https://www.sfu.ca/~ssurjano/stybtang.html
         """
         val = 0.0
         for i in range(self.dims):
@@ -39,7 +47,22 @@ class StyblinksiTang:
 
 
 class Rosenbrock:
+    """
+    Rosenbrock function.
 
+    Notes:
+    -----
+    Domain:
+      Usually evaluated on the hypercube xi ∈ [-5, 10], for all i = 1, …, dims.
+      However, it is sometimes evaluated on the hypercube xi ∈ [-2.048, 2.048], fro all i = 1, …, dims.
+
+    Global minimum:
+      f(x*) = 0  at x* = (1, …, 1)
+
+    Reference:
+    ---------
+    https://www.sfu.ca/~ssurjano/rosen.html
+    """
     def __init__(self, dims, lower=-5., upper=10.):
         self.dims = dims
         self.lower = lower
@@ -50,27 +73,55 @@ class Rosenbrock:
 
     def __call__(self, x):
         """
-        Rosenbrock function.
+        Query the Rosenbrock function at x.
 
         Parameters:
+        ----------
         * `x`: [array-like, shape=(,self.dims)]
           Points in domain to be evaluated.
-
-        Notes:
-        -----
-        Domain:
-          Usually evaluated on the hypercube xi ∈ [-5, 10], for all i = 1, …, dims.
-          However, it is sometimes evaluated on the hypercube xi ∈ [-2.048, 2.048], fro all i = 1, …, dims.
-
-        Global minimum:
-          f(x*) = 0  at x* = (1, …, 1)
-
-        Reference:
-        ---------
-        https://www.sfu.ca/~ssurjano/rosen.html
         """
         val = 0.0
         for i in range(self.dims-1):
             val += (100 * np.power(x[i+1] - x[i]**2, 2, dtype=np.longdouble)) - np.power(1 - x[i], 2, dtype=np.longdouble) 
         
         return val
+
+
+class Rastigrin:
+    """
+    Rastigrin function.
+
+    Notes:
+    -----
+    Domain:
+      Usually evaluated on the hypercube xi ∈ [-5.12, 5.12], for all i = 1, …, dims.
+
+    Global minimum:
+      f(x*) = 0  at x* = (0, …, 0)
+
+    Reference:
+    ---------
+    https://www.sfu.ca/~ssurjano/rastr.html
+    """
+    def __init__(self, dims, lower=-5.12, upper=5.12):
+        self.dims = dims
+        self.lower = lower
+        self.upper = upper
+
+    def __repr__(self):
+        return f'Rastigrin function defined over xi ∈ [{self.lower}, {self.upper}] for all i = 1, …, {self.dims}.'
+
+    def __call__(self, x):
+        """
+        Query the Rosenbrock function at x.
+
+        Parameters:
+        ----------
+        * `x`: [array-like, shape=(,self.dims)]
+          Points in domain to be evaluated.
+        """
+        val = 0.0
+        for i in range(self.dims):
+            val += x[i]**2 - 10 * np.cos(2 * math.pi * x[i])
+
+        return 10 * self.dims + val
