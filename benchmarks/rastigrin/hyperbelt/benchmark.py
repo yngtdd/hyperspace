@@ -7,7 +7,7 @@ from hyperspace.benchmarks import Rastigrin
 
 def main():
     parser = argparse.ArgumentParser(description='Setup experiment.')
-    parser.add_argument('--ndims', type=int, help='Number of dimensions for Styblinski-Tang function')
+    parser.add_argument('--ndims', type=int, help='Number of dimensions for Rastigrin function')
     parser.add_argument('--results_dir', type=str, help='Path to results directory.')
     args = parser.parse_args()
 
