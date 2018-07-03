@@ -6,10 +6,6 @@ class StyblinskiTang:
     """
     Styblinski-Tang function.
 
-    Parameters:
-    * `x`: [array-like, shape=(,self.dims)]
-      Points in domain to be evaluated.
-
     Notes:
     -----
     Domain:
