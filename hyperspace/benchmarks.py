@@ -126,7 +126,7 @@ class PichenySphere:
         for i in range(self.dims):
             val += x[i]**2 * 2**i - 1745
 
-        return 899**-1 * val
+        return val / 899
 
 
 class Rosenbrock:
