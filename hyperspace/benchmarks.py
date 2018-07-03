@@ -85,50 +85,6 @@ class Sphere:
         return val
 
 
-class PichenySphere:
-    """
-    Picheny Sphere function.
-
-    Notes:
-    -----
-    A slightly different version of the Sphere function, with d = 6, on [0, 1]**6:
-    This function has a mean of zero and a variance of one. 
-    The authors also add a small Gaussian error term to the output.
-
-    Domain:
-      Usually evaluated on the hypercube xi ∈ [-5.12, 5.12], for all i = 1, …, dims.
-
-    Global minimum:
-      f(x*) = 0  at x* = (0, …, 0)
-
-    Reference:
-    ---------
-    https://www.sfu.ca/~ssurjano/spheref.html
-    """
-    def __init__(self, dims=6, lower=0.0, upper=1.0):
-        self.dims = dims
-        self.lower = lower
-        self.upper = upper
-
-    def __repr__(self):
-        return f'Picheny Sphere function defined over xi ∈ [{self.lower}, {self.upper}] for all i = 1, …, {self.dims}.'
-
-    def __call__(self, x):
-        """
-        Query the Rosenbrock function at x.
-
-        Parameters:
-        ----------
-        * `x`: [array-like, shape=(,self.dims)]
-          Points in domain to be evaluated.
-        """
-        val = 0.0
-        for i in range(self.dims):
-            val += x[i]**2 * 2**i - 1745
-
-        return val / 899
-
-
 class Rosenbrock:
     """
     Rosenbrock function.
