@@ -42,12 +42,58 @@ class StyblinskiTang:
         return 0.5 * val
 
 
+class Sphere:
+    """
+    Sphere function.
+
+    Notes:
+    -----
+    The Sphere function has `dims` local minima except for the global one. 
+    It is continuous, convex and unimodal.
+
+    Domain:
+      Usually evaluated on the hypercube xi ∈ [-5.12, 5.12], for all i = 1, …, dims.
+
+    Global minimum:
+      f(x*) = 0  at x* = (0, …, 0)
+
+    Reference:
+    ---------
+    https://www.sfu.ca/~ssurjano/spheref.html
+    """
+    def __init__(self, dims, lower=-5.12, upper=5.12):
+        self.dims = dims
+        self.lower = lower
+        self.upper = upper
+
+    def __repr__(self):
+        return f'Sphere function defined over xi ∈ [{self.lower}, {self.upper}] for all i = 1, …, {self.dims}.'
+
+    def __call__(self, x):
+        """
+        Query the Sphere function at x.
+
+        Parameters:
+        ----------
+        * `x`: [array-like, shape=(,self.dims)]
+          Points in domain to be evaluated.
+        """
+        val = 0.0
+        for i in range(self.dims):
+            val += x[i]**2
+
+        return val
+
+
 class Rosenbrock:
     """
     Rosenbrock function.
 
     Notes:
     -----
+    The function is unimodal, and the global minimum lies in a narrow, parabolic valley. 
+    However, even though this valley is easy to find, convergence to the minimum is difficult (Picheny et al., 2012).
+
     Domain:
       Usually evaluated on the hypercube xi ∈ [-5, 10], for all i = 1, …, dims.
       However, it is sometimes evaluated on the hypercube xi ∈ [-2.048, 2.048], fro all i = 1, …, dims.
@@ -89,6 +135,9 @@ class Rastigrin:
 
     Notes:
     -----
+    The Rastrigin function has several local minima. It is highly multimodal, 
+    but locations of the minima are regularly distributed.
+
     Domain:
       Usually evaluated on the hypercube xi ∈ [-5.12, 5.12], for all i = 1, …, dims.
 
