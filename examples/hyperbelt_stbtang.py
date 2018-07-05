@@ -12,10 +12,10 @@ import argparse
 import numpy as np
 
 from hyperspace import hyperbelt 
-from hyperspace.benchmarks import StyblinksiTang 
+from hyperspace.benchmarks import StyblinskiTang
 
 
-stybtang = StyblinksiTang(5)
+stybtang = StyblinskiTang(5)
 
 
 def main():
