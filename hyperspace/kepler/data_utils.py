@@ -4,6 +4,9 @@ import re
 import pickle
 from skopt import load
 
+import numpy as np
+from scipy.optimize import OptimizeResult
+
 
 def load_results(results_path, sort=False, reverse_sort=False):
     """
@@ -74,6 +77,7 @@ def load_roboresults(results_path, sort=False):
     if sort:
         results = sorted(results, key=lambda result: result['f_opt'])
 
+    results = convert_roboresults(results)
     return results 
 
 
@@ -93,3 +97,58 @@ def _listfiles(results_path):
     
     files = sorted(files)
     return files 
+
+
+def _convert_robo(result):
+    """
+    Convert results from RoBO to scipy.OptimizeResult.
+
+    Parameters:
+    ----------
+    * `result`: [dict]
+      Result from optimization when using RoBO.
+
+    Returns:
+    -------
+    * `optresult`: [scipy.optimize.OptimizeResult]
+      Result formatted to match Scikit-Optimize.
+    """
+    # Attributes that match Scikit-optimize
+    x = result['x_opt']
+    fun = result['f_opt']
+    func_vals = np.array(result['y'])
+    x_iters = result['X']
+
+    # information particular to RoBO
+    specs = {
+      'incumbents': result['incumbents'],
+      'incumbent_values': result['incumbent_values'],
+      'runtime': result['runtime'],
+      'overhead': result['overhead']
+    }
+
+    optresult = OptimizeResult(
+      x=x,
+      fun=fun,
+      func_vals=func_vals,
+      x_iters=x_iters,
+      specs=specs
+    )
+
+    return optresult
+
+
+def convert_roboresults(results):
+    """
+    Convert results from RoBO to scipy.OptimizeResults.
+
+    Parameters:
+    ----------
+    * `results` [list]
+      Collection of results from distributed RoBO optimization.
+
+    Results:
+    -------
+    list of scipy.optimize.OptimizeResults.
+    """
+    return [_convert_robo(x) for x in results]

@@ -18,7 +18,7 @@ import numpy as np
 import argparse
 
 from hyperspace import hyperdrive
-from hyperspace import dualdrive
+#from hyperspace import dualdrive
 
 boston = load_boston()
 X, y = boston.data, boston.target
