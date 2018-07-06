@@ -37,7 +37,6 @@ def load_results(results_path, sort=False, reverse_sort=False):
         rank = int(rank[0])
         ranks.append(rank)
         full_path = os.path.join(results_path, file)
-        print(f'full path is {full_path} of type {type(full_path)}')
         results.append(load(str(full_path)))
 
     if reverse_sort and not sort:
