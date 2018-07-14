@@ -1,7 +1,7 @@
 from .hyperdrive import hyperband
 from .hyperdrive import hyperbelt
 from .hyperdrive import hyperdrive
-from .hyperdrive import robodrive 
+#from .hyperdrive import robodrive 
 
 from .rover.latin_hypercube_sampler import sample_latin_hypercube
 from .rover.latin_hypercube_sampler import lhs_start
@@ -28,7 +28,7 @@ __all__ = (
     "hyperdrive",
     "HyperInteger",
     "HyperReal",
-    "robodrive",
+#    "robodrive",
     "RoboInteger",
     "RoboReal",
     "lhs_start",

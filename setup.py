@@ -10,10 +10,10 @@ setup(
     name='hyperspace',
     version="0.2.0",
     packages=find_packages(),
-    install_requires=['numpy', 'scikit-optimize', 'scikit-learn', 'pyrfr', 'mpi4py'],
-    dependency_links = [
-      'https://github.com/automl/RoBO/tarball/master',
-    ],
+    install_requires=['numpy', 'scikit-optimize', 'scikit-learn', 'mpi4py'],
+    #dependency_links = [
+    #  'https://github.com/automl/RoBO/tarball/master',
+    #],
 
     # metadata for upload to PyPI
     author="Todd Young",
