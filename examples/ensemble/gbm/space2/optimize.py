@@ -106,7 +106,7 @@ def main():
     hyperdrive(objective=objective,
                hyperparameters=hparams,
                results_path=args.results_dir,
-               model="RAND",
+               model="GRBRT",
                n_iterations=50,
                verbose=True,
                random_state=0,

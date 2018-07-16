@@ -166,7 +166,7 @@ def hyperdrive(objective, hyperparameters, results_path, model="GP", n_iteration
                                      callback=callbacks, x0=init_points, y0=init_response, 
                                      n_random_starts=n_rand, random_state=random_state)
     # Case 2
-    elif model == "GRBRT":
+    elif model == "GBRT":
         if verbose and rank == 0:
             result = gbrt_minimize(objective, space, n_calls=n_iterations, verbose=verbose,
                                    callback=callbacks, x0=init_points, y0=init_response, 
