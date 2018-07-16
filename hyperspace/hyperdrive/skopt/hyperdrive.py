@@ -180,11 +180,11 @@ def hyperdrive(objective, hyperparameters, results_path, model="GP", n_iteration
         if verbose and rank == 0:
             result = dummy_minimize(objective, space, n_calls=n_iterations, verbose=verbose,
                                     callback=callbacks, x0=init_points, y0=init_response, 
-                                    n_random_starts=n_rand, random_state=random_state)
+                                    random_state=random_state)
         else:
             result = dummy_minimize(objective, space, n_calls=n_iterations,
                                     callback=callbacks, x0=init_points, y0=init_response,
-                                    n_random_starts=n_rand, random_state=random_state)
+                                    random_state=random_state)
     else:
         raise ValueError("Invalid model {}. Read the documentation for "
                          "supported models.".format(model))

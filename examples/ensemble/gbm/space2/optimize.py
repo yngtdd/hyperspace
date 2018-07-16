@@ -106,11 +106,11 @@ def main():
     hyperdrive(objective=objective,
                hyperparameters=hparams,
                results_path=args.results_dir,
-               model="GP",
+               model="RAND",
                n_iterations=50,
                verbose=True,
-               random_state=0,
-               checkpoints=True)
+               random_state=0)
+#               checkpoints=True)
 
     # Save the log data frame
     logger.save()
