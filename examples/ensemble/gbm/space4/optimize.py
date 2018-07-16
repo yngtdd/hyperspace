@@ -66,8 +66,14 @@ def objective(params):
         - Controlled by hyperspaces's hyperdrive function.
         - Order preserved from list passed to hyperdrive's hyperparameters argument.
     """
-    max_depth, lr = params
-    clf = GradientBoostingClassifier(max_depth=max_depth, learning_rate=lr)
+    max_depth, lr, min_impurity_decrease, n_estimators = params
+
+    clf = GradientBoostingClassifier(
+      max_depth=max_depth, 
+      learning_rate=lr,
+      min_impurity_decrease=min_impurity_decrease,
+      n_estimators=n_estimators
+    )
     
     clf.fit(X_train, y_train)
     # Training accuracy
@@ -101,12 +107,14 @@ def main():
     X_train, X_val, X_test, y_train, y_val, y_test = load_data(0.25, 0.25)
 
     hparams = [(2, 10),             # max_depth
-               (10.0**-2, 10.0**0)] # learning_rate
+               (10.0**-2, 10.0**0), # learning_rate
+               (0.0, 0.75),         # min_impurity_decrease
+               (50, 200)]           # n_estimators
 
     hyperdrive(objective=objective,
                hyperparameters=hparams,
                results_path=args.results_dir,
-               model="RAND",
+               model="GP",
                n_iterations=50,
                verbose=True,
                random_state=0,
