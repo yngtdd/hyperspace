@@ -48,7 +48,7 @@ def ensemble(clfs, X_train, y_train, X_test, y_test, nfolds=5):
     # Use stratified k-fold validation to get multiple multiple estimates from each clf.
     skf = StratifiedKFold(n_splits=nfolds)
     folds = list(skf.split(X_train, y_train))
-    n_models = 2**len(clfs)
+    n_models = len(clfs)
 
     dataset_blend_train = np.zeros((X_train.shape[0], n_models))
     dataset_blend_test = np.zeros((X_test.shape[0], n_models))
