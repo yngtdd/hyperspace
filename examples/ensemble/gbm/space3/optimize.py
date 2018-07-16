@@ -7,7 +7,7 @@ import pandas as pd
 from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, log_loss
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import GradientBoostingClassifier
 
 from mpi4py import MPI
 from hyperspace import hyperdrive
@@ -66,8 +66,13 @@ def objective(params):
         - Controlled by hyperspaces's hyperdrive function.
         - Order preserved from list passed to hyperdrive's hyperparameters argument.
     """
-    n_estimators, max_depth = params
-    clf = RandomForestClassifier(n_estimators=n_estimators, max_depth=max_depth)
+    max_depth, lr, min_impurity_decrease = params
+
+    clf = GradientBoostingClassifier(
+      max_depth=max_depth, 
+      learning_rate=lr,
+      min_impurity_decrease=min_impurity_decrease
+    )
     
     clf.fit(X_train, y_train)
     # Training accuracy
@@ -100,8 +105,9 @@ def main():
     global X_train; global X_val; global X_test; global y_train; global y_val; global y_test
     X_train, X_val, X_test, y_train, y_val, y_test = load_data(0.25, 0.25)
 
-    hparams = [(25, 100),  # n_estimators
-               (2, 10)]   # max_depth
+    hparams = [(2, 10),             # max_depth
+               (10.0**-2, 10.0**0), # learning_rate
+               (0.0, 0.75)]         # min_impurity_decrease
 
     hyperdrive(objective=objective,
                hyperparameters=hparams,
