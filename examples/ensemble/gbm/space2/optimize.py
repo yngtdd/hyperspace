@@ -73,7 +73,7 @@ def objective(params):
     # Training accuracy
     train_preds = clf.predict(X_train)
     acc_train = accuracy_score(y_train, train_preds)
-    # Validatin accuracy
+    # Validation accuracy
     val_preds = clf.predict(X_val)
     acc_val = accuracy_score(y_val, val_preds)
     # Validation log loss
