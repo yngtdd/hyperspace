@@ -8,11 +8,12 @@ HyperSpace algorithm.
 Usage:
 mpirun -n 8 python hyperbelt.py --results_dir ./results/hyperbelt
 """
+import numpy as np
+import argparse
+
 from sklearn.datasets import load_boston
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.model_selection import cross_val_score
-import numpy as np
-import argparse
 
 from hyperspace import hyperbelt 
 

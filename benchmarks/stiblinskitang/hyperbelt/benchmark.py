@@ -2,7 +2,7 @@ import argparse
 import numpy as np
 
 from hyperspace import hyperbelt 
-from hyperspace.benchmarks import StyblinksiTang 
+from hyperspace.benchmarks import StyblinskiTang 
 
 
 def main():
@@ -11,9 +11,9 @@ def main():
     parser.add_argument('--results_dir', type=str, help='Path to results directory.')
     args = parser.parse_args()
 
-    stybtang = StyblinksiTang(args.ndims)
+    stybtang = StyblinskiTang(args.ndims)
     bounds = np.tile((-5., 5.), (args.ndims, 1))
-
+    print(f'bounds: {bounds}')
     hyperbelt(objective=stybtang,
               hyperparameters=bounds,
               results_path=args.results_dir,
