@@ -53,7 +53,8 @@ def plot_convergence(*args, **kwargs):
     yscale = kwargs.get("yscale", None)
     plot_mean = kwargs.get("plot_mean", False)
     color_map = kwargs.get("color_map", "plasma")
-
+    
+    fig = plt.figure()
     if ax is None:
         ax = plt.gca()
 
@@ -101,4 +102,4 @@ def plot_convergence(*args, **kwargs):
     if true_minimum or name:
         ax.legend(loc="best")
 
-    return ax
+    return fig, ax
