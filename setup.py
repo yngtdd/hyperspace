@@ -1,13 +1,8 @@
 from setuptools import setup, find_packages
-# from os import path
 
-# here = path.abspath(path.dirname(__file__))
-#
-# with open(path.join(here, 'README.md'), encoding='utf-8') as f:
-#     long_description = f.read()
 
 setup(
-    name='hyperspace',
+    name='hyperspaces',
     version="0.2.0",
     packages=find_packages(),
     install_requires=['scikit-optimize', 'scikit-learn', 'mpi4py'],
