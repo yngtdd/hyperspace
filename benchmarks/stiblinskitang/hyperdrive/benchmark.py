@@ -1,7 +1,7 @@
 import argparse
 import numpy as np
 
-from hyperspace import hyperbelt 
+from hyperspace import hyperdrive 
 from hyperspace.benchmarks import StyblinskiTang 
 
 
@@ -14,18 +14,16 @@ def main():
     stybtang = StyblinskiTang(args.ndims)
     bounds = np.tile((-5., 5.), (args.ndims, 1))
 
-    hyperbelt(objective=stybtang,
+    hyperdrive(objective=stybtang,
               hyperparameters=bounds,
               results_path=args.results_dir,
-              model="RAND",
+              model="GP",
               n_iterations=50,
+              verbose=True,
               sampler='lhs',
               n_samples=2,
-              model_verbose=False,
-              hyperband_verbose=True,
               random_state=0)
 
 
 if __name__ == '__main__':
     main()
-
