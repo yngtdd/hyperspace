@@ -13,7 +13,7 @@ def main():
 
     stybtang = StyblinskiTang(args.ndims)
     bounds = np.tile((-5., 5.), (args.ndims, 1))
-    print(f'bounds: {bounds}')
+
     hyperbelt(objective=stybtang,
               hyperparameters=bounds,
               results_path=args.results_dir,
