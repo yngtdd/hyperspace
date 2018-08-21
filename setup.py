@@ -13,7 +13,7 @@ setup(
     # metadata for upload to PyPI
     author="Todd Young",
     author_email="youngmt1@ornl.gov",
-    description="Distributed Bayesian model-based optimization with Scikit-Optimize",
+    description="Distributed Bayesian model-based optimization",
     license="MIT",
     keywords="parallel optimization smbo",
     url="https://github.com/yngtodd/hyperspace",
