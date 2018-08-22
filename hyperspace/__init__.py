@@ -1,7 +1,6 @@
 from .hyperdrive import hyperband
 from .hyperdrive import hyperbelt
 from .hyperdrive import hyperdrive
-#from .hyperdrive import robodrive 
 
 from .rover.latin_hypercube_sampler import sample_latin_hypercube
 from .rover.latin_hypercube_sampler import lhs_start
@@ -19,7 +18,7 @@ from .space.robo.mapping_space import create_robospace
 
 __version__ = "0.2"
 
-__all__ = (
+__all__ = [
     "check_dimension",
     "check_robo_dimension",
     "create_hyperspace",
@@ -28,9 +27,15 @@ __all__ = (
     "hyperdrive",
     "HyperInteger",
     "HyperReal",
-#    "robodrive",
     "RoboInteger",
     "RoboReal",
     "lhs_start",
     "sample_latin_hypercube"
-)
+]
+
+try:
+    from .hyperdrive import robodrive
+    __all__.append("robodrive")
+except ImportError:
+    print('To use RoBO methods, make sure to setup RoBO here: ' \
+          'https://automl.github.io/RoBO/installation.html#manual-installation') 
