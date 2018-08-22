@@ -16,7 +16,7 @@ from .space.robo.space import RoboReal
 from .space.robo.mapping_space import check_robo_dimension
 from .space.robo.mapping_space import create_robospace
 
-__version__ = "0.2"
+__version__ = "0.2.2"
 
 __all__ = [
     "check_dimension",
