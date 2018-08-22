@@ -22,6 +22,7 @@ def main():
               verbose=True,
               sampler='lhs',
               n_samples=2,
+              checkpoints=True,
               random_state=0)
 
 
