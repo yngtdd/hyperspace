@@ -63,7 +63,6 @@ def main():
                n_iterations=100,
                verbose=True,
                random_state=0,
-               deadline=120,
                checkpoints=True,
                restart=checkpoint)
 
