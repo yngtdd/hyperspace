@@ -3,9 +3,9 @@ Gradient Boosting Regressor
 A hyperspace distributed version of Scikit-Optimize's hyperparameter optimization example
 
 To Run:
-mpirun -n 32 python gbm_regressor.py --results_dir <full_path_to.../gbm_results>
+mpirun -n 4 python example.py --results_dir results/skopt/space4 
 
-Note: we use 32 processes in this example (hence -n 32 above) since we have 2**5
+* Note: we use 4 processes in this example (hence -n 4 above) since we have 2**2
 combinations of hyperparameter subspaces.
 """
 from sklearn.datasets import load_boston
