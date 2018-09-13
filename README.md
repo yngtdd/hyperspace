@@ -2,7 +2,7 @@
     <img width="300" src="https://github.com/yngtodd/hyperspace/blob/master/img/hyperspace_logo.png">
 </p>
 
----------------------------
+----------------------------
 
 [![DOI](https://zenodo.org/badge/113602572.svg)](https://zenodo.org/badge/latestdoi/113602572)
 
