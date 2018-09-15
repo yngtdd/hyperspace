@@ -53,7 +53,7 @@ def main():
     hparams = [(2, 10),             # max_depth
                (10.0**-2, 10.0**0)] # learning_rate
 
-    # Load results from previous run  
+    # Load results from previous runs 
     checkpoint = load_results(args.results_dir)
 
     hyperdrive(objective=objective,
