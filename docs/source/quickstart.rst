@@ -101,7 +101,7 @@ be :math:`2^{D}`. So, for our example, we need :math:`2^{3}=8` MPI ranks.
 And that is all we need to get running with HyperSpace! If we were to save this example in as a python module called `example.py`,
 then we would run it using
 
-.. code-block: shell
+.. code-block: bash 
     mpirun -n 8 python3 example.py 
 
 I hope this quickstart guide is helpful! If you have any questions or comments, let me know on the HyperSpace's GitHub issues!
