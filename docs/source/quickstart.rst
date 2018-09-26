@@ -103,9 +103,9 @@ scales exponentially with the number of search dimensions. If we have :math:`D` 
 be :math:`2^{D}`. So, for our example, we need :math:`2^{3}=8` MPI ranks. 
 
 And that is all we need to get running with HyperSpace! If we were to save this example in as a python module called `example.py`,
-then we would run it using
+then we would run it using:
 
-.. code-block: console 
+.. code-block:: console 
 
    mpirun -n 8 python3 example.py 
 
