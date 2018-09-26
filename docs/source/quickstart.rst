@@ -28,6 +28,7 @@ settings of our hyperparameters, tested on some validation set not used to train
 This objective function would look something like this:
 
 .. code-block:: python
+
     def objective(params: List) -> float:
         param0, param1, param2 = params
         # Instantiate your model with new params
@@ -54,6 +55,7 @@ categorical with three options: ('cat0', 'cat1', 'cat2'). We would then define
 our search space like this:
 
 .. code-block:: python
+
    params = [(5, 10), (0.01, 1), ('cat0', 'cat1', 'cat2')]
 
 And that's all we need to do. Two quick notes before we move on; Note 1: HyperSpace will do a type check for your parameters.
@@ -75,6 +77,7 @@ there arguments as similar as possible, though there are some slight differences
 Scikit-Optimize:
 
 .. code-block:: python
+
    from hyperspace import hyperdrive
 
 
