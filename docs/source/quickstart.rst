@@ -11,6 +11,7 @@ are working with machine learning models. You just need an objective function
 to be minimized. 
 
 Here are the basic steps to get you started:
+
 1. Define an objective function.
 2. Define a parameter search space.
 3. Call one of HyperSpace's minimization functions, passing it the objective function
