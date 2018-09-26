@@ -20,7 +20,7 @@ Here are the basic steps to get you started:
 Step 1: Defining the objective function.
 ----------------------------------------
 
-Say you have a machine learning model which has two parameters you would like to optimize.
+Say you have a machine learning model which has three parameters you would like to optimize.
 Since in machine learning we care about our models' generalization performance, we would
 like to find the optimal setting of these parameters which minimizes some error on a 
 validation set. Our objective function then is the result of training our model with some
