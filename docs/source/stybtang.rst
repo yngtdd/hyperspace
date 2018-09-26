@@ -16,4 +16,10 @@ dimensions. It's global minimum :math:`f(x^{*}) = -39.16599 * D` which
 can be found at :math:`x^{*} = (-2.903534, \dots, -2.903534)`. We are going
 to use the two dimensional form of the function, which looks like this:
 
-.. image:: ./_static/img/stybtang.gif
+.. raw:: html
+
+    <embed>
+        <p align="center">
+            <img width="300" src="https://github.com/yngtodd/hyperspace/blob/master/docs/source/_static/img/stybtang.gif">
+        </p>
+    </embed>
