@@ -106,6 +106,7 @@ And that is all we need to get running with HyperSpace! If we were to save this 
 then we would run it using
 
 .. code-block: bash 
+
    mpirun -n 8 python3 example.py 
 
 I hope this quickstart guide is helpful! If you have any questions or comments, let me know on the HyperSpace's GitHub issues!
