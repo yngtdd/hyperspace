@@ -29,7 +29,7 @@ This objective function would look something like this:
 
 .. code-block:: python
 
-    def objective(params: List) -> float:
+    def objective(params: list) -> float:
         param0, param1, param2 = params
         # Instantiate your model with new params
         model = Model(param0, param1, param2)
