@@ -53,7 +53,7 @@ categorical with three options: ('cat0', 'cat1', 'cat2'). We would then define
 our search space like this:
 
 .. code-block:: python
-    params = [(5, 10), (0.01, 1), ('cat0', 'cat1', 'cat2')]
+   params = [(5, 10), (0.01, 1), ('cat0', 'cat1', 'cat2')]
 
 And that's all we need to do. Two quick notes before we move on; Note 1: HyperSpace will do a type check for your parameters.
 if both of your parameters are integer valued (as is the case in `param0`), then HyperSpace will treat 
@@ -74,17 +74,17 @@ there arguments as similar as possible, though there are some slight differences
 Scikit-Optimize:
 
 .. code-block:: python
-    from hyperspace import hyperdrive
+   from hyperspace import hyperdrive
 
 
-    hyperdrive(objective=objective,
-               hyperparameters=params,
-               results_path='/path/to/save/results',
-               model="GP",
-               n_iterations=100,
-               verbose=True,
-               random_state=0,
-               checkpoints=True)
+   hyperdrive(objective=objective,
+              hyperparameters=params,
+              results_path='/path/to/save/results',
+              model="GP",
+              n_iterations=100,
+              verbose=True,
+              random_state=0,
+              checkpoints=True)
 
 HyperSpace here runs a distributed SMBO optimization using a Gaussian process (model='GP') to model our objective function.  
 This will run for 100 iterations (n_iterations), saving a checkpoint after each iteration (checkpoints=True) to the directory
@@ -102,7 +102,7 @@ And that is all we need to get running with HyperSpace! If we were to save this 
 then we would run it using
 
 .. code-block: bash 
-    mpirun -n 8 python3 example.py 
+   mpirun -n 8 python3 example.py 
 
 I hope this quickstart guide is helpful! If you have any questions or comments, let me know on the HyperSpace's GitHub issues!
 
