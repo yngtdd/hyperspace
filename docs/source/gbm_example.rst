@@ -18,7 +18,7 @@ will just have just two MPI ranks.
 We will be using the Boston Housing Dataset as it is small and readily
 available through Scikit-Learn. This dataset consists of 506 samples and
 13 attributes, some numeric, some categorical. The label is the median home
-value for these various Boston houses. Thus we are looking at a regression 
+value for these various Boston houses. Thus, we are looking at a regression 
 problem.
 
 Gradient boosted regression trees have separate hyperparameters. For this
