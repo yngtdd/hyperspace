@@ -96,6 +96,12 @@ get straight to it:
          main()
 
 
+If we save this as a module by the name gbm.py, we can run this as:
+
+.. code-block:: console
+
+    mpirun -n 4 python3 gbm.py --results </path/to/save/results>
+
 You might have noticed that we added one piece to this example, the ability to load
 from previous checkpoints. This is as simple as calling on the
 `hyperspace.kepler.load_results` function, passing it the path where you had previously
