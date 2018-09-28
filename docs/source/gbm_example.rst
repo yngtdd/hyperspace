@@ -30,11 +30,12 @@ get straight to it:
 
 .. code-block:: python
 
+    import argparse
+    import numpy as np
+
     from sklearn.datasets import load_boston
     from sklearn.ensemble import GradientBoostingRegressor
     from sklearn.model_selection import cross_val_score
-    import numpy as np
-    import argparse
 
     from hyperspace import hyperdrive
     from hyperspace.kepler import load_results
