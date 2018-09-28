@@ -1,6 +1,6 @@
-==========================================
-Minimal Example: Styblinski-Tang Benchmark
-==========================================
+================================
+Minimal Example: Styblinski-Tang
+================================
 
 In the quickstart guide, we went over the three main pieces we need to 
 get up and running with HyperSpace. That gave us a general idea of how
