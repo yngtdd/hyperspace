@@ -18,6 +18,7 @@ to use the two dimensional form of the function, which looks like this:
 
 .. image:: _static/img/stybtang.gif 
    :width: 300
+   :align: center
 
 In its two dimensional form, the Styblinski-Tang function has three local
 minima in addition to its global minimum. Let's see if we can find the global 
