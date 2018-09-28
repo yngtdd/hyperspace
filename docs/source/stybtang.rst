@@ -20,7 +20,7 @@ to use the two dimensional form of the function, which looks like this:
 
     <embed>
         <p align="center">
-            <img width="300" src="https://github.com/yngtodd/hyperspace/blob/master/img/stybtang.gif">
+            <img width="300" src="https://github.com/yngtodd/hyperspace/blob/master/img/stybtang_clear.png">
         </p>
     </embed>
 
