@@ -16,13 +16,8 @@ dimensions. It's global minimum :math:`f(x^{*}) = -39.16599 * D` which
 can be found at :math:`x^{*} = (-2.903534, \dots, -2.903534)`. We are going
 to use the two dimensional form of the function, which looks like this:
 
-.. raw:: html
-
-    <embed>
-        <p align="center">
-            <img width="300" src="https://github.com/yngtodd/hyperspace/blob/master/img/stybtang.png">
-        </p>
-    </embed>
+.. image:: _static/img/stybtang.gif 
+   :width: 300
 
 In its two dimensional form, the Styblinski-Tang function has three local
 minima in addition to its global minimum. Let's see if we can find the global 
