@@ -1,6 +1,6 @@
-=======================================
-ML Example: Gradient Boosted Regression
-=======================================
+==================================
+ML Example: Gradient Boosted Trees 
+==================================
 
 In quickstart guide we outlined how to setup hyperparameter optimization
 for machine learning models. We have also seen a minimal example using 
