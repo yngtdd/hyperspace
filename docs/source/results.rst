@@ -11,10 +11,7 @@ distributed run. Loading those results is as simple as
 .. code-block:: python
 
     from hyperspace.kepler.data_utils import load_results
-
-
-    def objective():
-        pass
+    from my_optimization import objective
 
 
     path = '/results_path'
@@ -25,7 +22,7 @@ Pointing `load_results` to the directory that we saved the
 HyperSpace results to returns a list of `Scipy.OptimizeResults`
 objects. By setting `sort=True`, we sort the results by the
 minimum found in ascending order. 
-Note that we have initialized an empty `objective` function
+Note that we have imported the `objective` function
 here. This is because the Python pickles the reference to that 
 namespace whenever it saves `Scipy.OptimizeResults` objects.
 Each element of this list of results contains all of the information
