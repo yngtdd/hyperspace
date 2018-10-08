@@ -52,7 +52,7 @@ We can then visualize the course of the optimization with the following:
 
 
 .. image:: _static/img/gbm32.png 
-   :width: 500
+   :width: 600
    :align: center
 
 The above figure shows the convergence plot when optimizing five 
