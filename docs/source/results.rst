@@ -35,7 +35,7 @@ distributed ranks. This includes the following:
 4. `random_state`: the random seed
 5. `space`: the bounds of the search space for that particular rank
 6. `specs`: the specification for the Bayesian SMBO
-7. `x: point`: found in the domain that returns the minimal `fun` value
+7. `x`: point found in the domain that returns the minimal `fun` value
 8. `x_iters`: the point in domain sampled at each iteration of the optimization
 
 We can then visualize the course of the optimization with the following:
