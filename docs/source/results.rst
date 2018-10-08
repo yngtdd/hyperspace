@@ -32,14 +32,14 @@ Each element of this list of results contains all of the information
 gained through the optimization process for the respective
 distributed ranks. This includes the following:
 
-1. fun: the minimum found by the optimization
-2. func_vals: the function value found at each iteration of the optimization
-3. models: the specification of the surrogate model at each iteration
-4. random_state: the random seed
-5. space: the bounds of the search space for that particular rank
-6. specs: the specification for the Bayesian SMBO
-7. x: point found in the domain that returns the minimal `fun` value
-8. x_iters: the point in domain sampled at each iteration of the optimization
+1. `fun`: the minimum found by the optimization
+2. `func_vals`: the function value found at each iteration of the optimization
+3. `models`: the specification of the surrogate model at each iteration
+4. `random_state`: the random seed
+5. `space`: the bounds of the search space for that particular rank
+6. `specs`: the specification for the Bayesian SMBO
+7. `x: point`: found in the domain that returns the minimal `fun` value
+8. `x_iters`: the point in domain sampled at each iteration of the optimization
 
 We can then visualize the course of the optimization with the following:
 
