@@ -10,8 +10,8 @@ distributed run. Loading those results is as simple as
 
 .. code-block:: python
 
-    from hyperspace.kepler.data_utils import load_results
     from my_optimization import objective
+    from hyperspace.kepler.data_utils import load_results
 
 
     path = '/results_path'
