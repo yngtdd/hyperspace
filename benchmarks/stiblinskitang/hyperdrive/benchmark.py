@@ -1,8 +1,8 @@
 import argparse
 import numpy as np
 
-from hyperspace import hyperdrive 
-from hyperspace.benchmarks import StyblinskiTang 
+from hyperspace import hyperdrive
+from hyperspace.benchmarks import StyblinskiTang
 
 
 def main():

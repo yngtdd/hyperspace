@@ -17,8 +17,16 @@ HyperSpace is a library for distributed Bayesian hyperparameter optimization.
    introduction
 
 .. toctree::
+   :maxdepth: 2
+   :caption: Tutorials: 
+
+   quickstart
+   stybtang
+   gbm_example
+
+.. toctree::
   :maxdepth: 1
-  :caption: Library Reference
+  :caption: Library Reference:
 
   space
   hyperspace.hyperdrive
