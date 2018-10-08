@@ -8,7 +8,7 @@ we specified a `results_path` within the `hyperdrive` function.
 This specified the path where we saved the results from the 
 distributed run. Loading those results is as simple as
 
-.. code-block: python
+.. code-block:: python
 
     from hyperspace.kepler.data_utils import load_results
 
@@ -41,7 +41,7 @@ distributed ranks. This includes the following:
 
 We can then visualize the course of the optimization with the following:
 
-.. code-block: python
+.. code-block:: python
 
     from hyperspace.kepler.plots import plot_convergence
 
