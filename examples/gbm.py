@@ -65,7 +65,7 @@ def main():
                hyperparameters=hparams,
                results_path=args.results_dir,
                model="GP",
-               n_iterations=15,
+               n_iterations=50,
                verbose=True,
                random_state=0,
                sampler="lhs",
