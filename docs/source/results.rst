@@ -91,6 +91,6 @@ explore the partial dependencies between hyperparameters.
 .. rubric:: References
 
 .. bibliography:: refs_results.bib
+   :style: plain
    :encoding: latex+latin
    :cited:
-   :style: plain
