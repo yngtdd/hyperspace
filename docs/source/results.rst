@@ -92,5 +92,4 @@ explore the partial dependencies between hyperparameters.
 
 .. bibliography:: refs_results.bib
    :style: plain
-   :encoding: latex+latin
    :cited:
