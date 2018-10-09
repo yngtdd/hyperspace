@@ -8,8 +8,8 @@ Subpackages
 
     hyperspace.hyperdrive
     hyperspace.kepler
+    hyperspace.rover
     hyperspace.space
-    hyperspace.tests
 
 Module contents
 ---------------
