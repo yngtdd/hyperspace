@@ -104,6 +104,24 @@ interactions between hyperparameters, again holding all others constant.
    :align: center
 
 
+The above partial dependence plot shows how our objective function behaves at 
+various settings of our model hyperparameters when considering the best 
+hyperparameter subspace found by HyperSpace.
+Along the diagonal we have the effect of each hyperparameter, holding all other
+hyperparameters constant, on the five fold cross validation loss for our 
+gradient boosted regressor. The dotted red line each of those subplots indicates
+the final setting of the hyperparameter. All off-diagonal plots show the two-way
+interactions for the hyperparameters, holding all other hyperparameters constant. 
+The black points within these subplots show the points sampled along the two 
+search dimensions. The red point in each of those subplots shows the final setting 
+for the hyperparameters. The countours on the two-way interactions subplots show
+the loss landscape as viewed by our surrogate Gaussian process. Yellow contours
+indicate lower regions in the loss, whereas blue regions show higher loss values.
+
+As we iterate through the model building process, it is helpful to visualize the
+outcomes of the optimization process. This allows us to inject our preferences and 
+intuitions into the process so that we can better steer future directions.
+
 .. rubric:: References
 
 .. bibliography:: refs_results.bib
