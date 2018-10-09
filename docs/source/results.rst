@@ -118,6 +118,15 @@ for the hyperparameters. The countours on the two-way interactions subplots show
 the loss landscape as viewed by our surrogate Gaussian process. Yellow contours
 indicate lower regions in the loss, whereas blue regions show higher loss values.
 
+Note that the above partial dependence example shows the partial dependence of our
+hyperparameters *within the best performing search space* found by HyperSpace. We
+can also inspect these partial dependencies for all other search spaces used by 
+HyperSpace. By doing so we can explore how a change in the bounds of the search space
+effects our optimization. We can therefore view where the models are performing well
+and where they are performing poorly. This is key to better understanding how our models
+behave. It is not only useful to find when our models perform well, knowing when the
+models will break down is equally important!
+
 As we iterate through the model building process, it is helpful to visualize the
 outcomes of the optimization process. This allows us to inject our preferences and 
 intuitions into the process so that we can better steer future directions.
