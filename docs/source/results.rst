@@ -83,7 +83,8 @@ process, understanding the behavior of our models over various hyperparameter
 search spaces can inform future model building. 
 
 We can also explore the effects of the hyperparameters within each of the search
-spaces. Since Scikit-Optimize is integrated into HyperSpace, we can then 
+spaces. Since Scikit-Optimize :cite:`tim_head_2018_1207017` is integrated into HyperSpace, 
+we can then 
 explore the partial dependencies between hyperparameters. 
 
 
@@ -91,4 +92,5 @@ explore the partial dependencies between hyperparameters.
 
 .. bibliography:: refs_results.bib
    :encoding: latex+latin
-   :notcited:
+   :cited:
+   :style: plain
