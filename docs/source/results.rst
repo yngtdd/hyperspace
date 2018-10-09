@@ -83,11 +83,12 @@ process, understanding the behavior of our models over various hyperparameter
 search spaces can inform future model building. 
 
 We can also explore the effects of the hyperparameters within each of the search
-spaces. When using minimization functions from `hyperspace.skopt`, we can then 
+spaces. Since Scikit-Optimize is integrated into HyperSpace, we can then 
 explore the partial dependencies between hyperparameters. 
 
 
 .. rubric:: References
 
 .. bibliography:: refs_results.bib
-   :cited:
+   :encoding: latex+latin
+   :notcited:
