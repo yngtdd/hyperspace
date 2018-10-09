@@ -77,4 +77,17 @@ how we can look at the top five results from the above HyperSpace run:
    :align: center
 
 
+By examining the optimization traces, we could then decide to prune some of the
+search spaces in the future. Since machine learning is always an iterative 
+process, understanding the behavior of our models over various hyperparameter
+search spaces can inform future model building. 
 
+We can also explore the effects of the hyperparameters within each of the search
+spaces. When using minimization functions from `hyperspace.skopt`, we can then 
+explore the partial dependencies between hyperparameters. 
+
+
+.. rubric:: References
+
+.. bibliography:: refs_results.bib
+   :cited:
