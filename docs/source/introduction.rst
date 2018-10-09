@@ -19,6 +19,6 @@ Bayesian model based optimization library.
 
 .. rubric:: References
 
-.. bibliography:: refs_results.bib
+.. bibliography:: refs_intro.bib
    :style: plain
    :cited:
