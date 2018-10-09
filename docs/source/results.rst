@@ -84,8 +84,24 @@ search spaces can inform future model building.
 
 We can also explore the effects of the hyperparameters within each of the search
 spaces. Since Scikit-Optimize :cite:`tim_head_2018_1207017` is integrated into HyperSpace, 
-we can then 
-explore the partial dependencies between hyperparameters. 
+we can then explore the partial dependencies between hyperparameters. Originally 
+proposed by Jerome H. Friedman, partial dependence plots were designed to visualize
+the effects of input variables for gradient boosted machines :cite:`friedman2001`.
+Here we can use them to understand the partial dependence of our objective function
+on each of the hyperparameters, holding all others constant, as well as all two-way
+interactions between hyperparameters, again holding all others constant.
+
+.. code-block:: python
+
+    from skopt.plots import plot_objective
+
+
+    _ = plot_objective(best_result)
+
+
+.. image:: _static/img/partial_dep.png
+   :width: 600
+   :align: center
 
 
 .. rubric:: References
