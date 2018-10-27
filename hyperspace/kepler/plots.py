@@ -121,7 +121,7 @@ def plot_convergence(*args, **kwargs):
         if true_minimum:
             ax.axhline(true_minimum, linestyle="--",
                        color="r", lw=1,
-                       label="True minimum")
+                       label="True maximum")
 
         if true_maximum or name:
             ax.legend(loc="best")
