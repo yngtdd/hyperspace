@@ -71,5 +71,5 @@ def hyperband(objective, space, model, max_iter=50, eta=3, random_state=0, x_ini
                 print(f'Number of hyperparameter configurations: {len(T)}')
 
         # End Finite Horizon Successive Halving with (n,r)
-        return result
+        return all_results
 
