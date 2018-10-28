@@ -2,10 +2,11 @@ import numpy as np
 from math import log, ceil
 
 from skopt.space import Space
+from hyperspace.kepler import create_result
 
 
-def hyperband(objective, space, max_iter=100, eta=3, random_state=0,
-              verbose=True, debug=False, rank=None):
+def hyperband(objective, space, n_evaluations, max_iter=100, eta=3,
+              random_state=0, verbose=True, debug=False, rank=None):
     """
     Hyperband algorithm as defined by Kevin Jamieson.
 
@@ -36,10 +37,8 @@ def hyperband(objective, space, max_iter=100, eta=3, random_state=0,
     # Convert space into search dimensinons
     space = Space(space)
     #### Begin Finite Horizon Hyperband outlerloop. Repeat indefinetely.
-    incumbents = []
-    func_vals = []
-    x_incumbents = []
-    x_iters = []
+    yi = []
+    Xi = []
     for s in reversed(range(s_max+1)):
         n = int(ceil(int(B/max_iter/(s+1))*eta**s)) # initial number of configurations
         r = max_iter*eta**(-s) # initial number of iterations to run configurations for
@@ -51,23 +50,20 @@ def hyperband(objective, space, max_iter=100, eta=3, random_state=0,
             n_i = n*eta**(-i)
             r_i = r*eta**(i)
 
-            result = [objective(t, r_i) for t in T]
-            incumbents.append(min(result))
-            idx = np.argmin(result)
-            x_incumbents.append(T[idx])
-            func_vals.append(result)
-            x_iters.append(T)
+            iter_result = [objective(t, r_i) for t in T]
+            yi.append(iter_result)
+            Xi.append(T)
 
             # Get next hyperparameter configurations
-            T = [ T[i] for i in np.argsort(result)[0:int( n_i/eta )] ]
+            T = [ T[i] for i in np.argsort(iter_result)[0:int( n_i/eta )] ]
             print(f'num hyperparameter configs: {len(T)}')
 
             if verbose:
-                print(f'Rank {rank} Iteration number: {i}, Func value: {min(result)}, num configs: {len(result)}\n')
+                print(f'Rank {rank} Iteration number: {i}, Func value: {min(iter_result)}, num configs: {len(iter_result)}\n')
             if debug:
                 print(f'Number of hyperparameter configurations: {len(T)}')
 
-        out = [result, incumbents, x_incumbents, func_vals, x_iters]
+        result = create_result(Xi, yi, n_evaluations=n_evaluations, space=space, rng=random_state)
         # End Finite Horizon Successive Halving with (n,r)
-        return out
+        return result
 

@@ -57,22 +57,8 @@ def main():
                (10.0**-2, 10.0**0), # learning_rate
                (1, 10)]             # max_features
 
-    out = hyperband(objective, hparams, max_iter=100, eta=3, verbose=True, random_state=0)
-
-    print(f'Result: {out[0]}')
-    print(f'Incumbents: {out[1]}')
-    print(f'X incumbents: {out[2]}')
-    func_vals = out[3]
-    x_iters = out[4]
-
-    func_vals = list(itertools.chain.from_iterable(func_vals))
-    x_iters = list(itertools.chain.from_iterable(x_iters))
-
-    unique_func_vals = np.unique(func_vals)
-    unique_func_vals_sorted = sorted(unique_func_vals)
-
-    print(len(func_vals))
-    print(f'Func vals: {unique_func_vals[:20]}')
+    res = hyperband(objective, hparams, 20, max_iter=100, eta=3, verbose=True, random_state=0)
+    print(res)
 
 
 if __name__ == '__main__':
