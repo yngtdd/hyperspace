@@ -8,14 +8,15 @@ HyperSpace algorithm.
 Usage:
 mpirun -n 8 python hyperbelt.py --results_dir ./results/hyperbelt
 """
-import numpy as np
 import argparse
+import itertools
+import numpy as np
 
 from sklearn.datasets import load_boston
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.model_selection import cross_val_score
 
-from hyperspace import hyperbelt
+from hyperspace import hyperband
 
 
 boston = load_boston()
@@ -25,7 +26,7 @@ n_features = X.shape[1]
 reg = GradientBoostingRegressor(n_estimators=50, random_state=0)
 
 
-def objective(params):
+def objective(params, iterations):
     """
     Objective function to be minimized.
 
@@ -37,6 +38,7 @@ def objective(params):
         - Order preserved from list passed to hyperdrive's hyperparameters argument.
     """
     max_depth, learning_rate, max_features = params
+    print(f'Running {iterations} iterations')
 
     reg.set_params(max_depth=max_depth,
                    learning_rate=learning_rate,
@@ -55,16 +57,8 @@ def main():
                (10.0**-2, 10.0**0), # learning_rate
                (1, 10)]             # max_features
 
-    hyperbelt(objective=objective,
-              hyperparameters=hparams,
-              results_path=args.results_dir,
-              model="RAND",
-              n_iterations=50,
-              sampler='lhs',
-              n_samples=2,
-              model_verbose=False,
-              hyperband_verbose=True,
-              random_state=0)
+    res = hyperband(objective, hparams, 20, max_iter=100, eta=3, verbose=True, random_state=0)
+    print(res)
 
 
 if __name__ == '__main__':

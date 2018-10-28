@@ -7,6 +7,7 @@ import numpy as np
 from skopt import dump
 
 from hyperspace import hyperband
+from skopt import dummy_minimize
 from hyperspace.benchmarks import StyblinskiTang
 
 
@@ -20,11 +21,10 @@ def main():
 
     bounds = np.tile((-5., 5.), (5, 1))
 
-    results = hyperband(objective=stybtang,
-                        space=bounds,
-                        model="RAND",
-                        model_verbose=True,
-                        hyperband_verbose=True,
+    results = dummy_minimize(stybtang,
+                        bounds,
+                        verbose=True,
+                        n_calls=1,
                         random_state=0)
 
     results_path = os.path.join(args.results_dir, 'hyperband_stybtang.pkl')
