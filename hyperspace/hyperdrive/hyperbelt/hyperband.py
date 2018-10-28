@@ -6,7 +6,7 @@ from hyperspace.kepler import create_result
 
 
 def hyperband(objective, space, n_evaluations, max_iter=100, eta=3,
-              random_state=0, verbose=True, debug=False, rank=None):
+              random_state=0, verbose=True, debug=False, rank=0):
     """
     Hyperband algorithm as defined by Kevin Jamieson.
 
@@ -42,26 +42,22 @@ def hyperband(objective, space, n_evaluations, max_iter=100, eta=3,
     for s in reversed(range(s_max+1)):
         n = int(ceil(int(B/max_iter/(s+1))*eta**s)) # initial number of configurations
         r = max_iter*eta**(-s) # initial number of iterations to run configurations for
-        #
-        T = space.rvs(n, random_state)
         # Begin Finite Horizon Successive Halving with (n,r)
         for i in range(s+1):
             # Run each of the n_i configs for r_i iterations and keep best n_i/eta
-            n_i = n*eta**(-i)
-            r_i = r*eta**(i)
+            n_i = ceil(n*eta**(-i))
+            r_i = ceil(r*eta**(i))
 
+            T = space.rvs(ceil(n_i), random_state)
             iter_result = [objective(t, r_i) for t in T]
             yi.append(iter_result)
             Xi.append(T)
 
             # Get next hyperparameter configurations
             T = [ T[i] for i in np.argsort(iter_result)[0:int( n_i/eta )] ]
-            print(f'num hyperparameter configs: {len(T)}')
 
-            if verbose:
-                print(f'Rank {rank} Iteration number: {i}, Func value: {min(iter_result)}, num configs: {len(iter_result)}\n')
-            if debug:
-                print(f'Number of hyperparameter configurations: {len(T)}')
+            if verbose and rank == 0:
+                print(f'Iteration number: {i}, Epochs per config: {r_i}, Num configs: {n_i}, Incumbent: {min(iter_result)}')
 
         result = create_result(Xi, yi, n_evaluations=n_evaluations, space=space, rng=random_state)
         # End Finite Horizon Successive Halving with (n,r)

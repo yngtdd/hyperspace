@@ -8,10 +8,12 @@ HyperSpace algorithm.
 Usage:
 mpirun -n 8 python hyperbelt.py --results_dir ./results/hyperbelt
 """
+import os
 import argparse
 import itertools
 import numpy as np
 
+import skopt
 from sklearn.datasets import load_boston
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.model_selection import cross_val_score
@@ -38,7 +40,6 @@ def objective(params, iterations):
         - Order preserved from list passed to hyperdrive's hyperparameters argument.
     """
     max_depth, learning_rate, max_features = params
-    print(f'Running {iterations} iterations')
 
     reg.set_params(max_depth=max_depth,
                    learning_rate=learning_rate,
@@ -58,8 +59,8 @@ def main():
                (1, 10)]             # max_features
 
     res = hyperband(objective, hparams, 20, max_iter=100, eta=3, verbose=True, random_state=0)
-    print(res)
-
+    results_path = os.path.join(args.results_dir, 'hyperband_gbm.pkl')
+    skopt.dump(res, results_path)
 
 if __name__ == '__main__':
     main()
