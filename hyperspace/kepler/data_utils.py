@@ -202,29 +202,29 @@ def create_result(Xi, yi, n_evaluations=None, space=None, rng=None, specs=None, 
         if len(unique) < n_evaluations:
             func_sort_idx = np.argsort(yi)
             func_vals = sorted(yi)
-            res.func_vals = func_vals[:n_evaluations]
+            res.func_vals = np.asarray(func_vals[:n_evaluations])
 
             x_iter_sort = []
             for idx in func_sort_idx:
                 x_iter_sort.append(Xi[idx])
 
-            res.x_iters = x_iter_sort[:n_evaluations]
-            res.all_func_vals = yi
-            res.all_x_iters = Xi
+            res.x_iters = np.asarray(x_iter_sort[:n_evaluations])
+            res.all_func_vals = np.asarray(yi)
+            res.all_x_iters = np.asarray(Xi)
         else:
             func_vals = sorted(unique)
-            res.func_vals = func_vals[:n_evaluations]
+            res.func_vals = np.asarray(func_vals[:n_evaluations])
 
             x_iter_sort = []
             for idx in sort_indices:
                 x_iter_sort.append(Xi[idx])
 
-            res.x_iters = x_iter_sort[:n_evaluations]
-            res.all_func_vals = yi
-            res.all_x_iters = Xi
+            res.x_iters = np.asarray(x_iter_sort[:n_evaluations])
+            res.all_func_vals = np.asarray(yi)
+            res.all_x_iters = np.asarray(Xi)
     else:
-        res.func_vals = yi
-        res.x_iters = Xi
+        res.func_vals = np.asarray(yi)
+        res.x_iters = np.asarray(Xi)
 
     res.models = models
     res.space = space
