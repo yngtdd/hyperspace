@@ -25,7 +25,7 @@ n_features = X.shape[1]
 reg = GradientBoostingRegressor(n_estimators=50, random_state=0)
 
 
-def objective(params):
+def objective(params, iterations):
     """
     Objective function to be minimized.
 
@@ -37,6 +37,7 @@ def objective(params):
         - Order preserved from list passed to hyperdrive's hyperparameters argument.
     """
     max_depth, learning_rate, max_features = params
+    print(f'Hyperband would run {iterations} iterations.')
 
     reg.set_params(max_depth=max_depth,
                    learning_rate=learning_rate,
@@ -58,12 +59,9 @@ def main():
     hyperbelt(objective=objective,
               hyperparameters=hparams,
               results_path=args.results_dir,
-              model="RAND",
-              n_iterations=50,
-              sampler='lhs',
-              n_samples=2,
-              model_verbose=False,
-              hyperband_verbose=True,
+              n_evaluations=50,
+              max_iter=100,
+              verbose=True,
               random_state=0)
 
 
