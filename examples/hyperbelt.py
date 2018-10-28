@@ -37,7 +37,6 @@ def objective(params, iterations):
         - Order preserved from list passed to hyperdrive's hyperparameters argument.
     """
     max_depth, learning_rate, max_features = params
-    print(f'Hyperband would run {iterations} iterations.')
 
     reg.set_params(max_depth=max_depth,
                    learning_rate=learning_rate,
