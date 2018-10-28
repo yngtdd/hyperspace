@@ -1,5 +1,5 @@
 """
-Distributed Hyperband with SMBO. 
+Distributed Hyperband with SMBO.
 
 We take the Hyperband algorithm, replace the random sampling with Bayesian
 optimization using a Gaussian process, and run in parallel according to the
@@ -15,7 +15,7 @@ from sklearn.datasets import load_boston
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.model_selection import cross_val_score
 
-from hyperspace import hyperbelt 
+from hyperspace import hyperbelt
 
 
 boston = load_boston()

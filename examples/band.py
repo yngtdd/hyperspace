@@ -8,8 +8,9 @@ HyperSpace algorithm.
 Usage:
 mpirun -n 8 python hyperbelt.py --results_dir ./results/hyperbelt
 """
-import numpy as np
 import argparse
+import itertools
+import numpy as np
 
 from sklearn.datasets import load_boston
 from sklearn.ensemble import GradientBoostingRegressor
@@ -37,7 +38,7 @@ def objective(params, iterations):
         - Order preserved from list passed to hyperdrive's hyperparameters argument.
     """
     max_depth, learning_rate, max_features = params
-    #print(f'Running {iterations} iterations')
+    print(f'Running {iterations} iterations')
 
     reg.set_params(max_depth=max_depth,
                    learning_rate=learning_rate,
@@ -56,11 +57,22 @@ def main():
                (10.0**-2, 10.0**0), # learning_rate
                (1, 10)]             # max_features
 
-    result, func_vals, x_iters = hyperband(objective, hparams, max_iter=40, eta=2, verbose=True, random_state=0)
+    out = hyperband(objective, hparams, max_iter=100, eta=3, verbose=True, random_state=0)
 
-    print(f'Result: {result}')
-    #print(f'Func vals: {func_vals}')
-    #print(f'hyperparameters: {x_iters}')
+    print(f'Result: {out[0]}')
+    print(f'Incumbents: {out[1]}')
+    print(f'X incumbents: {out[2]}')
+    func_vals = out[3]
+    x_iters = out[4]
+
+    func_vals = list(itertools.chain.from_iterable(func_vals))
+    x_iters = list(itertools.chain.from_iterable(x_iters))
+
+    unique_func_vals = np.unique(func_vals)
+    unique_func_vals_sorted = sorted(unique_func_vals)
+
+    print(len(func_vals))
+    print(f'Func vals: {unique_func_vals[:20]}')
 
 
 if __name__ == '__main__':

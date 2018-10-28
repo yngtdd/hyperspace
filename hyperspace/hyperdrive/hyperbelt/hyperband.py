@@ -36,7 +36,9 @@ def hyperband(objective, space, max_iter=100, eta=3, random_state=0,
     # Convert space into search dimensinons
     space = Space(space)
     #### Begin Finite Horizon Hyperband outlerloop. Repeat indefinetely.
+    incumbents = []
     func_vals = []
+    x_incumbents = []
     x_iters = []
     for s in reversed(range(s_max+1)):
         n = int(ceil(int(B/max_iter/(s+1))*eta**s)) # initial number of configurations
@@ -50,17 +52,22 @@ def hyperband(objective, space, max_iter=100, eta=3, random_state=0,
             r_i = r*eta**(i)
 
             result = [objective(t, r_i) for t in T]
+            incumbents.append(min(result))
+            idx = np.argmin(result)
+            x_incumbents.append(T[idx])
             func_vals.append(result)
             x_iters.append(T)
 
             # Get next hyperparameter configurations
             T = [ T[i] for i in np.argsort(result)[0:int( n_i/eta )] ]
+            print(f'num hyperparameter configs: {len(T)}')
 
             if verbose:
                 print(f'Rank {rank} Iteration number: {i}, Func value: {min(result)}, num configs: {len(result)}\n')
             if debug:
                 print(f'Number of hyperparameter configurations: {len(T)}')
 
+        out = [result, incumbents, x_incumbents, func_vals, x_iters]
         # End Finite Horizon Successive Halving with (n,r)
-        return result, func_vals, x_iters
+        return out
 
