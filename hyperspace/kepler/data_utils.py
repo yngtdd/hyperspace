@@ -184,9 +184,15 @@ def create_result(Xi, yi, n_evaluations=None, space=None, rng=None, specs=None, 
         OptimizeResult instance with the required information.
     """
     res = OptimizeResult()
-    if n_evaluations:
+
+    try:
+        # Hyperband returns evaluations as lists of lists.
+        # We want to store the results as a single array.
         yi = list(itertools.chain.from_iterable(yi))
         Xi = list(itertools.chain.from_iterable(Xi))
+    except TypeError:
+        # All algorithms other than Hyperband already return a single list.
+        pass
 
     yi = np.asarray(yi)
     if np.ndim(yi) == 2:

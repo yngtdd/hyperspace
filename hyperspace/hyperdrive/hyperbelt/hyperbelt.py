@@ -10,8 +10,8 @@ import os
 from mpi4py import MPI
 
 
-def hyperbelt(objective, hyperparameters, n_evaluations, results_path,
-              max_iter=100, eta=3, verbose=True, random_state=0):
+def hyperbelt(objective, hyperparameters, results_path, max_iter=100, eta=3,
+              verbose=True, n_evaluations=None, random_state=0):
     """
     Distributed HyperBand with SMBO - one hyperspace per node.
 
@@ -58,8 +58,8 @@ def hyperbelt(objective, hyperparameters, n_evaluations, results_path,
 
     space = comm.scatter(hyperspace, root=0)
 
-    result = hyperband(objective, space, n_evaluations, max_iter,
-                       eta, random_state, verbose, rank)
+    result = hyperband(objective, space, max_iter, eta,
+                       random_state, verbose, n_evaluations, rank)
 
     # Each worker will independently write their results to disk
     dump(result, savefile)

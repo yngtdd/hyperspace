@@ -6,7 +6,7 @@ from hyperspace.kepler import create_result
 
 
 def hyperband(objective, space, max_iter=100, eta=3, random_state=0,
-              verbose=True, debug=False, n_evaluations=None, rank=0):
+              verbose=True, n_evaluations=None, rank=0):
     """
     Hyperband algorithm as defined by Kevin Jamieson.
 
@@ -37,7 +37,6 @@ def hyperband(objective, space, max_iter=100, eta=3, random_state=0,
     # If space is the original list of tuples, convert to Space()
     if isinstance(space, list):
         space = Space(space)
-        print('converting space.')
     #### Begin Finite Horizon Hyperband outlerloop. Repeat indefinetely.
     yi = []
     Xi = []
@@ -64,4 +63,3 @@ def hyperband(objective, space, max_iter=100, eta=3, random_state=0,
         result = create_result(Xi, yi, n_evaluations=n_evaluations, space=space, rng=random_state)
         # End Finite Horizon Successive Halving with (n,r)
         return result
-
