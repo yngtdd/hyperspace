@@ -58,7 +58,7 @@ def main():
                (10.0**-2, 10.0**0), # learning_rate
                (1, 10)]             # max_features
 
-    res = hyperband(objective, hparams, 20, max_iter=100, eta=3, verbose=True, random_state=0)
+    res = hyperband(objective, hparams, 300, max_iter=100, eta=3, verbose=True, random_state=0)
     results_path = os.path.join(args.results_dir, 'hyperband_gbm.pkl')
     skopt.dump(res, results_path)
 
