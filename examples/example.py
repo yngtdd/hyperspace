@@ -60,7 +60,7 @@ def main():
                hyperparameters=hparams,
                results_path=args.results_dir,
                model="GP",
-               n_iterations=100,
+               n_iterations=10,
                verbose=True,
                random_state=0,
                checkpoints=True,
