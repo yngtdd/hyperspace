@@ -1,5 +1,6 @@
 import os
 import re
+import itertools
 
 import pickle
 from skopt import load
@@ -28,7 +29,7 @@ def load_results(results_path, sort=False, reverse_sort=False):
     -------
     * results [list]
     """
-    files = _listfiles(results_path) 
+    files = _listfiles(results_path)
 
     ranks = []
     results = []
@@ -64,7 +65,7 @@ def load_roboresults(results_path, sort=False):
     -------
     * results [list]
     """
-    spacenames = _listfiles(results_path) 
+    spacenames = _listfiles(results_path)
 
     results = []
     for file in spacenames:
@@ -77,7 +78,7 @@ def load_roboresults(results_path, sort=False):
         results = sorted(results, key=lambda result: result['f_opt'])
 
     results = convert_roboresults(results)
-    return results 
+    return results
 
 
 def _listfiles(results_path):
@@ -93,9 +94,9 @@ def _listfiles(results_path):
     for file in os.listdir(results_path):
         # Sort files by MPI rank: used for checkpointing.
         files.append(file)
-    
+
     files = sorted(files)
-    return files 
+    return files
 
 
 def _convert_robo(result):
@@ -151,3 +152,88 @@ def convert_roboresults(results):
     list of scipy.optimize.OptimizeResults.
     """
     return [_convert_robo(x) for x in results]
+
+
+def create_result(Xi, yi, n_evaluations=None, space=None, rng=None, specs=None, models=None):
+    """
+    Initialize an `OptimizeResult` object.
+
+    Parameters
+    ----------
+    * `Xi` [list of lists, shape=(n_iters, n_features)]:
+        Location of the minimum at every iteration.
+
+    * `yi` [array-like, shape=(n_iters,)]:
+        Minimum value obtained at every iteration.
+
+    * `space` [Space instance, optional]:
+        Search space.
+
+    * `rng` [RandomState instance, optional]:
+        State of the random state.
+
+    * `specs` [dict, optional]:
+        Call specifications.
+
+    * `models` [list, optional]:
+        List of fit surrogate models.
+
+    Returns
+    -------
+    * `res` [`OptimizeResult`, scipy object]:
+        OptimizeResult instance with the required information.
+    """
+    res = OptimizeResult()
+
+    try:
+        # Hyperband returns evaluations as lists of lists.
+        # We want to store the results as a single array.
+        yi = list(itertools.chain.from_iterable(yi))
+        Xi = list(itertools.chain.from_iterable(Xi))
+    except TypeError:
+        # All algorithms other than Hyperband already return a single list.
+        pass
+
+    yi = np.asarray(yi)
+    if np.ndim(yi) == 2:
+        res.log_time = np.ravel(yi[:, 1])
+        yi = np.ravel(yi[:, 0])
+    best = np.argmin(yi)
+    res.x = Xi[best]
+    res.fun = yi[best]
+
+    if n_evaluations:
+        unique, sort_indices = np.unique(yi, return_index=True)
+
+        if len(unique) < n_evaluations:
+            func_sort_idx = np.argsort(yi)
+            func_vals = sorted(yi)
+            res.func_vals = np.asarray(func_vals[:n_evaluations])
+
+            x_iter_sort = []
+            for idx in func_sort_idx:
+                x_iter_sort.append(Xi[idx])
+
+            res.x_iters = np.asarray(x_iter_sort[:n_evaluations])
+            res.all_func_vals = np.asarray(yi)
+            res.all_x_iters = np.asarray(Xi)
+        else:
+            func_vals = sorted(unique)
+            res.func_vals = np.asarray(func_vals[:n_evaluations])
+
+            x_iter_sort = []
+            for idx in sort_indices:
+                x_iter_sort.append(Xi[idx])
+
+            res.x_iters = np.asarray(x_iter_sort[:n_evaluations])
+            res.all_func_vals = np.asarray(yi)
+            res.all_x_iters = np.asarray(Xi)
+    else:
+        res.func_vals = np.asarray(yi)
+        res.x_iters = np.asarray(Xi)
+
+    res.models = models
+    res.space = space
+    res.random_state = rng
+    res.specs = specs
+    return res

@@ -10,8 +10,8 @@ import os
 from mpi4py import MPI
 
 
-def hyperbelt(objective, hyperparameters, results_path, model="GP", n_iterations=50, model_verbose=False,
-              hyperband_verbose=True, deadline=None, sampler=None, n_samples=None, random_state=0):
+def hyperbelt(objective, hyperparameters, results_path, max_iter=100, eta=3,
+              verbose=True, n_evaluations=None, random_state=0):
     """
     Distributed HyperBand with SMBO - one hyperspace per node.
 
@@ -26,32 +26,11 @@ def hyperbelt(objective, hyperparameters, results_path, model="GP", n_iterations
     * `results_path` [string]
         Path to save optimization results
 
-    * `model` [string, default="GP"]
-        Probilistic learner used to model our objective function.
-        Options:
-        - "GP": Gaussian process
-        - "RF": Random forest
-        - "GBRT": Gradient boosted regression trees
-        - "RAND": Random search
-
     * `n_iterations` [int, default=50]
         Number of optimization iterations
 
     * `verbose` [bool, default=False]
         Verbosity of optimization.
-
-    * `deadline` [int, optional]
-        Deadline (seconds) for the optimization to finish within.
-
-    * `sampler` [str, default=None]
-        Random sampling scheme for optimizer's initial runs.
-        Options:
-        - "lhs": latin hypercube sampling
-
-    * `n_samples` [int, default=None]
-        Number of random samples to be drawn from the `sampler`.
-        - Required if you would like to use `sampler`.
-        - Must be <= the number of elements in the smallest hyperparameter bound's set.
 
     * `random_state` [int, default=0]
         Random state for reproducibility.
@@ -74,32 +53,13 @@ def hyperbelt(objective, hyperparameters, results_path, model="GP", n_iterations
 
     if rank == 0:
         hyperspace = create_hyperspace(hyperparameters)
-
-        if sampler and not n_samples:
-            raise ValueError('Sampler requires n_samples > 0. Got {}'.format(n_samples))
-        elif sampler and n_samples:
-            hyperbounds = create_hyperbounds(hyperparameters)
     else:
         hyperspace = None
-        if sampler is not None:
-            hyperbounds = None
 
     space = comm.scatter(hyperspace, root=0)
 
-    if sampler:
-        bounds = comm.scatter(hyperbounds, root=0)
-        # Get initial points in the obj. function domain via latin hypercube sampling
-        init_points = lhs_start(bounds, n_samples)
-        n_rand = 10 - len(init_points)
-    else:
-        init_points = None
-        n_rand = 10
-
-    if deadline:
-        deadline = DeadlineStopper(deadline)
-
-    result = hyperband(objective, space, model=model, x_init=init_points, model_verbose=model_verbose,
-                       hyperband_verbose=hyperband_verbose, n_random_starts=n_rand, rank=rank)
+    result = hyperband(objective, space, max_iter, eta,
+                       random_state, verbose, n_evaluations, rank)
 
     # Each worker will independently write their results to disk
     dump(result, savefile)

@@ -1,22 +1,25 @@
 """
-Gradient Boosting Regressor
-A hyperspace distributed version of Scikit-Optimize's hyperparameter optimization example
+Distributed Hyperband with SMBO.
 
-To Run:
-If using hyperdrive -- 1 process per node:
-mpirun -n 32 python gbm.py --results_dir <full_path_to.../gbm_results>
+We take the Hyperband algorithm, replace the random sampling with Bayesian
+optimization using a Gaussian process, and run in parallel according to the
+HyperSpace algorithm.
 
-Note: we use 32 processes in this example (hence -n 32 above) since we have 2**5
-combinations of hyperparameter subspaces.
+Usage:
+mpirun -n 8 python hyperbelt.py --results_dir ./results/hyperbelt
 """
+import os
+import argparse
+import itertools
+import numpy as np
+
+import skopt
 from sklearn.datasets import load_boston
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.model_selection import cross_val_score
-import numpy as np
-import argparse
 
-from hyperspace import hyperdrive
-#from hyperspace import dualdrive
+from hyperspace import hyperband
+
 
 boston = load_boston()
 X, y = boston.data, boston.target
@@ -25,7 +28,7 @@ n_features = X.shape[1]
 reg = GradientBoostingRegressor(n_estimators=50, random_state=0)
 
 
-def objective(params):
+def objective(params, iterations):
     """
     Objective function to be minimized.
 
@@ -36,13 +39,11 @@ def objective(params):
         - Controlled by hyperspaces's hyperdrive function.
         - Order preserved from list passed to hyperdrive's hyperparameters argument.
     """
-    max_depth, learning_rate, max_features, min_samples_split, min_samples_leaf = params
+    max_depth, learning_rate, max_features = params
 
     reg.set_params(max_depth=max_depth,
                    learning_rate=learning_rate,
-                   max_features=max_features,
-                   min_samples_split=min_samples_split,
-                   min_samples_leaf=min_samples_leaf)
+                   max_features=max_features)
 
     return -np.mean(cross_val_score(reg, X, y, cv=5, n_jobs=-1,
                                     scoring="neg_mean_absolute_error"))
@@ -55,21 +56,12 @@ def main():
 
     hparams = [(2, 10),             # max_depth
                (10.0**-2, 10.0**0), # learning_rate
-               (1, 10),             # max_features
-               (2, 100),            # min_samples_split
-               (1, 100)]            # min_samples_leaf
+               (1, 10)]             # max_features
 
-    hyperdrive(objective=objective,
-               hyperparameters=hparams,
-               results_path=args.results_dir,
-               model="GP",
-               n_iterations=50,
-               verbose=True,
-               random_state=0,
-               sampler="lhs",
-               n_samples=5,
-               checkpoints=True)
-
+    res = hyperband(objective, hparams, max_iter=100, eta=3, verbose=True, random_state=0)
+    results_path = os.path.join(args.results_dir, 'hyperband_gbm.pkl')
+    skopt.dump(res, results_path)
 
 if __name__ == '__main__':
     main()
+
