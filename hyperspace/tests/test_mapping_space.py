@@ -7,9 +7,9 @@ from hyperspace.space import HyperInteger
 from hyperspace.space import HyperReal
 from hyperspace.space import HyperCategorical
 
-from hyperspace.space.mapping_space import check_dimension
-from hyperspace.space.mapping_space import fold_spaces
-from hyperspace.space.mapping_space import create_hyperspace
+from hyperspace.space.skopt.mapping_space import check_dimension
+from hyperspace.space.skopt.mapping_space import fold_spaces
+from hyperspace.space.skopt.mapping_space import create_hyperspace
 
 
 @pytest.mark.fast_test
@@ -157,3 +157,11 @@ def test_create_hyperspace(integer=(0, 10), real=(20.0, 30), cat=['a', 'b', 'c',
     assert_equal(hyperspace0, test_hyperspace0)
     assert_equal(hyperspace1, test_hyperspace1)
     assert_equal(hyperspace2, test_hyperspace2)
+
+
+if __name__=='__main__':
+    check_int()
+    check_real()
+    check_categorical()
+    test_fold_spaces()
+    test_create_hyperspace()
