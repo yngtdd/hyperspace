@@ -9,6 +9,26 @@ import numpy as np
 from scipy.optimize import OptimizeResult
 
 
+def _load_checkpoint(results_path, rank):
+    """
+    Loads checkpoint to resume optimization.
+
+    * `results_path` [str]
+        Path to the previously saved results.
+
+    * `rank` [int]
+        Rank to which the saved results belong.
+    """
+    files = _listfiles(results_path)
+    for file in files:
+        saved_rank = re.findall(r'\d+', file)
+        if rank == int(saved_rank[0]):
+            filepath = os.path.join(results_path, file)
+            checkpoint = load(str(filepath))
+            print(f'loading checkpoint for rank {int(saved_rank[0])}')
+            return checkpoint
+
+
 def load_results(results_path, sort=False, reverse_sort=False):
     """
     Loads results from distributed run with Scikit-Optimize.
@@ -36,6 +56,7 @@ def load_results(results_path, sort=False, reverse_sort=False):
     for file in files:
         rank = re.findall(r'\d+', file)
         rank = int(rank[0])
+        print(f'Rank: {rank}')
         ranks.append(rank)
         full_path = os.path.join(results_path, file)
         results.append(load(str(full_path)))

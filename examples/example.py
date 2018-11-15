@@ -3,7 +3,7 @@ Gradient Boosting Regressor
 A hyperspace distributed version of Scikit-Optimize's hyperparameter optimization example
 
 To Run:
-mpirun -n 4 python example.py --results_dir results/skopt/space4 
+mpirun -n 4 python example.py --results_dir results/skopt/space4
 
 * Note: we use 4 processes in this example (hence -n 4 above) since we have 2**2
 combinations of hyperparameter subspaces.
@@ -53,18 +53,14 @@ def main():
     hparams = [(2, 10),             # max_depth
                (10.0**-2, 10.0**0)] # learning_rate
 
-    # Load results from previous runs 
-    checkpoint = load_results(args.results_dir)
-
     hyperdrive(objective=objective,
                hyperparameters=hparams,
                results_path=args.results_dir,
+               checkpoints_path=args.results_dir,
                model="GP",
                n_iterations=10,
                verbose=True,
-               random_state=0,
-               checkpoints=True,
-               restart=checkpoint)
+               random_state=0)
 
 
 if __name__ == '__main__':
