@@ -35,7 +35,7 @@ def load_data(val_size, test_size, seed=1):
 
 
 class Log:
-    
+
     def __init__(self, colnames, savepath, rank):
         self.colnames = colnames
         self.log = pd.DataFrame(columns=self.colnames)
@@ -68,7 +68,7 @@ def objective(params):
     """
     max_depth, lr = params
     clf = GradientBoostingClassifier(max_depth=max_depth, learning_rate=lr)
-    
+
     clf.fit(X_train, y_train)
     # Training accuracy
     train_preds = clf.predict(X_train)
@@ -79,7 +79,7 @@ def objective(params):
     # Validation log loss
     val_proba = clf.predict_proba(X_val)
     ll = log_loss(y_val, val_proba)
-    
+
     name = clf.__class__.__name__
     logger.update(name, acc_train, acc_val, ll)
 
@@ -106,11 +106,11 @@ def main():
     hyperdrive(objective=objective,
                hyperparameters=hparams,
                results_path=args.results_dir,
+               checkpoints_path=args.results_dir,
                model="GRBRT",
                n_iterations=50,
                verbose=True,
-               random_state=0,
-               checkpoints=True)
+               random_state=0)
 
     # Save the log data frame
     logger.save()

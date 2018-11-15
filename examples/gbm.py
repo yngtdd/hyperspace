@@ -62,13 +62,11 @@ def main():
     hyperdrive(objective=objective,
                hyperparameters=hparams,
                results_path=args.results_dir,
+               checkpoints_path=args.results_dir,
                model="GP",
                n_iterations=50,
                verbose=True,
-               random_state=0,
-               sampler="lhs",
-               n_samples=5,
-               checkpoints=True)
+               random_state=0)
 
 
 if __name__ == '__main__':

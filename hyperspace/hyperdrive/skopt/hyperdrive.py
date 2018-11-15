@@ -15,8 +15,8 @@ import os
 from mpi4py import MPI
 
 
-def hyperdrive(objective, hyperparameters, results_path, checkpoints_path=None, model="GP", n_iterations=50, verbose=False,
-               deadline=None, sampler=None, n_samples=None, random_state=0):
+def hyperdrive(objective, hyperparameters, results_path, model="GP", n_iterations=50, verbose=False,
+               checkpoints_path=None, deadline=None, sampler=None, n_samples=None, random_state=0):
     """
     Distributed optimization - one optimization per node.
 
