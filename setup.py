@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='hyperspaces',
-    version="0.2.3",
+    version="0.3.0",
     packages=find_packages(),
     install_requires=['scikit-optimize', 'scikit-learn', 'mpi4py', 'cython', 'sphinxcontrib-bibtex'],
     author="Todd Young",
