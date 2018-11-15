@@ -52,7 +52,6 @@ def dualdrive(objective, hyperparameters, results_path, model="GP", n_iterations
     rank = comm.Get_rank()
     size = comm.Get_size()
 
-
     if rank == 0:
         hyperspace = create_hyperspace(hyperparameters)
         hyperspace = [hyperspace[i:i+2] for i in range(0, len(hyperspace), 2)]

@@ -74,3 +74,9 @@ def test_hypercat(categories=['a', 'b', 'c', 'd'], overlap=0.25):
 
     assert_equal(hyperspace_low, space_low)
     assert_equal(hyperspace_high, space_high)
+
+
+if __name__=='__main__':
+    test_hyperinteger()
+    test_hyperreal()
+    test_hypercat()
