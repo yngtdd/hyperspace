@@ -84,15 +84,15 @@ Scikit-Optimize:
    hyperdrive(objective=objective,
               hyperparameters=params,
               results_path='/path/to/save/results',
+              checkpoints_path='/path/to/save/checkpoints',
               model="GP",
               n_iterations=100,
               verbose=True,
-              random_state=0,
-              checkpoints=True)
+              random_state=0)
 
 HyperSpace here runs a distributed SMBO optimization using a Gaussian process (model='GP') to model our objective function.  
-This will run for 100 iterations (n_iterations), saving a checkpoint after each iteration (checkpoints=True) to the directory
-specified (results_path). When in verbose mode (verbose=True), the optimization will print the progress of our MPI rank 0. 
+This will run for 100 iterations (n_iterations), saving a checkpoint after each iteration (saved to the path specified in checkpoints_path).
+When in verbose mode (verbose=True), the optimization will print the progress of our MPI rank 0. 
 We can make our results reproducible by setting a random state (here random_state=0). There are several other parameters that
 can be passed to this function, including whether you would like to use latin hypercube sampling for the initial random draws 
 to warm up the SMBO procedure. You can see more of these in the docstrings of the minimization functions.
