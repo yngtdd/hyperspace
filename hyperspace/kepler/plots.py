@@ -97,7 +97,9 @@ def plot_convergence(*args, **kwargs):
             n_calls = len(results[0].x_iters)
             iterations = range(1, n_calls + 1)
             if maximize:
-                mins = [[np.max(r.func_vals[:i]) for i in iterations]
+                for x in results:
+                    x.func_vals = - x.func_vals
+                maxes = [[np.max(r.func_vals[:i]) for i in iterations]
                         for r in results]
 
                 for m in maxes:
