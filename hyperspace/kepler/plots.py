@@ -7,6 +7,7 @@ https://scikit-optimize.github.io/plots.m.html1
 import numpy as np
 from scipy.optimize import OptimizeResult
 
+import seaborn as sns
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import cm
 
@@ -47,6 +48,8 @@ def plot_convergence(*args, **kwargs):
     * `ax`: [`Axes`]:
         The matplotlib axes.
     """
+    sns.set()
+    sns.set_context("paper")
     # <3 legacy python
     ax = kwargs.get("ax", None)
     true_minimum = kwargs.get("true_minimum", None)
@@ -56,12 +59,12 @@ def plot_convergence(*args, **kwargs):
     color_map = kwargs.get("color_map", "plasma")
     maximize = kwargs.get("maximize", False)
 
-    fig = plt.figure()
+    fig = plt.figure(figsize=(15, 10), dpi=600)
     if ax is None:
         ax = plt.gca()
 
-    ax.set_title("Convergence plot")
-    ax.set_xlabel("Number of calls $n$")
+    ax.set_title("Convergence plot", fontsize=20)
+    ax.set_xlabel("Number of calls $n$", fontsize=18)
     if maximize:
         ax.set_ylabel(r"$\max f(x)$ after $n$ calls")
     else:
