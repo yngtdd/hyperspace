@@ -174,7 +174,7 @@ def convert_roboresults(results):
     return [_convert_robo(x) for x in results]
 
 
-def create_result(Xi, yi, n_evaluations=None, space=None, rng=None, specs=None, models=None):
+def create_result(Xi, yi, n_evaluations=None, space=None, rng=None, specs=None, models=None, maximize=False):
     """
     Initialize an `OptimizeResult` object.
 
@@ -218,7 +218,12 @@ def create_result(Xi, yi, n_evaluations=None, space=None, rng=None, specs=None, 
     if np.ndim(yi) == 2:
         res.log_time = np.ravel(yi[:, 1])
         yi = np.ravel(yi[:, 0])
-    best = np.argmin(yi)
+
+    if maximize:
+        best = np.argmax(yi)
+    else:
+        best = np.argmin(yi)
+
     res.x = Xi[best]
     res.fun = yi[best]
 
