@@ -108,7 +108,7 @@ def plot_convergence(*args, **kwargs):
                         for r in results]
 
                 for m in maxes:
-                    ax.plot(iterations, m, c=color, alpha=0.2)
+                    ax.plot(iterations, m, c=color, alpha=0.35)
 
                 if plot_mean == True:
                     ax.plot(iterations, np.mean(maxes, axis=0), c=color,
@@ -119,7 +119,7 @@ def plot_convergence(*args, **kwargs):
                         for r in results]
 
                 for m in mins:
-                    ax.plot(iterations, m, c=color, alpha=0.2)
+                    ax.plot(iterations, m, c=color, alpha=0.35)
 
                 if plot_mean == True:
                     ax.plot(iterations, np.mean(mins, axis=0), c=color,
