@@ -56,7 +56,6 @@ def load_results(results_path, sort=False, reverse_sort=False):
     for file in files:
         rank = re.findall(r'\d+', file)
         rank = int(rank[0])
-        print(f'Rank: {rank}')
         ranks.append(rank)
         full_path = os.path.join(results_path, file)
         results.append(load(str(full_path)))
