@@ -58,6 +58,7 @@ def plot_convergence(*args, **kwargs):
     plot_mean = kwargs.get("plot_mean", False)
     color_map = kwargs.get("color_map", "plasma")
     maximize = kwargs.get("maximize", False)
+    colors = kwargs.get("colors", None)
 
     fig = plt.figure(figsize=(15, 10), dpi=600)
     plt.tick_params(axis='both', which='major', labelsize=12)
@@ -76,7 +77,10 @@ def plot_convergence(*args, **kwargs):
     if yscale is not None:
         ax.set_yscale(yscale)
 
-    colors = cm.coolwarm(np.linspace(0.25, 1.0, len(args)))
+    if colors is not None:
+        colors = colors
+    else:
+        colors = cm.coolwarm(np.linspace(0.25, 1.0, len(args)))
 
     for results, color in zip(args, colors):
         if isinstance(results, tuple):
