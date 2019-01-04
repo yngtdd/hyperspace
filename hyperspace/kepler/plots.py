@@ -131,7 +131,7 @@ def plot_convergence(*args, **kwargs):
                        label="True maximum")
 
         if true_maximum or name:
-            ax.legend(loc="best")
+            ax.legend(loc='upper left', prop={'size': 18})
 
     else:
         if true_minimum:
