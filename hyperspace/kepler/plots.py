@@ -60,18 +60,18 @@ def plot_convergence(*args, **kwargs):
     maximize = kwargs.get("maximize", False)
     colors = kwargs.get("colors", None)
 
-    fig = plt.figure(figsize=(15, 10), dpi=600)
-    plt.tick_params(axis='both', which='major', labelsize=12)
+    fig = plt.figure(figsize=(15, 10), dpi=1000)
+    plt.tick_params(axis='both', which='major', labelsize=22)
 
     if ax is None:
         ax = plt.gca()
 
-    ax.set_title("Convergence plot", fontsize=20)
-    ax.set_xlabel("Number of calls $n$", fontsize=18)
+    ax.set_title("Convergence plot", fontsize=22)
+    ax.set_xlabel("Number of calls $n$", fontsize=22)
     if maximize:
-        ax.set_ylabel(r"$\max f(x)$ after $n$ calls", fontsize=18)
+        ax.set_ylabel(r"$\max f(x)$ after $n$ calls", fontsize=22)
     else:
-        ax.set_ylabel(r"$\min f(x)$ after $n$ calls", fontsize=18)
+        ax.set_ylabel(r"$\min f(x)$ after $n$ calls", fontsize=22)
     ax.grid()
 
     if yscale is not None:
@@ -135,7 +135,7 @@ def plot_convergence(*args, **kwargs):
                        label="True maximum")
 
         if true_maximum or name:
-            ax.legend(loc='upper left', prop={'size': 18})
+            ax.legend(loc='upper left', prop={'size': 20})
 
     else:
         if true_minimum:
