@@ -22,6 +22,7 @@ import sys
 sys.path.insert(0, os.path.abspath('../../hyperspace'))
 
 import sphinx_rtd_theme
+import hyperspace
 
 # -- General configuration ------------------------------------------------
 
