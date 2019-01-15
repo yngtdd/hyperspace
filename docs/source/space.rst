@@ -3,7 +3,12 @@
 
 Space
 =====
-.. automodule:: hyperspace.space
+
+.. automodule:: hyperspace.space.skopt.space
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 .. currentmodule:: hyperspace.space
 
 :hidden:`HyperInteger`
