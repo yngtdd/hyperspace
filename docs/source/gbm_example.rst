@@ -76,21 +76,14 @@ get straight to it:
         hparams = [(2, 10),             # max_depth
                    (10.0**-2, 10.0**0)] # learning_rate
 
-        try:
-            # Load results from previous runs
-            checkpoint = load_results(args.results)
-        except:
-            ValueError('No prior results found. Starting from the top.')
-
         hyperdrive(objective=objective,
                    hyperparameters=hparams,
                    results_path=args.results,
+                   checkpoints_path=args.results,
                    model="GP",
-                   n_iterations=100,
+                   n_iterations=50,
                    verbose=True,
-                   random_state=0,
-                   checkpoints=True,
-                   restart=checkpoint)
+                   random_state=0)
 
 
      if __name__=='__main__':
@@ -104,13 +97,9 @@ If we save this as a module by the name gbm.py, we can run this as:
     mpirun -n 4 python3 gbm.py --results </path/to/save/results>
 
 You might have noticed that we added one piece to this example, the ability to load
-from previous checkpoints. This is as simple as calling on the
-`hyperspace.kepler.load_results` function, passing it the path where you had previously
-saved your optimization results, and storing that object into a variable (here called
-`checkpoint`). This will be a list of Scipy OptimizeResult objects, which contain all
-information about previous runs. Then we simply pass that list to the `hyperdrive` as 
-the expected value for the parameter `restart`. And voila, HyperSpace will pick up 
-where it left off!
+from previous checkpoints. When we give a path to the `checkpoints_path` argument, HyperSpace will
+save the its progress at each step of the optimization. If that path contains previously 
+saved checkpoints, HyperSpace will resume the optimization from where it left off.
 
 Check out the other parameters available in Scikit-learn's documentation. 
 See if by including more hyperparameters you can get a better result! And if anyone is

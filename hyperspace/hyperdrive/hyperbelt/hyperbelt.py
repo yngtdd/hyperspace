@@ -51,12 +51,8 @@ def hyperbelt(objective, hyperparameters, results_path, max_iter=100, eta=3,
 
     savefile = os.path.join(results_path, filename)
 
-    if rank == 0:
-        hyperspace = create_hyperspace(hyperparameters)
-    else:
-        hyperspace = None
-
-    space = comm.scatter(hyperspace, root=0)
+    hyperspace = create_hyperspace(hyperparameters)
+    space = hyperspace[rank]
 
     result = hyperband(objective, space, max_iter, eta,
                        random_state, verbose, n_evaluations, rank)

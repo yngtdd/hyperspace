@@ -7,6 +7,7 @@ https://scikit-optimize.github.io/plots.m.html1
 import numpy as np
 from scipy.optimize import OptimizeResult
 
+import seaborn as sns
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import cm
 
@@ -47,6 +48,8 @@ def plot_convergence(*args, **kwargs):
     * `ax`: [`Axes`]:
         The matplotlib axes.
     """
+    sns.set()
+    sns.set_context("paper")
     # <3 legacy python
     ax = kwargs.get("ax", None)
     true_minimum = kwargs.get("true_minimum", None)
@@ -55,23 +58,29 @@ def plot_convergence(*args, **kwargs):
     plot_mean = kwargs.get("plot_mean", False)
     color_map = kwargs.get("color_map", "plasma")
     maximize = kwargs.get("maximize", False)
+    colors = kwargs.get("colors", None)
 
-    fig = plt.figure()
+    fig = plt.figure(figsize=(15, 10), dpi=1000)
+    plt.tick_params(axis='both', which='major', labelsize=22)
+
     if ax is None:
         ax = plt.gca()
 
-    ax.set_title("Convergence plot")
-    ax.set_xlabel("Number of calls $n$")
+    ax.set_title("Convergence plot", fontsize=22)
+    ax.set_xlabel("Number of calls $n$", fontsize=22)
     if maximize:
-        ax.set_ylabel(r"$\max f(x)$ after $n$ calls")
+        ax.set_ylabel(r"$\max f(x)$ after $n$ calls", fontsize=22)
     else:
-        ax.set_ylabel(r"$\min f(x)$ after $n$ calls")
+        ax.set_ylabel(r"$\min f(x)$ after $n$ calls", fontsize=22)
     ax.grid()
 
     if yscale is not None:
         ax.set_yscale(yscale)
 
-    colors = cm.coolwarm(np.linspace(0.25, 1.0, len(args)))
+    if colors is not None:
+        colors = colors
+    else:
+        colors = cm.coolwarm(np.linspace(0.25, 1.0, len(args)))
 
     for results, color in zip(args, colors):
         if isinstance(results, tuple):
@@ -97,11 +106,13 @@ def plot_convergence(*args, **kwargs):
             n_calls = len(results[0].x_iters)
             iterations = range(1, n_calls + 1)
             if maximize:
-                mins = [[np.max(r.func_vals[:i]) for i in iterations]
+                for x in results:
+                    x.func_vals = - x.func_vals
+                maxes = [[np.max(r.func_vals[:i]) for i in iterations]
                         for r in results]
 
                 for m in maxes:
-                    ax.plot(iterations, m, c=color, alpha=0.2)
+                    ax.plot(iterations, m, c=color, alpha=0.35)
 
                 if plot_mean == True:
                     ax.plot(iterations, np.mean(maxes, axis=0), c=color,
@@ -112,7 +123,7 @@ def plot_convergence(*args, **kwargs):
                         for r in results]
 
                 for m in mins:
-                    ax.plot(iterations, m, c=color, alpha=0.2)
+                    ax.plot(iterations, m, c=color, alpha=0.35)
 
                 if plot_mean == True:
                     ax.plot(iterations, np.mean(mins, axis=0), c=color,
@@ -124,7 +135,7 @@ def plot_convergence(*args, **kwargs):
                        label="True maximum")
 
         if true_maximum or name:
-            ax.legend(loc="best")
+            ax.legend(loc='upper left', prop={'size': 20})
 
     else:
         if true_minimum:
@@ -133,6 +144,6 @@ def plot_convergence(*args, **kwargs):
                        label="True minimum")
 
         if true_minimum or name:
-            ax.legend(loc="best")
+            ax.legend(loc="best", prop={'size': 18})
 
     return fig, ax

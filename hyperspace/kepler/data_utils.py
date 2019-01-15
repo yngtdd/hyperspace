@@ -9,6 +9,26 @@ import numpy as np
 from scipy.optimize import OptimizeResult
 
 
+def _load_checkpoint(results_path, rank):
+    """
+    Loads checkpoint to resume optimization.
+
+    * `results_path` [str]
+        Path to the previously saved results.
+
+    * `rank` [int]
+        Rank to which the saved results belong.
+    """
+    files = _listfiles(results_path)
+    for file in files:
+        saved_rank = re.findall(r'\d+', file)
+        if rank == int(saved_rank[0]):
+            filepath = os.path.join(results_path, file)
+            checkpoint = load(str(filepath))
+            print(f'loading checkpoint for rank {int(saved_rank[0])}')
+            return checkpoint
+
+
 def load_results(results_path, sort=False, reverse_sort=False):
     """
     Loads results from distributed run with Scikit-Optimize.
@@ -154,7 +174,7 @@ def convert_roboresults(results):
     return [_convert_robo(x) for x in results]
 
 
-def create_result(Xi, yi, n_evaluations=None, space=None, rng=None, specs=None, models=None):
+def create_result(Xi, yi, n_evaluations=None, space=None, rng=None, specs=None, models=None, maximize=False):
     """
     Initialize an `OptimizeResult` object.
 
@@ -198,7 +218,12 @@ def create_result(Xi, yi, n_evaluations=None, space=None, rng=None, specs=None, 
     if np.ndim(yi) == 2:
         res.log_time = np.ravel(yi[:, 1])
         yi = np.ravel(yi[:, 0])
-    best = np.argmin(yi)
+
+    if maximize:
+        best = np.argmax(yi)
+    else:
+        best = np.argmin(yi)
+
     res.x = Xi[best]
     res.fun = yi[best]
 

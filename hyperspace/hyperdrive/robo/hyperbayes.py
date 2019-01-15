@@ -38,18 +38,14 @@ def robodrive(objective, hyperparameters, results_path, n_iterations=50):
         filename = 'hyperspace' + str(rank)
 
     if not os.path.exists(results_path):
-        os.makedirs(results_path, exist_ok=True)    
+        os.makedirs(results_path, exist_ok=True)
 
     savefile = os.path.join(results_path, filename)
 
-    if rank == 0:
-        robospace = create_robospace(hyperparameters)
-        hyperspace = convert_robospace(robospace)
-    else:
-        hyperspace = None
+    robospace = create_robospace(hyperparameters)
+    hyperspace = convert_robospace(robospace)
+    space = hyperspace[rank]
 
-    space = comm.scatter(hyperspace, root=0)
-    
     lower = space[0]
     upper = space[1]
 

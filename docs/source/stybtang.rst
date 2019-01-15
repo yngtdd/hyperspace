@@ -50,10 +50,10 @@ behaves in various dimensions. Without further ado, let's do this:
         hyperdrive(objective=stybtang,
                    hyperparameters=bounds,
                    results_path=args.results,
+                   checkpoints_path=args.results,
                    model="GP",
                    n_iterations=50,
                    verbose=True,
-                   checkpoints=True,
                    random_state=0)
 
 

@@ -15,3 +15,10 @@ Return to HyperSpace!
 ### New Features
 
 API has been reworked from the ground up.
+
+## Version 0.3.0
+
+Switching up communication.
+
+* API has been simplified a bit for `hyperdrive` functions.
+* Bug fix when checkpointing while MPI is oversubscribed.
