@@ -1,8 +1,5 @@
-hyperspace\.space package
-=========================
-
-Submodules
-----------
+Space
+=====
 
 hyperspace\.space\.mapping\_space module
 ----------------------------------------

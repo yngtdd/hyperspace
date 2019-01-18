@@ -60,7 +60,7 @@ def plot_convergence(*args, **kwargs):
     maximize = kwargs.get("maximize", False)
     colors = kwargs.get("colors", None)
 
-    fig = plt.figure(figsize=(15, 10), dpi=1000)
+    fig = plt.figure(figsize=(15, 10), dpi=300)
     plt.tick_params(axis='both', which='major', labelsize=22)
 
     if ax is None:

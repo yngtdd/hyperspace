@@ -1,4 +1,4 @@
-hyperspace\.hyperdrive package
+Hyperdrive
 ==============================
 
 Submodules

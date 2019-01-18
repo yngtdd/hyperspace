@@ -1,5 +1,5 @@
-hyperspace\.kepler package
-==========================
+Kepler
+======
 
 Submodules
 ----------
