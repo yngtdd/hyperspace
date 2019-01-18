@@ -1,4 +1,6 @@
-sphinx
--e git://github.com/snide/sphinx_rtd_theme.git#egg=sphinx_rtd_theme
 sphinxcontrib-bibtex
 sphinxcontrib-napoleon
+sphinx==1.5.6
+sphinx-autobuild==0.7.1
+sphinx-rtd-theme==0.4.1
+mock
