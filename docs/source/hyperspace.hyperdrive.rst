@@ -1,19 +1,14 @@
-Hyperdrive
-==============================
+hyperspace.hyperdrive package
+=============================
 
-Submodules
-----------
+Subpackages
+-----------
 
-.. 
+.. toctree::
 
-hyperspace\.hyperdrive\.hyperdrive module
------------------------------------------
-
-.. automodule:: hyperspace.hyperdrive.hyperdrive
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+    hyperspace.hyperdrive.hyperbelt
+    hyperspace.hyperdrive.robo
+    hyperspace.hyperdrive.skopt
 
 Module contents
 ---------------

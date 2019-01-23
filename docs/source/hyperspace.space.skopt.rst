@@ -1,21 +1,21 @@
-hyperspace.tests package
-========================
+hyperspace.space.skopt package
+==============================
 
 Submodules
 ----------
 
-hyperspace.tests.test\_mapping\_space module
+hyperspace.space.skopt.mapping\_space module
 --------------------------------------------
 
-.. automodule:: hyperspace.tests.test_mapping_space
+.. automodule:: hyperspace.space.skopt.mapping_space
     :members:
     :undoc-members:
     :show-inheritance:
 
-hyperspace.tests.test\_space module
+hyperspace.space.skopt.space module
 -----------------------------------
 
-.. automodule:: hyperspace.tests.test_space
+.. automodule:: hyperspace.space.skopt.space
     :members:
     :undoc-members:
     :show-inheritance:
@@ -24,7 +24,7 @@ hyperspace.tests.test\_space module
 Module contents
 ---------------
 
-.. automodule:: hyperspace.tests
+.. automodule:: hyperspace.space.skopt
     :members:
     :undoc-members:
     :show-inheritance:

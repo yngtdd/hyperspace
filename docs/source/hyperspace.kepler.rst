@@ -1,19 +1,19 @@
-Kepler
-======
+hyperspace.kepler package
+=========================
 
 Submodules
 ----------
 
-hyperspace\.kepler\.data\_utils module
---------------------------------------
+hyperspace.kepler.data\_utils module
+------------------------------------
 
 .. automodule:: hyperspace.kepler.data_utils
     :members:
     :undoc-members:
     :show-inheritance:
 
-hyperspace\.kepler\.plots module
---------------------------------
+hyperspace.kepler.plots module
+------------------------------
 
 .. automodule:: hyperspace.kepler.plots
     :members:

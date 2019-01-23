@@ -1,22 +1,13 @@
-Space
-=====
+hyperspace.space package
+========================
 
-hyperspace\.space\.mapping\_space module
-----------------------------------------
+Subpackages
+-----------
 
-.. automodule:: hyperspace.space.mapping_space
-    :members:
-    :undoc-members:
-    :show-inheritance:
+.. toctree::
 
-hyperspace\.space\.space module
--------------------------------
-
-.. automodule:: hyperspace.space.space
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+    hyperspace.space.robo
+    hyperspace.space.skopt
 
 Module contents
 ---------------
