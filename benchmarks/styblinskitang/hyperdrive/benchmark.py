@@ -13,7 +13,7 @@ def main():
     args = parser.parse_args()
 
     stybtang = StyblinskiTang(args.ndims)
-    bounds = np.tile((-5., 5.), (args.ndims, 1))
+    bounds = np.tile([-5., 5.], (args.ndims, 1))
 
     hyperdrive(objective=stybtang,
               hyperparameters=bounds,

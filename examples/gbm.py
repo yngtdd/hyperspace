@@ -53,7 +53,7 @@ def main():
     parser.add_argument('--results_dir', type=str, help='Path to results directory.')
     args = parser.parse_args()
 
-    hparams = [(2, 10),             # max_depth
+    hparams = [[2, 10],             # max_depth
                (10.0**-2, 10.0**0), # learning_rate
                (1, 10),             # max_features
                (2, 100),            # min_samples_split
