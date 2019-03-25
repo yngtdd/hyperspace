@@ -1,4 +1,5 @@
 from __future__ import print_function
+import dill
 import argparse
 import torch.nn as nn
 import torch.nn.functional as F
@@ -7,31 +8,12 @@ from torchvision import datasets, transforms
 import torch.utils.data.distributed
 import horovod.torch as hvd
 from hyperspace import hyperdrive
+from mpi4py import MPI
 
-# Training settings
-parser = argparse.ArgumentParser(description='PyTorch MNIST Example')
-parser.add_argument('--batch-size', type=int, default=64, metavar='N',
-                        help='input batch size for training (default: 64)')
-parser.add_argument('--test-batch-size', type=int, default=1000, metavar='N',
-                        help='input batch size for testing (default: 1000)')
-parser.add_argument('--epochs', type=int, default=10, metavar='N',
-                        help='number of epochs to train (default: 10)')
-parser.add_argument('--lr', type=float, default=0.01, metavar='LR',
-                        help='learning rate (default: 0.01)')
-parser.add_argument('--momentum', type=float, default=0.5, metavar='M',
-                        help='SGD momentum (default: 0.5)')
-parser.add_argument('--no-cuda', action='store_true', default=False,
-                        help='disables CUDA training')
-parser.add_argument('--seed', type=int, default=42, metavar='S',
-                        help='random seed (default: 42)')
-parser.add_argument('--log-interval', type=int, default=10, metavar='N',
-                        help='how many batches to wait before logging training status')
-parser.add_argument('--fp16-allreduce', action='store_true', default=False,
-                        help='use fp16 compression during allreduce')
-parser.add_argument('--results_path', type=str, help="Path to store results")
-args = parser.parse_args()
-args.cuda = not args.no_cuda and torch.cuda.is_available()
 
+comm = MPI.COMM_WORLD
+rank = comm.Get_rank()
+size = comm.Get_size()
 
 
 class Net(nn.Module):
@@ -69,12 +51,12 @@ def train(epoch, model, optimizer, train_sampler, train_loader, args):
         loss.backward()
         batch_loss += loss.item()
         optimizer.step()
-#        if batch_idx % args.log_interval == 0:
+        if batch_idx % args.log_interval == 0:
             # Horovod: use train_sampler to determine the number of examples in
             # this worker's partition.
-#            print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
-#                epoch, batch_idx * len(data), len(train_sampler),
-#                100. * batch_idx / len(train_loader), loss.item()))
+            print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
+                epoch, batch_idx * len(data), len(train_sampler),
+                100. * batch_idx / len(train_loader), loss.item()))
 
     return loss.item()
 
@@ -115,7 +97,7 @@ def test(model, test_sampler, test_loader, args):
 
 
 
-def objective(hparams):
+def objective(hparams, model, train_sampler, train_loader, args):
     kernel1 = hparams
     model.kernel1 = kernel1
 
@@ -128,6 +110,30 @@ def objective(hparams):
 
 
 def main():
+    # Training settings
+    parser = argparse.ArgumentParser(description='PyTorch MNIST Example')
+    parser.add_argument('--batch-size', type=int, default=64, metavar='N',
+                        help='input batch size for training (default: 64)')
+    parser.add_argument('--test-batch-size', type=int, default=1000, metavar='N',
+                        help='input batch size for testing (default: 1000)')
+    parser.add_argument('--epochs', type=int, default=10, metavar='N',
+                        help='number of epochs to train (default: 10)')
+    parser.add_argument('--lr', type=float, default=0.01, metavar='LR',
+                        help='learning rate (default: 0.01)')
+    parser.add_argument('--momentum', type=float, default=0.5, metavar='M',
+                        help='SGD momentum (default: 0.5)')
+    parser.add_argument('--no-cuda', action='store_true', default=False,
+                        help='disables CUDA training')
+    parser.add_argument('--seed', type=int, default=42, metavar='S',
+                        help='random seed (default: 42)')
+    parser.add_argument('--log-interval', type=int, default=10, metavar='N',
+                        help='how many batches to wait before logging training status')
+    parser.add_argument('--fp16-allreduce', action='store_true', default=False,
+                        help='use fp16 compression during allreduce')
+    parser.add_argument('--results_path', type=str, help="Path to store results")
+    args = parser.parse_args()
+    args.cuda = not args.no_cuda and torch.cuda.is_available()
+
     # Horovod: initialize library.
     hvd.init()
     torch.manual_seed(args.seed)
@@ -146,7 +152,6 @@ def main():
                         transforms.Normalize((0.1307,), (0.3081,))
                     ]))
 
-    global train_sampler, train_loader
     # Horovod: use DistributedSampler to partition the training data.
     train_sampler = torch.utils.data.distributed.DistributedSampler(
         train_dataset, num_replicas=hvd.size(), rank=hvd.rank())
@@ -159,14 +164,12 @@ def main():
             transforms.Normalize((0.1307,), (0.3081,))
         ]))
 
-    global test_sampler, test_loader
     # Horovod: use DistributedSampler to partition the test data.
     test_sampler = torch.utils.data.distributed.DistributedSampler(
         test_dataset, num_replicas=hvd.size(), rank=hvd.rank())
     test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=args.test_batch_size,
                                             sampler=test_sampler, **kwargs)
 
-    global model
     model = Net()
 
     if args.cuda:
@@ -195,8 +198,15 @@ def main():
 
     space = [(2, 8)]
 
+    #if hvd.rank() == 0:
     hyperdrive(
-        objective=objective,
+        lambda hparams: objective(
+            hparams,
+            model,
+            train_sampler,
+            train_loader,
+            args
+        ),
         hyperparameters=space,
         results_path=args.results_path,
         checkpoints_path=args.results_path,
