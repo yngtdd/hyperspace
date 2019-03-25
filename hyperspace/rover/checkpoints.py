@@ -59,7 +59,6 @@ class JsonCheckpointSaver(object):
         self.checkpoint_path = checkpoint_path
         self.filename = filename
         self.savefile = os.path.join(self.checkpoint_path, self.filename)
-        self.dump_options = dump_options
 
     def _convert_fields(self, result_field):
         """
@@ -72,7 +71,7 @@ class JsonCheckpointSaver(object):
             Field consisting of numpy types to be converted.
         """
         converted_field = []
-        for dim in skopt_result_field:
+        for dim in result_field:
             if isinstance(dim, numbers.Integral):
                 converted_field.append(int(dim))
             elif isinstance(dim, numbers.Real):
