@@ -1,5 +1,6 @@
 import os
 import re
+import json
 import itertools
 
 import pickle
@@ -262,3 +263,72 @@ def create_result(Xi, yi, n_evaluations=None, space=None, rng=None, specs=None, 
     res.random_state = rng
     res.specs = specs
     return res
+
+
+def load_json_results(results_path, sort=False, reverse_sort=False):
+    """
+    Loads results from distributed run with Scikit-Optimize.
+    
+    Parameters
+    ----------
+    * `results_path` [string]
+        Path where results from the distributed run is stored.
+        
+    * `sort` [Bool, default=False]
+        Sorts results by objective function minimum (lowest first).
+        
+    * `reverse_sort` [Bool, defaul=False]
+        Sort results by objective function minimum (highest first.)
+        - `sort` must be set to True.
+        
+    Returns
+    -------
+    * results [list]
+    """
+    files = _listfiles(results_path)
+
+    results = []
+    for file in files:
+        savefile = os.path.join(results_path, file)
+        with open(savefile, 'r') as infile:
+            results.append(json.load(infile))
+            
+    if reverse_sort and not sort:
+        sort = True
+
+    if sort:
+        results = sorted(results, key=lambda result: result['fun'])
+        
+    results = _convert_json_results(results)
+
+    return results
+
+
+def _convert_json(result):
+    """
+    Convert results from json to scipy.OptimizeResult.
+    
+    Parameters:
+    ----------
+    
+    * `result`: [dict]
+      Result from optimization when saving with JsonCheckpointSaver.
+      
+    Returns:
+    -------
+    * `optresult`: [scipy.optimize.OptimizeResult]
+      Result formatted to match Scikit-Optimize.
+    """
+    optresult = OptimizeResult(
+      x=result['x'],
+      fun=result['fun'],
+      func_vals=result['func_vals'],
+      x_iters=result['x_iters'],
+    )
+
+    return optresult
+
+
+def _convert_json_results(results):
+    """Convert all json results to  scipy.OptimizeResults."""
+    return [_convert_json(x) for x in results]
