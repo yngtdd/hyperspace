@@ -9,7 +9,6 @@ def main():
     parser = argparse.ArgumentParser(description='Setup experiment.')
     parser.add_argument('--ndims', type=int, help='Number of dimensions for Styblinski-Tang function')
     parser.add_argument('--results_dir', type=str, help='Path to results directory.')
-    parser.add_argument('--checkpoints', type=str, help='Path to checkpoints')
     args = parser.parse_args()
 
     stybtang = StyblinskiTang(args.ndims)
@@ -18,7 +17,7 @@ def main():
     hyperdrive(objective=stybtang,
               hyperparameters=bounds,
               results_path=args.results_dir,
-              checkpoints_path=args.checkpoints,
+              checkpoints_path=args.results_dir,
               model="GP",
               n_iterations=50,
               verbose=True,

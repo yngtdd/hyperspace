@@ -11,9 +11,5 @@ from .space.skopt.space import HyperCategorical
 from .space.skopt.mapping_space import check_dimension
 from .space.skopt.mapping_space import create_hyperspace
 
-from .space.robo.space import RoboInteger
-from .space.robo.space import RoboReal
-from .space.robo.mapping_space import check_robo_dimension
-from .space.robo.mapping_space import create_robospace
 
 __version__ = "0.3.0"
