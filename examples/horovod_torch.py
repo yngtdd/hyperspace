@@ -106,7 +106,9 @@ def objective(hparams, model, train_sampler, train_loader, args):
          epoch_loss = train(epoch, model, optimizer, train_sampler, train_loader, args)
          loss += epoch_loss
 
-    return epoch_loss / args.epochs
+    loss_avg = epoch_loss / args.epochs
+
+    return loss_avg
 
 
 def main():
