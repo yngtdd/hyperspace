@@ -26,9 +26,14 @@ def run(results_dir, n_calls=200, n_runs=10):
             checkpoint = load_results(directory)
 
             hyperdrive(
-              branin, bounds, directory, n_iterations=n_calls,
-              verbose=True, random_state=random_state,
-              checkpoints=True, restart=checkpoint
+                branin,
+                bounds,
+                directory,
+                model,
+                n_iterations=n_calls,
+                verbose=True,
+                random_state=random_state,
+                checkpoints_path=directory
             )
 
 
